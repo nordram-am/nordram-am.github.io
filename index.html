@@ -3,51 +3,374 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nordram</title>
-<meta name="description" content="Nordram reads screenshots of your bank app, so you never type your spending in by hand.">
+<title>Nordram — real analytics on all your money</title>
+<meta name="description" content="Nordram reads screenshots of your bank app and turns them into real analytics. No typing, no bank connection, no email address.">
+<meta name="theme-color" content="#0A0A0E">
+<meta property="og:title" content="Nordram — real analytics on all your money">
+<meta property="og:description" content="Screenshot your bank app. Nordram reads the payments out of the picture and charts them.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nordram-am.github.io/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /*
+    Colours are the app's own tokens, transcribed from src/theme/tokens.gen.ts
+    rather than sampled from a screenshot. The site and the app are the same
+    product; a near-miss hex is a second brand.
+  */
   :root {
-    --bg: #0B0B0F;
-    --line: #24242F;
-    --text: #F4F4F6;
-    --muted: #A0A0AE;
-    --accent: #FF6A00;
-    --font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --canvas:      #0A0A0E;   /* surfaceCanvas */
+    --sunken:      #050507;   /* surfaceSunken */
+    --raised:      #101015;   /* surfaceRaised */
+    --card:        #131319;   /* surfaceCard */
+    --card-hover:  #1A1A21;   /* surfaceCardHover */
+
+    --text:        #EFEFF3;   /* textPrimary */
+    --text-2:      #A8A8B4;   /* textSecondary */
+    --text-3:      #7C7C89;   /* textTertiary */
+
+    --accent:      #FF6A00;   /* ndApricot500 — rationed */
+    --accent-soft: #FF8534;   /* textAccent */
+
+    --mint:        #2BE0A8;   /* ndVizMint */
+    --sky:         #3D9BFF;   /* ndVizSky */
+    --violet:      #9B6BFF;   /* ndVizViolet */
+    --pink:        #FF4D9E;   /* ndVizPink */
+    --lime:        #C8F03C;   /* ndVizLime */
+    --amber:       #FFC53D;   /* ndVizAmber */
+
+    --hairline:    rgba(255,255,255,.055);
+    --line:        rgba(255,255,255,.10);
+    --line-strong: rgba(255,255,255,.18);
+
+    --font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --measure: 68rem;
   }
+
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
   body {
-    margin: 0; min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--bg); color: var(--text);
-    font-family: var(--font); font-size: 17px; line-height: 1.65;
+    margin: 0;
+    background: var(--canvas);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-  .wrap { max-width: 34rem; padding: 3rem 1.5rem; }
+
+  /* One warm glow behind the fold, then the page settles into ink. */
+  .glow {
+    position: absolute; inset: 0 0 auto 0; height: 42rem;
+    background:
+      radial-gradient(60rem 34rem at 22% -8%, rgba(255,106,0,.13), transparent 62%),
+      radial-gradient(46rem 28rem at 88% 4%, rgba(61,155,255,.07), transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.5rem; }
+  main, header, footer { position: relative; z-index: 1; }
+
+  a { color: inherit; }
+
+  /* ------------------------------------------------------------- masthead */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; padding: 1.6rem 0;
+  }
   .brand {
-    font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; margin: 0 0 1rem;
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-weight: 600; font-size: 1.05rem; letter-spacing: -.01em;
+    text-decoration: none; color: var(--text);
   }
-  h1 { font-size: 2.1rem; line-height: 1.25; margin: 0 0 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
-  p { margin: 0 0 1.1rem; color: var(--muted); }
-  nav { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
-  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(255,106,0,0.35); }
-  a:hover { border-bottom-color: var(--accent); }
-  @media (max-width: 480px) { h1 { font-size: 1.7rem; } }
+  .mark {
+    width: 1.65rem; height: 1.65rem; border-radius: .55rem; flex: none;
+    background: linear-gradient(150deg, var(--accent-soft), var(--accent));
+    display: grid; place-items: center;
+    font-size: .95rem; font-weight: 700; color: var(--sunken); line-height: 1;
+  }
+  .top-links { display: flex; gap: 1.4rem; font-size: .93rem; }
+  .top-links a { color: var(--text-3); text-decoration: none; }
+  .top-links a:hover { color: var(--text); }
+
+  /* ----------------------------------------------------------------- hero */
+  .hero { padding: 4.5rem 0 4rem; max-width: 46rem; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-size: .78rem; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 600; color: var(--accent-soft);
+    border: 1px solid rgba(255,106,0,.28); border-radius: 999px;
+    padding: .32rem .8rem; margin: 0 0 1.6rem;
+  }
+  .dot { width: .4rem; height: .4rem; border-radius: 50%; background: var(--accent); flex: none; }
+  h1 {
+    font-size: clamp(2.3rem, 6.2vw, 3.9rem);
+    line-height: 1.06; letter-spacing: -.035em; font-weight: 600;
+    margin: 0 0 1.35rem;
+  }
+  h1 .quiet { color: var(--text-3); }
+  .lede { font-size: 1.2rem; color: var(--text-2); margin: 0 0 1rem; max-width: 36rem; }
+  .hero .fine { color: var(--text-3); font-size: 1rem; margin: 1.7rem 0 0; }
+
+  /* -------------------------------------------------------------- panes */
+  section { padding: 3.5rem 0; }
+  .section-head { max-width: 40rem; margin: 0 0 2.2rem; }
+  h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2rem); line-height: 1.15;
+    letter-spacing: -.025em; font-weight: 600; margin: 0 0 .7rem;
+  }
+  .section-head p { color: var(--text-2); margin: 0; }
+
+  .panes { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
+  .pane {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 20px; padding: 1.6rem 1.5rem 1.7rem;
+  }
+  .pane .glyph {
+    width: 2.4rem; height: 2.4rem; border-radius: .8rem; margin-bottom: 1.1rem;
+    display: grid; place-items: center; font-size: 1.15rem;
+  }
+  .pane h3 { font-size: 1.16rem; font-weight: 600; letter-spacing: -.015em; margin: 0 0 .55rem; line-height: 1.25; }
+  .pane p { color: var(--text-2); margin: 0; font-size: .98rem; }
+  .g-wealth  { background: rgba(43,224,168,.12);  color: var(--mint); }
+  .g-shot    { background: rgba(255,106,0,.14);   color: var(--accent-soft); }
+  .g-privacy { background: rgba(155,107,255,.14); color: var(--violet); }
+
+  /* --------------------------------------------------------------- steps */
+  .steps { display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr); counter-reset: step; }
+  .step {
+    background: var(--raised); border: 1px solid var(--hairline);
+    border-radius: 18px; padding: 1.4rem 1.3rem 1.5rem;
+  }
+  .step .n {
+    counter-increment: step;
+    font-size: .78rem; font-weight: 600; letter-spacing: .12em;
+    color: var(--text-3); display: block; margin-bottom: .8rem;
+  }
+  .step .n::before { content: "0" counter(step); }
+  .step h3 { font-size: 1.03rem; font-weight: 600; margin: 0 0 .45rem; letter-spacing: -.01em; }
+  .step p { color: var(--text-2); margin: 0; font-size: .94rem; }
+
+  /* ------------------------------------------------------------ features */
+  .features { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
+  .feature {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; padding: 1.35rem 1.4rem 1.45rem;
+  }
+  .feature h3 {
+    font-size: 1.02rem; font-weight: 600; margin: 0 0 .45rem; letter-spacing: -.01em;
+    display: flex; align-items: center; gap: .55rem;
+  }
+  .feature h3::before {
+    content: ""; width: .5rem; height: .5rem; border-radius: 50%;
+    background: var(--tint, var(--text-3)); flex: none;
+  }
+  .feature p { color: var(--text-2); margin: 0; font-size: .94rem; }
+
+  /* ---------------------------------------------------------- signup card */
+  .signup {
+    background: linear-gradient(160deg, var(--card-hover), var(--card));
+    border: 1px solid var(--line); border-radius: 22px;
+    padding: 2.2rem 2rem;
+    display: grid; gap: 2rem; grid-template-columns: 1.15fr 1fr; align-items: center;
+  }
+  .signup h2 { margin-bottom: .6rem; }
+  .signup p { color: var(--text-2); margin: 0; }
+  .req { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
+  .req li {
+    background: var(--sunken); border: 1px solid var(--hairline);
+    border-radius: 14px; padding: .85rem 1rem;
+  }
+  .req strong { display: block; font-weight: 600; font-size: 1rem; }
+  .req span { color: var(--text-3); font-size: .92rem; }
+
+  /* -------------------------------------------------------------- status */
+  .status {
+    border: 1px solid var(--line-strong); border-radius: 22px;
+    padding: 2.1rem 2rem; text-align: center; background: var(--raised);
+  }
+  .status h2 { margin-bottom: .7rem; }
+  .status p { color: var(--text-2); margin: 0 auto; max-width: 34rem; }
+  .status .mail { margin-top: 1.4rem; }
+  .status a {
+    color: var(--accent-soft); text-decoration: none;
+    border-bottom: 1px solid rgba(255,133,52,.35);
+  }
+  .status a:hover { border-bottom-color: var(--accent-soft); }
+
+  /* -------------------------------------------------------------- footer */
+  footer {
+    border-top: 1px solid var(--hairline); margin-top: 3.5rem;
+    padding: 2rem 0 3.5rem; color: var(--text-3); font-size: .92rem;
+    display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; justify-content: space-between;
+  }
+  footer nav { display: flex; gap: 1.4rem; }
+  footer a { color: var(--text-3); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  /* ------------------------------------------------------------ responsive */
+  @media (max-width: 900px) {
+    .panes, .features { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .signup { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 1.15rem; }
+    .hero { padding: 3rem 0 2.5rem; }
+    .panes, .features, .steps { grid-template-columns: 1fr; }
+    .signup, .status { padding: 1.6rem 1.3rem; }
+    section { padding: 2.5rem 0; }
+    footer { flex-direction: column; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
+
+<div class="glow"></div>
+
 <div class="wrap">
-  <p class="brand">Nordram</p>
-  <h1>You don’t type your spending in. We read it.</h1>
-  <p>Nordram is a budgeting app for Armenia. Screenshot your bank app, and Nordram reads the payments out of the picture — the amounts, the dates, the places — and turns them into something you can actually understand.</p>
-  <p>It is in private testing.</p>
+
+<header>
+  <a class="brand" href="/"><span class="mark">N</span> Nordram</a>
+  <nav class="top-links">
+    <a href="#how">How it works</a>
+    <a href="privacy.html">Privacy</a>
+  </nav>
+</header>
+
+<main>
+
+  <!--
+    The hero and the three panes below are the app's own words — INTRO_PANES in
+    src/features/onboarding/IntroArt.tsx, which is itself the prototype's copy
+    verbatim. The site should not invent a second pitch.
+  -->
+  <div class="hero">
+    <p class="eyebrow"><span class="dot"></span> Private testing</p>
+    <h1>Real analytics<br><span class="quiet">on all your money.</span></h1>
+    <p class="lede">Banks, cards, cash in a drawer, any currency. Nordram charts them as one and does the maths for you.</p>
+    <p class="lede">And you never type a payment in. You screenshot your bank app, and Nordram reads the amounts, the dates and the places straight out of the picture.</p>
+    <p class="fine">A budgeting app for Armenia. No bank connection, no email address, no adverts.</p>
+  </div>
+
+  <section id="why">
+    <div class="panes">
+      <article class="pane">
+        <div class="glyph g-wealth">◆</div>
+        <h3>Real analytics on all your money.</h3>
+        <p>Banks, cards, cash in a drawer, any currency. Nordram charts them as one and does the maths for you.</p>
+      </article>
+      <article class="pane">
+        <div class="glyph g-shot">▣</div>
+        <h3>No typing, just screenshots.</h3>
+        <p>Upload screenshots from your bank app and we pull out every amount, file it, and chart it for you.</p>
+      </article>
+      <article class="pane">
+        <div class="glyph g-privacy">◈</div>
+        <h3>Your money, nobody&rsquo;s business.</h3>
+        <p>No name, no email, no phone. A username is the whole sign-up.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="section-head">
+      <h2>How an import goes</h2>
+      <p>Four steps, and you can stop at any of them. Nothing is saved until you say so.</p>
+    </div>
+    <div class="steps">
+      <article class="step">
+        <span class="n"></span>
+        <h3>Pick your screenshots</h3>
+        <p>As many as you like, straight from your photos. Anything that shows a list of transactions.</p>
+      </article>
+      <article class="step">
+        <span class="n"></span>
+        <h3>Check them</h3>
+        <p>You see the shots you chose before a single one is sent, and you can drop any of them.</p>
+      </article>
+      <article class="step">
+        <span class="n"></span>
+        <h3>We read them</h3>
+        <p>Every amount, date and place comes back as a row. The picture itself is never kept.</p>
+      </article>
+      <article class="step">
+        <span class="n"></span>
+        <h3>Look, then keep</h3>
+        <p>Untick a row you don&rsquo;t want, fix a detail, keep the rest. If we weren&rsquo;t sure of something, the row says so.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="inside">
+    <div class="section-head">
+      <h2>What is inside</h2>
+      <p>The analytics are the product, so most of the app is the part that reads your money back to you.</p>
+    </div>
+    <div class="features">
+      <article class="feature" style="--tint: var(--mint)">
+        <h3>Wealth over time</h3>
+        <p>Everything you hold, in one line, across every account and pocket you have told us about.</p>
+      </article>
+      <article class="feature" style="--tint: var(--accent)">
+        <h3>Spent and money in</h3>
+        <p>This month against last, by category and by place, with the day-by-day shape underneath.</p>
+      </article>
+      <article class="feature" style="--tint: var(--sky)">
+        <h3>Four currencies</h3>
+        <p>Armenian dram, dollars, euros and roubles. Every payment keeps the currency it happened in, at the rate of the day it happened &mdash; not today&rsquo;s.</p>
+      </article>
+      <article class="feature" style="--tint: var(--amber)">
+        <h3>Budgets</h3>
+        <p>A limit per category, and an honest read on how much of the month is left against how much of the money is.</p>
+      </article>
+      <article class="feature" style="--tint: var(--violet)">
+        <h3>Pockets</h3>
+        <p>Set money aside without moving it at your bank. What is left to spend stops pretending your savings are spendable.</p>
+      </article>
+      <article class="feature" style="--tint: var(--pink)">
+        <h3>Trips</h3>
+        <p>Tag the payments from a journey and see what a country actually cost you, on a globe you can spin.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="signup">
+    <div class="signup">
+      <div>
+        <h2>A username. A password. That is the sign-up.</h2>
+        <p>No email address, no phone number, no identity check, and nothing that asks who you are. We are not connected to your bank and never will be without you doing it yourself.</p>
+      </div>
+      <ul class="req">
+        <li><strong>A username</strong><span>Pick anything. It doesn&rsquo;t have to be your name.</span></li>
+        <li><strong>A password</strong><span>So you can log back in on any phone.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="status">
+    <div class="status">
+      <h2>Nordram is in private testing</h2>
+      <p>It is not on the App Store or Google Play yet. If you are in Armenia and you would like to try it early, or you just want to know when it opens up, write to us.</p>
+      <p class="mail"><a href="mailto:nordram.am@gmail.com">nordram.am@gmail.com</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>Nordram &middot; Yerevan, Armenia</span>
   <nav>
     <a href="privacy.html">Privacy policy</a>
+    <a href="mailto:nordram.am@gmail.com">Contact</a>
   </nav>
+</footer>
+
 </div>
 </body>
 </html>

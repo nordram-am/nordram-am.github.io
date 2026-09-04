@@ -9,15 +9,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /*
+    The same tokens as the landing page, transcribed from the app's own
+    src/theme/tokens.gen.ts. Two pages of one site should not be two palettes.
+  */
   :root {
-    --bg: #0B0B0F;
-    --surface: #14141B;
-    --line: #24242F;
-    --text: #F4F4F6;
-    --muted: #A0A0AE;
-    --accent: #FF6A00;
-    --good: #4ADE80;
-    --font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --bg: #0A0A0E;               /* surfaceCanvas */
+    --surface: #131319;          /* surfaceCard */
+    --line: rgba(255,255,255,.10);
+    --text: #EFEFF3;             /* textPrimary */
+    --muted: #A8A8B4;            /* textSecondary */
+    --accent: #FF6A00;           /* ndApricot500 */
+    --good: #2BE0A8;             /* ndVizMint / success */
+    --font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -34,8 +38,9 @@
   header { border-bottom: 1px solid var(--line); padding-bottom: 1.75rem; margin-bottom: 2.5rem; }
   .brand {
     font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; margin: 0 0 0.75rem;
+    font-weight: 600; margin: 0 0 0.75rem;
   }
+  .brand a { color: var(--accent); text-decoration: none; border-bottom: none; }
   h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.6rem; font-weight: 600; letter-spacing: -0.02em; }
   .date { color: var(--muted); font-size: 0.95rem; margin: 0; }
   h2 {
@@ -78,7 +83,7 @@
 <div class="wrap">
 
 <header>
-  <p class="brand">Nordram</p>
+  <p class="brand"><a href="./">Nordram</a></p>
   <h1>Privacy Policy</h1>
   <p class="date">Last updated 4 September 2026</p>
 </header>
