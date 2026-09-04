@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Nordram</title>
+<meta name="description" content="What Nordram does with your data, in plain language.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0B0F;
+    --surface: #14141B;
+    --line: #24242F;
+    --text: #F4F4F6;
+    --muted: #A0A0AE;
+    --accent: #FF6A00;
+    --good: #4ADE80;
+    --font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  header { border-bottom: 1px solid var(--line); padding-bottom: 1.75rem; margin-bottom: 2.5rem; }
+  .brand {
+    font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin: 0 0 0.75rem;
+  }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.6rem; font-weight: 600; letter-spacing: -0.02em; }
+  .date { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  h2 {
+    font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em;
+    margin: 2.75rem 0 0.85rem; padding-top: 0.25rem;
+  }
+  p { margin: 0 0 1.1rem; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(255,106,0,0.35); }
+  a:hover { border-bottom-color: var(--accent); }
+  ul { margin: 0 0 1.1rem; padding-left: 1.15rem; }
+  li { margin-bottom: 0.55rem; }
+  li::marker { color: var(--muted); }
+  .lede { font-size: 1.1rem; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 1.35rem 1.5rem; margin: 0 0 1.25rem;
+  }
+  .card h3 {
+    margin: 0 0 0.85rem; font-size: 1rem; font-weight: 600;
+  }
+  .card ul { margin-bottom: 0; }
+  .keep h3 { color: var(--good); }
+  .never h3 { color: var(--accent); }
+  .note {
+    border-left: 2px solid var(--line); padding-left: 1.1rem;
+    color: var(--muted); font-size: 0.97rem; margin: 0 0 1.1rem;
+  }
+  footer {
+    margin-top: 3.5rem; padding-top: 1.75rem; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 0.9rem;
+  }
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    .wrap { padding: 2rem 1.1rem 4rem; }
+    h1 { font-size: 1.65rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="brand">Nordram</p>
+  <h1>Privacy Policy</h1>
+  <p class="date">Last updated 4 September 2026</p>
+</header>
+
+<p class="lede">Nordram reads screenshots of your bank app so you don’t have to type your spending in by hand. That means we handle information about your money, so here is exactly what we do with it — in plain language, with nothing important left out.</p>
+
+<p>Nordram is a small independent project based in Armenia.</p>
+
+<h2>The short version</h2>
+<ul>
+  <li><strong>We are not connected to your bank.</strong> We only ever see what you choose to show us.</li>
+  <li><strong>We never ask for your email address or phone number.</strong></li>
+  <li><strong>We do not keep your screenshots.</strong></li>
+  <li><strong>We do not sell your data</strong>, and there are no adverts in Nordram.</li>
+</ul>
+
+<h2>What we keep, and what we never keep</h2>
+<div class="card keep">
+  <h3>We keep</h3>
+  <ul>
+    <li>The payments you import or add — the amount, currency, date, place and category.</li>
+    <li>Your username, your currency, and the rules you set for budgets, pockets, planned moves, trips and accounts.</li>
+    <li>Your password, stored scrambled. We cannot read it.</li>
+    <li>A record of each import: when it happened, and a fingerprint of each picture, so the same screenshot is not imported twice by accident.</li>
+  </ul>
+</div>
+
+<div class="card never">
+  <h3>We never keep</h3>
+  <ul>
+    <li>Your screenshots. They are read, then gone.</li>
+    <li>Your card number, PIN or bank login. We never ask for them.</li>
+    <li>Your email address or phone number.</li>
+    <li>Your location, your contacts, or anything else on your phone.</li>
+  </ul>
+</div>
+
+<p class="note">Nordram signs you in with a username and a password, and nothing else. So that the sign-in system has an address to work with, one is generated from your username behind the scenes. It is not a mailbox, nothing is ever sent to it, and it is never shown to you or to anyone else.</p>
+
+<h2>What happens to a screenshot</h2>
+<p>When you import a screenshot, the picture is sent to an AI service to be read. It sends back the amounts, dates and places it found. We keep those numbers. The picture itself is not stored.</p>
+<p>The AI service is Google’s Gemini, reached through a provider called OpenRouter. Every picture is sent with settings that instruct the provider not to retain it and not to use it to train models. The reading happens on Google’s global infrastructure, which means a picture may be processed on servers outside Armenia and outside Europe.</p>
+
+<h2>Where your data is kept</h2>
+<p>Your account and your payment records are stored with Supabase, on servers in Frankfurt, Germany.</p>
+
+<h2>Who can see it</h2>
+<p>Nordram is small, and the person who builds it can see the transactions you import. Nobody reads them as a habit — but nothing technical prevents it, and we would rather tell you that than claim otherwise. When that changes, so does this line.</p>
+<p>We do not sell your data and we do not share it with anyone else, apart from the two services named above that are needed to make the app work.</p>
+
+<h2>Measuring how the app is used</h2>
+<p>We measure how the app is used so we can fix what is broken — which screens people open, which steps fail. We never try to work out who you are from it, and it is never joined up with your payments.</p>
+<p>Nordram also carries crash reporting, so that when the app breaks we can find out why. It is set up so that amounts, places and usernames are removed before anything leaves your phone.</p>
+
+<h2>Deleting your data</h2>
+<p>You can have your account and everything we hold about you deleted, whenever you want. We are adding a button inside the app to do it yourself; until that arrives, write to us at the address below and we will do it for you and tell you when it is finished.</p>
+
+<h2>Children</h2>
+<p>Nordram is not intended for anyone under 16.</p>
+
+<h2>Changes to this policy</h2>
+<p>If this policy changes, we will update this page and change the date at the top.</p>
+
+<h2>Contact</h2>
+<p>Questions about any of this, or a request to delete your data: <a href="mailto:nordram.am@gmail.com">nordram.am@gmail.com</a></p>
+
+<footer>
+  Nordram · Yerevan, Armenia
+</footer>
+
+</div>
+</body>
+</html>

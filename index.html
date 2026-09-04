@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nordram</title>
+<meta name="description" content="Nordram reads screenshots of your bank app, so you never type your spending in by hand.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0B0F;
+    --line: #24242F;
+    --text: #F4F4F6;
+    --muted: #A0A0AE;
+    --accent: #FF6A00;
+    --font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg); color: var(--text);
+    font-family: var(--font); font-size: 17px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 34rem; padding: 3rem 1.5rem; }
+  .brand {
+    font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin: 0 0 1rem;
+  }
+  h1 { font-size: 2.1rem; line-height: 1.25; margin: 0 0 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
+  p { margin: 0 0 1.1rem; color: var(--muted); }
+  nav { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(255,106,0,0.35); }
+  a:hover { border-bottom-color: var(--accent); }
+  @media (max-width: 480px) { h1 { font-size: 1.7rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="brand">Nordram</p>
+  <h1>You don’t type your spending in. We read it.</h1>
+  <p>Nordram is a budgeting app for Armenia. Screenshot your bank app, and Nordram reads the payments out of the picture — the amounts, the dates, the places — and turns them into something you can actually understand.</p>
+  <p>It is in private testing.</p>
+  <nav>
+    <a href="privacy.html">Privacy policy</a>
+  </nav>
+</div>
+</body>
+</html>
