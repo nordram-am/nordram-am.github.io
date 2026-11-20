@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nordram — իրական վերլուծություն ձեր բոլոր միջոցների համար</title>
-<meta name="description" content="Nordram-ը կարդում է ձեր բանկային հավելվածի սքրինշոթները և դրանք վերածում իրական վերլուծության։ Առանց բանկի հետ կապի, առանց էլ. փոստի։">
+<meta name="description" content="Իրական վերլուծություն ձեր բոլոր միջոցների համար՝ մեկ տեղում։ Վճարումներն ավելացրեք սքրինշոթով, քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով։ Առանց բանկի հետ կապի, առանց էլ. փոստի։">
 <meta name="theme-color" content="#060b0d">
 <meta property="og:title" content="Nordram — իրական վերլուծություն ձեր բոլոր միջոցների համար">
-<meta property="og:description" content="Սքրինշոթ արեք բանկի հավելվածից։ Nordram-ը նկարից կարդում է վճարումները և ցույց տալիս գրաֆիկներով։">
+<meta property="og:description" content="Nordram-ը ձեր բոլոր միջոցները ցույց է տալիս որպես մեկ ամբողջություն։ Վճարումն ավելացրեք սքրինշոթով, քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով։">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nordram-am.github.io/hy/">
 <meta property="og:locale" content="hy_AM">
@@ -303,73 +303,8 @@
   /* Wealth */
   #wealth .ruled { margin-top: .4rem; }
 
-  /* Ways in: the Add sheet on its Photos tab, with the dock along the bottom. */
-  .sheet {
-    position: relative; overflow: hidden;
-    max-width: 25rem; justify-self: center; width: 100%;
-    background: var(--card); border: 1px solid var(--edge);
-    border-radius: 2.25rem;
-    padding: .7rem 1rem 1rem;
-    box-shadow: 0 30px 70px rgba(0,0,0,.45);
-  }
-  .grabber { width: 2.4rem; height: .3rem; border-radius: 999px; background: rgba(255,255,255,.18); margin: 0 auto 1rem; }
-  .sheet-title { font: 500 1.375rem/1.2 var(--display); letter-spacing: -.02em; margin: 0 .25rem 1rem; }
-  /* Recent photos are plain tinted tiles: no picture with anyone's data in it. */
-  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; border-radius: 1rem; overflow: hidden; }
-  .grid span { position: relative; aspect-ratio: 1; }
-  .grid .cam {
-    grid-row: span 2; aspect-ratio: 1 / 2;
-    background: radial-gradient(120% 70% at 30% 35%, #23343b 0%, #0b1215 100%);
-    color: #fff;
-  }
-  .grid .cam .icon { position: absolute; top: .5rem; right: .5rem; font-size: 1.35rem; stroke-width: 1.75; }
-  .grid .ph { background: linear-gradient(160deg, color-mix(in srgb, var(--hue) 34%, transparent), color-mix(in srgb, var(--hue) 10%, transparent)), rgba(255,255,255,.035); }
-  .grid .ph::after {
-    content: ""; position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%;
-    border: 1.5px solid rgba(255,255,255,.85); background: rgba(6,11,13,.25);
-  }
-  .grid .ph.on { box-shadow: inset 0 0 0 999px rgba(6,11,13,.45); }
-  .grid .ph.on::after { content: attr(data-n); display: grid; place-items: center; background: #fff; border-color: #fff; color: var(--canvas); font: 700 .7rem/1 var(--body); }
-  /* The bottom of the grid fades under the dock, as it scrolls under it in the app. */
-  .sheet::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 7rem; pointer-events: none;
-    background: linear-gradient(180deg, rgba(18,29,33,0) 0%, var(--card) 72%);
-  }
-  .dock {
-    position: absolute; z-index: 1; left: 50%; bottom: 1rem; transform: translateX(-50%);
-    display: flex; align-items: center; gap: .5rem;
-    padding: 4px; border-radius: 999px;
-    background: var(--card-2); border: 1px solid var(--hairline);
-    box-shadow: 0 8px 24px rgba(0,0,0,.35);
-    white-space: nowrap;
-  }
-  .dock-tabs { display: flex; gap: 2px; }
-  .dock-tabs span { width: 2.75rem; height: 2.75rem; border-radius: 999px; display: grid; place-items: center; color: var(--text-2); border: 1px solid transparent; }
-  .dock-tabs span.on { color: var(--text); background: rgba(255,255,255,.035); border-color: var(--hairline); }
-  .dock-tabs .icon { font-size: 1.15rem; }
-  .dock-btn {
-    height: 2.75rem; padding: 0 1rem; border-radius: 999px;
-    display: grid; place-items: center;
-    background: linear-gradient(180deg, #FFFFFF 0%, #EDEDF1 100%);
-    color: var(--on-accent); font: 600 .9rem/1 var(--body);
-  }
-
+  /* Four ways in: the list, then the review that three of them lead to. */
   .ways .then { margin-top: 1.5rem; color: var(--text-2); font-size: .97rem; }
-
-  /* How an import goes */
-  .steps { list-style: none; margin: 2.25rem 0 0; padding: 0; counter-reset: step; }
-  .steps li {
-    counter-increment: step;
-    display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); gap: 0 .5rem;
-    padding: 1.2rem 0; border-top: 1px solid var(--hairline);
-  }
-  .steps li::before {
-    content: counter(step, decimal-leading-zero);
-    font: 500 .95rem/1.6 var(--display); font-feature-settings: "tnum" 1;
-    color: var(--text-3);
-  }
-  .steps h3 { margin-bottom: .3rem; }
-  .steps p { color: var(--text-2); font-size: .97rem; }
 
   /* What is inside */
   .inside-head { max-width: 40rem; margin-bottom: 2.5rem; }
@@ -467,7 +402,7 @@
     </svg>
   </a>
   <nav aria-label="Կայք">
-    <a class="wide-only" href="#how">Ինչպես է աշխատում</a>
+    <a class="wide-only" href="#wealth">Ինչպես է աշխատում</a>
     <a href="../privacy.html" hreflang="en">Գաղտնիություն</a>
     <a href="../" hreflang="en" lang="en">English</a>
   </nav>
@@ -485,10 +420,10 @@
       <p class="caption enter">Փակ թեստավորում &middot; Հայաստան</p>
       <h1 class="enter">Իրական վերլուծություն՝<br><span class="second">ձեր բոլոր միջոցների համար։</span></h1>
       <p class="lede enter enter-2">Բանկեր, քարտեր, դարակում պահած կանխիկ՝ դրամով թե արտարժույթով։ <span class="nw">Nordram-ը</span> դրանք ցույց է տալիս որպես մեկ ամբողջություն և բոլոր հաշվարկներն անում է ձեր փոխարեն։</p>
-      <p class="lede enter enter-2">Եվ վճարումները ձեռքով մուտքագրել պետք չէ։ Սքրինշոթ եք անում բանկի հավելվածից, և <span class="nw">Nordram-ը</span> նկարից կարդում է գումարները, ամսաթվերը և վայրերը։ Կարելի է նաև քաղվածք կամ կտրոնի լուսանկար, իսկ ցանկացած վճարում միշտ կարող եք մուտքագրել ձեռքով։</p>
+      <p class="lede enter enter-2">Վճարումներն ավելացրեք այն ձևով, որն այդ օրը ամենահարմարն է՝ բանկի հավելվածի սքրինշոթով, քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով մուտքագրելով։</p>
       <div class="actions enter enter-3">
         <a class="btn" href="mailto:nordram.am@gmail.com">Ցանկանում եմ փորձել</a>
-        <a class="textlink" href="#how">Ինչպես է անցնում ներմուծումը</a>
+        <a class="textlink" href="#wealth">Ինչպես է աշխատում</a>
       </div>
       <p class="fine enter enter-3">Բյուջեի հավելված Հայաստանի համար։ Առանց բանկի հետ կապի, առանց էլ. փոստի, առանց գովազդի։ Հավելվածն առայժմ միայն անգլերեն է։</p>
     </div>
@@ -575,59 +510,51 @@
     </div>
   </section>
 
-  <section id="ways" aria-labelledby="ways-h">
-    <div class="split split-5-7">
-      <figure class="sheet" role="img" aria-label="Nordram-ի ավելացման պատուհանը՝ «Photos» ներդիրում․ տեսախցիկի սալիկ, ապա ձեր վերջին լուսանկարները, որոնցից երեքն ընտրված են և համարակալված մեկից երեք։ Ներքևում՝ ավելացնելու երեք եղանակները՝ ձեռքով, լուսանկարներից և քաղվածքից, և «Read 3 photos» կոճակը։">
-        <div class="grabber"></div>
-        <p class="sheet-title">Photos</p>
-        <div class="grid">
-          <span class="cam"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
-          <span class="ph on" data-n="1" style="--hue:var(--sky)"></span>
-          <span class="ph" style="--hue:var(--mint)"></span>
-          <span class="ph" style="--hue:var(--violet)"></span>
-          <span class="ph on" data-n="2" style="--hue:var(--amber)"></span>
-          <span class="ph" style="--hue:var(--pink)"></span>
-          <span class="ph on" data-n="3" style="--hue:var(--mint)"></span>
-          <span class="ph" style="--hue:var(--sky)"></span>
-        </div>
-        <div class="dock">
-          <div class="dock-tabs">
-            <span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span>
-            <span class="on"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></span>
-            <span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
-          </div>
-          <span class="dock-btn">Read 3 photos</span>
-        </div>
-      </figure>
-      <div class="intro ways">
-        <h2 id="ways-h">Սքրինշոթները մուտքագրում են ձեր փոխարեն։</h2>
-        <p>Վերբեռնեք սքրինշոթներ բանկի հավելվածից, քաղվածք կամ կտրոնի լուսանկար, և մենք կհանենք յուրաքանչյուր գումար, կդասակարգենք այն և ցույց կտանք գրաֆիկներով։ Կամ վճարումը մուտքագրեք ինքներդ։</p>
-        <ul class="ruled" style="margin-top:1.75rem">
-          <li><h3>Բանկի հավելվածի սքրինշոթ</h3><p>Վճարումների ցանկը՝ այնպես, ինչպես ցույց է տալիս ձեր բանկը։</p></li>
-          <li><h3>Քաղվածք</h3><p>Այն, որ տալիս է ձեր բանկը։</p></li>
-          <li><h3>Կտրոնի լուսանկար</h3><p>Խանութի թղթե կտրոնը։</p></li>
-          <li><h3>Ձեռքով</h3><p>Մեկ առ մեկ մուտքագրված վճարումներ։ Առանց սահմանափակման։</p></li>
-        </ul>
-        <p class="then">Սքրինշոթները, քաղվածքներն ու կտրոնները անցնում են նույն ստուգումը, և ոչինչ չի պահպանվում, քանի դեռ չեք սեղմել «Add»։</p>
-      </div>
+  <section id="inside" aria-labelledby="inside-h">
+    <div class="inside-head">
+      <h2 id="inside-h">Ինչ կա ներսում</h2>
+      <p>Վերլուծությունն է հենց արտադրանքը, ուստի հավելվածի մեծ մասն այն է, ինչ ձեզ ցույց է տալիս ձեր գումարի պատկերը։</p>
     </div>
+    <ul class="inside">
+      <li>
+        <h3>Ծախսեր և մուտքեր</h3>
+        <p>Այս ամիսը՝ նախորդի համեմատ, ըստ կատեգորիաների և վայրերի, իսկ ներքևում՝ օր առ օր պատկերը։</p>
+      </li>
+      <li>
+        <h3>Արժույթներ՝ օրվա փոխարժեքով</h3>
+        <p>Առաջինը դրամն է, հետո՝ այն արտարժույթները, որոնց հետ գործ ունենք Հայաստանում ապրելով։ Յուրաքանչյուր վճարում պահում է իր արժույթը՝ այն օրվա փոխարժեքով, երբ կատարվել է, և ոչ թե այսօրվա։</p>
+      </li>
+      <li>
+        <h3>Ամսական բյուջեներ</h3>
+        <p>Սահմանաչափ ձեր ընտրած ցանկացած կատեգորիայի համար, և թե որքան է մնացել այս ամիս։</p>
+      </li>
+      <li>
+        <h3>Ճամփորդություններ</h3>
+        <p>Նշեք ուղևորության վճարումները և տեսեք, թե իրականում որքան արժեցավ ձեզ այդ երկիրը՝ պտտվող գլոբուսի վրա։</p>
+      </li>
+      <li>
+        <h3>Կատեգորիաներ և վայրեր</h3>
+        <p><span class="nw">Nordram-ը</span> կատեգորիա է առաջարկում իրեն անծանոթ խանութի համար, իսկ հայտնի խանութները երևում են իրենց լոգոյով։ Ստեղծեք ձեր սեփական կատեգորիաները՝ յուրաքանչյուրն իր պատկերակով, և նշեք, թե որտեղ է կատարվել ձեռքով մուտքագրված վճարումը։</p>
+      </li>
+    </ul>
   </section>
 
-  <section id="how" aria-labelledby="how-h">
+  <section id="ways" aria-labelledby="ways-h">
     <div class="split split-7-5">
-      <div class="intro">
-        <h2 id="how-h">Ինչպես է անցնում ներմուծումը</h2>
-        <p>Չորս քայլ, և կարող եք կանգ առնել դրանցից ցանկացածում։ Ոչինչ չի պահպանվում առանց ձեր համաձայնության։</p>
-        <ol class="steps">
-          <li><div><h3>Ընտրեք սքրինշոթները</h3><p>Անմիջապես ձեր լուսանկարներից։ Ցանկացած նկար, որտեղ երևում է գործարքների ցանկ։ Հյուրը կարող է կարդալ հինգ նկար, իսկ ավելին ավելացնելու համար ստեղծեք հաշիվ։</p></div></li>
-          <li><div><h3>Ստուգեք դրանք</h3><p>Ընտրած նկարները տեսնում եք նախքան որևէ մեկն ուղարկվի, և կարող եք հանել դրանցից ցանկացածը։</p></div></li>
-          <li><div><h3>Մենք կարդում ենք դրանք</h3><p>Յուրաքանչյուր գումար, ամսաթիվ և վայր վերադառնում է առանձին տողով։ Նկարն ինքը երբեք չի պահվում։</p></div></li>
-          <li><div><h3>Նայեք, հետո պահեք</h3><p>Հանեք նշումն այն տողից, որը պետք չէ, ուղղեք մանրամասները, պահեք մնացածը։ Եթե ինչ-որ բանում վստահ չենք եղել, տողն այդ մասին կասի։</p></div></li>
-        </ol>
+      <div class="intro ways">
+        <h2 id="ways-h">Վճարում ավելացնելու չորս եղանակ։</h2>
+        <p>Ընտրեք այն, որը տվյալ պահին ամենահարմարն է։ Ինչպես էլ վճարումն ավելացվի, այն հայտնվում է նույն գրաֆիկներում։</p>
+        <ul class="ruled" style="margin-top:1.75rem">
+          <li><h3>Բանկի հավելվածի սքրինշոթ</h3><p>Վճարումների ցանկը՝ այնպես, ինչպես ցույց է տալիս ձեր բանկը։</p></li>
+          <li><h3>Քաղվածք</h3><p>PDF կամ CSV ֆայլը, որ տալիս է ձեր բանկը։</p></li>
+          <li><h3>Կտրոնի լուսանկար</h3><p>Խանութի թղթե կտրոնը։</p></li>
+          <li><h3>Ձեռքով</h3><p>Մեկ առ մեկ մուտքագրված վճարումներ։ Ոչինչ չի կարդացվում, ուստի սա գաղտնիության համար ամենալավ եղանակն է։</p></li>
+        </ul>
+        <p class="then">Սքրինշոթը, քաղվածքը կամ կտրոնը կարդում ենք ձեր փոխարեն։ Յուրաքանչյուր գումար, ամսաթիվ և վայր վերադառնում է առանձին տողով, որը դուք ստուգում եք, և ոչինչ չի պահպանվում, քանի դեռ չեք սեղմել «Add»։ Ֆայլն ինքը երբեք չի պահվում։</p>
       </div>
 
       <figure class="device">
-        <div class="phone" role="img" aria-label="Ստուգման օրինակ՝ «Check what we found» վերնագրով․ սքրինշոթից կարդացված չորս վճարում՝ յուրաքանչյուրը իր գումարով, օրով և կատեգորիայով։ Երեքը նշված են։ Մեկը դեռ կատեգորիա չունի և նշված է «Uncategorised»։ Չորրորդը նշված չէ, քանի որ համընկնում է Nordram-ում արդեն եղած վճարման հետ։ Կոճակին գրված է «Add 3 transactions»։">
+        <div class="phone" role="img" aria-label="Ստուգման օրինակ՝ «Check what we found» վերնագրով․ ձեր փոխարեն կարդացված չորս վճարում՝ յուրաքանչյուրը իր գումարով, օրով և կատեգորիայով։ Երեքը նշված են։ Մեկը դեռ կատեգորիա չունի և նշված է «Uncategorised»։ Չորրորդը նշված չէ, քանի որ համընկնում է Nordram-ում արդեն եղած վճարման հետ։ Կոճակին գրված է «Add 3 transactions»։">
           <div class="screen">
             <span class="statusbar">10:31</span>
             <div class="island"></div>
@@ -662,35 +589,6 @@
     </div>
   </section>
 
-  <section id="inside" aria-labelledby="inside-h">
-    <div class="inside-head">
-      <h2 id="inside-h">Ինչ կա ներսում</h2>
-      <p>Վերլուծությունն է հենց արտադրանքը, ուստի հավելվածի մեծ մասն այն է, ինչ ձեզ ցույց է տալիս ձեր գումարի պատկերը։</p>
-    </div>
-    <ul class="inside">
-      <li>
-        <h3>Ծախսեր և մուտքեր</h3>
-        <p>Այս ամիսը՝ նախորդի համեմատ, ըստ կատեգորիաների և վայրերի, իսկ ներքևում՝ օր առ օր պատկերը։</p>
-      </li>
-      <li>
-        <h3>Արժույթներ՝ օրվա փոխարժեքով</h3>
-        <p>Առաջինը դրամն է, հետո՝ այն արտարժույթները, որոնց հետ գործ ունենք Հայաստանում ապրելով։ Յուրաքանչյուր վճարում պահում է իր արժույթը՝ այն օրվա փոխարժեքով, երբ կատարվել է, և ոչ թե այսօրվա։</p>
-      </li>
-      <li>
-        <h3>Ամսական բյուջեներ</h3>
-        <p>Սահմանաչափ ձեր ընտրած ցանկացած կատեգորիայի համար, և թե որքան է մնացել այս ամիս։</p>
-      </li>
-      <li>
-        <h3>Ճամփորդություններ</h3>
-        <p>Նշեք ուղևորության վճարումները և տեսեք, թե իրականում որքան արժեցավ ձեզ այդ երկիրը՝ պտտվող գլոբուսի վրա։</p>
-      </li>
-      <li>
-        <h3>Կատեգորիաներ և վայրեր</h3>
-        <p><span class="nw">Nordram-ը</span> կատեգորիա է առաջարկում իրեն անծանոթ խանութի համար, իսկ հայտնի խանութները երևում են իրենց լոգոյով։ Ստեղծեք ձեր սեփական կատեգորիաները՝ յուրաքանչյուրն իր պատկերակով, և նշեք, թե որտեղ է կատարվել ձեռքով մուտքագրված վճարումը։</p>
-      </li>
-    </ul>
-  </section>
-
   <section id="signup" aria-labelledby="signup-h">
     <div class="split split-6-6">
       <div class="intro">
@@ -702,7 +600,7 @@
         <h3>Սեղմեք «Get started»։ Դա է ամբողջ գրանցումը։</h3>
         <p>Ոչ էլ. փոստի հասցե, ոչ հեռախոսահամար, ոչ ինքնության ստուգում, և ոչինչ, որ հարցնի, թե ով եք դուք։ Մենք կապված չենք ձեր բանկի հետ և երբեք չենք լինի, եթե դուք ինքներդ դա չանեք։</p>
         <ul class="ruled">
-          <li><h3>Սկսեք որպես հյուր</h3><p>Առանց օգտանվան, առանց գաղտնաբառի։ Սկզբի համար <span class="nw">Nordram-ը</span> ձեզ անուն է տալիս։</p></li>
+          <li><h3>Սկսեք որպես հյուր</h3><p>Առանց օգտանվան, առանց գաղտնաբառի։ Սկզբի համար <span class="nw">Nordram-ը</span> ձեզ անուն է տալիս։ Հյուրը կարող է կատարել հինգ ներմուծում, իսկ ձեռքով մուտքագրումը երբեք չի սահմանափակվում։</p></li>
           <li><h3>Ստեղծեք հաշիվ</h3><p>Ընտրեք օգտանուն և գաղտնաբառ, որպեսզի կարողանաք կրկին մուտք գործել ցանկացած հեռախոսից։ Ձեր ավելացրած ամեն ինչ մնում է։</p></li>
         </ul>
       </div>

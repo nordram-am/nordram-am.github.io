@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nordram — real analytics on all your money</title>
-<meta name="description" content="Nordram reads screenshots of your bank app and turns them into real analytics. No bank connection, no email address.">
+<meta name="description" content="Real analytics on all your money, in one place. Add payments from a screenshot, a statement, a receipt photo or by hand. No bank connection, no email address.">
 <meta name="theme-color" content="#060b0d">
 <meta property="og:title" content="Nordram — real analytics on all your money">
-<meta property="og:description" content="Screenshot your bank app. Nordram reads the payments out of the picture and charts them.">
+<meta property="og:description" content="Nordram charts all your money as one. Add a payment from a screenshot, a statement, a receipt photo or by hand.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nordram-am.github.io/">
 <link rel="alternate" hreflang="en" href="https://nordram-am.github.io/">
@@ -302,73 +302,8 @@
   /* Wealth */
   #wealth .ruled { margin-top: .4rem; }
 
-  /* Ways in: the Add sheet on its Photos tab, with the dock along the bottom. */
-  .sheet {
-    position: relative; overflow: hidden;
-    max-width: 25rem; justify-self: center; width: 100%;
-    background: var(--card); border: 1px solid var(--edge);
-    border-radius: 2.25rem;
-    padding: .7rem 1rem 1rem;
-    box-shadow: 0 30px 70px rgba(0,0,0,.45);
-  }
-  .grabber { width: 2.4rem; height: .3rem; border-radius: 999px; background: rgba(255,255,255,.18); margin: 0 auto 1rem; }
-  .sheet-title { font: 500 1.375rem/1.2 var(--display); letter-spacing: -.02em; margin: 0 .25rem 1rem; }
-  /* Recent photos are plain tinted tiles: no picture with anyone's data in it. */
-  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; border-radius: 1rem; overflow: hidden; }
-  .grid span { position: relative; aspect-ratio: 1; }
-  .grid .cam {
-    grid-row: span 2; aspect-ratio: 1 / 2;
-    background: radial-gradient(120% 70% at 30% 35%, #23343b 0%, #0b1215 100%);
-    color: #fff;
-  }
-  .grid .cam .icon { position: absolute; top: .5rem; right: .5rem; font-size: 1.35rem; stroke-width: 1.75; }
-  .grid .ph { background: linear-gradient(160deg, color-mix(in srgb, var(--hue) 34%, transparent), color-mix(in srgb, var(--hue) 10%, transparent)), rgba(255,255,255,.035); }
-  .grid .ph::after {
-    content: ""; position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%;
-    border: 1.5px solid rgba(255,255,255,.85); background: rgba(6,11,13,.25);
-  }
-  .grid .ph.on { box-shadow: inset 0 0 0 999px rgba(6,11,13,.45); }
-  .grid .ph.on::after { content: attr(data-n); display: grid; place-items: center; background: #fff; border-color: #fff; color: var(--canvas); font: 700 .7rem/1 var(--body); }
-  /* The bottom of the grid fades under the dock, as it scrolls under it in the app. */
-  .sheet::after {
-    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 7rem; pointer-events: none;
-    background: linear-gradient(180deg, rgba(18,29,33,0) 0%, var(--card) 72%);
-  }
-  .dock {
-    position: absolute; z-index: 1; left: 50%; bottom: 1rem; transform: translateX(-50%);
-    display: flex; align-items: center; gap: .5rem;
-    padding: 4px; border-radius: 999px;
-    background: var(--card-2); border: 1px solid var(--hairline);
-    box-shadow: 0 8px 24px rgba(0,0,0,.35);
-    white-space: nowrap;
-  }
-  .dock-tabs { display: flex; gap: 2px; }
-  .dock-tabs span { width: 2.75rem; height: 2.75rem; border-radius: 999px; display: grid; place-items: center; color: var(--text-2); border: 1px solid transparent; }
-  .dock-tabs span.on { color: var(--text); background: rgba(255,255,255,.035); border-color: var(--hairline); }
-  .dock-tabs .icon { font-size: 1.15rem; }
-  .dock-btn {
-    height: 2.75rem; padding: 0 1rem; border-radius: 999px;
-    display: grid; place-items: center;
-    background: linear-gradient(180deg, #FFFFFF 0%, #EDEDF1 100%);
-    color: var(--on-accent); font: 600 .9rem/1 var(--body);
-  }
-
+  /* Four ways in: the list, then the review that three of them lead to. */
   .ways .then { margin-top: 1.5rem; color: var(--text-2); font-size: .97rem; }
-
-  /* How an import goes */
-  .steps { list-style: none; margin: 2.25rem 0 0; padding: 0; counter-reset: step; }
-  .steps li {
-    counter-increment: step;
-    display: grid; grid-template-columns: 2.75rem minmax(0, 1fr); gap: 0 .5rem;
-    padding: 1.2rem 0; border-top: 1px solid var(--hairline);
-  }
-  .steps li::before {
-    content: counter(step, decimal-leading-zero);
-    font: 500 .95rem/1.6 var(--display); font-feature-settings: "tnum" 1;
-    color: var(--text-3);
-  }
-  .steps h3 { margin-bottom: .3rem; }
-  .steps p { color: var(--text-2); font-size: .97rem; }
 
   /* What is inside */
   .inside-head { max-width: 40rem; margin-bottom: 2.5rem; }
@@ -453,7 +388,7 @@
     </svg>
   </a>
   <nav aria-label="Site">
-    <a href="#how">How it works</a>
+    <a href="#wealth">How it works</a>
     <a href="privacy.html">Privacy</a>
     <a href="hy/" hreflang="hy" lang="hy">Հայերեն</a>
   </nav>
@@ -472,10 +407,10 @@
       <p class="caption enter">Private testing &middot; Armenia</p>
       <h1 class="enter">Real analytics<br><span class="second">on all your money.</span></h1>
       <p class="lede enter enter-2">Banks, cards, cash in a drawer, in dram or in foreign currency. Nordram charts them as one and does the maths for you.</p>
-      <p class="lede enter enter-2">And you don&rsquo;t have to type your payments in. You screenshot your bank app, and Nordram reads the amounts, the dates and the places straight out of the picture. A statement or a photo of a receipt works too, and you can always type one in by hand.</p>
+      <p class="lede enter enter-2">Add payments whichever way is easiest that day: a screenshot of your bank app, a statement, a photo of a receipt, or typing one in by hand.</p>
       <div class="actions enter enter-3">
         <a class="btn" href="mailto:nordram.am@gmail.com">Ask to try it early</a>
-        <a class="textlink" href="#how">How an import goes</a>
+        <a class="textlink" href="#wealth">How it works</a>
       </div>
       <p class="fine enter enter-3">A budgeting app for Armenia. No bank connection, no email address, no adverts.</p>
     </div>
@@ -562,59 +497,51 @@
     </div>
   </section>
 
-  <section id="ways" aria-labelledby="ways-h">
-    <div class="split split-5-7">
-      <figure class="sheet" role="img" aria-label="Nordram's Add sheet on its Photos tab: a camera tile, then your recent photos, three of them picked and numbered one to three. Along the bottom, the three ways to add, by hand, photos and statement, and the button Read 3 photos.">
-        <div class="grabber"></div>
-        <p class="sheet-title">Photos</p>
-        <div class="grid">
-          <span class="cam"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span>
-          <span class="ph on" data-n="1" style="--hue:var(--sky)"></span>
-          <span class="ph" style="--hue:var(--mint)"></span>
-          <span class="ph" style="--hue:var(--violet)"></span>
-          <span class="ph on" data-n="2" style="--hue:var(--amber)"></span>
-          <span class="ph" style="--hue:var(--pink)"></span>
-          <span class="ph on" data-n="3" style="--hue:var(--mint)"></span>
-          <span class="ph" style="--hue:var(--sky)"></span>
-        </div>
-        <div class="dock">
-          <div class="dock-tabs">
-            <span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span>
-            <span class="on"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></span>
-            <span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
-          </div>
-          <span class="dock-btn">Read 3 photos</span>
-        </div>
-      </figure>
-      <div class="intro ways">
-        <h2 id="ways-h">Screenshots do the typing.</h2>
-        <p>Upload screenshots from your bank app, a statement or a receipt photo, and we pull out every amount, file it, and chart it for you. Or type a payment in yourself.</p>
-        <ul class="ruled" style="margin-top:1.75rem">
-          <li><h3>A screenshot of your bank app</h3><p>The list of payments, the way your bank shows it.</p></li>
-          <li><h3>A statement</h3><p>The one your bank gives you.</p></li>
-          <li><h3>A photo of a receipt</h3><p>The paper slip from the shop.</p></li>
-          <li><h3>By hand</h3><p>One payment at a time, typed in. Never limited.</p></li>
-        </ul>
-        <p class="then">Screenshots, statements and receipts all land in the same review, and nothing is saved until you tap Add.</p>
-      </div>
+  <section id="inside" aria-labelledby="inside-h">
+    <div class="inside-head">
+      <h2 id="inside-h">What is inside</h2>
+      <p>The analytics are the product, so most of the app is the part that reads your money back to you.</p>
     </div>
+    <ul class="inside">
+      <li>
+        <h3>Spent and money in</h3>
+        <p>This month against last, by category and by place, with the day-by-day shape underneath.</p>
+      </li>
+      <li>
+        <h3>Currencies at the day&rsquo;s rate</h3>
+        <p>The dram first, and the foreign currencies that come with living in Armenia. Every payment keeps the currency it happened in, at the rate of the day it happened &mdash; not today&rsquo;s.</p>
+      </li>
+      <li>
+        <h3>Monthly budgets</h3>
+        <p>A limit for any category you choose, and how much of it is left this month.</p>
+      </li>
+      <li>
+        <h3>Trips</h3>
+        <p>Tag the payments from a journey and see what a country actually cost you, on a globe you can spin.</p>
+      </li>
+      <li>
+        <h3>Categories and places</h3>
+        <p>Nordram suggests a category for a shop it does not know, and well-known shops show their own logo. Make your own categories, each with its icon, and say where a payment you typed in happened.</p>
+      </li>
+    </ul>
   </section>
 
-  <section id="how" aria-labelledby="how-h">
+  <section id="ways" aria-labelledby="ways-h">
     <div class="split split-7-5">
-      <div class="intro">
-        <h2 id="how-h">How an import goes</h2>
-        <p>Four steps, and you can stop at any of them. Nothing is saved until you say so.</p>
-        <ol class="steps">
-          <li><div><h3>Pick your screenshots</h3><p>Straight from your photos. Anything that shows a list of transactions. A guest can read five pictures; create an account to keep adding them.</p></div></li>
-          <li><div><h3>Check them</h3><p>You see the shots you chose before a single one is sent, and you can drop any of them.</p></div></li>
-          <li><div><h3>We read them</h3><p>Every amount, date and place comes back as a row. The picture itself is never kept.</p></div></li>
-          <li><div><h3>Look, then keep</h3><p>Untick a row you don&rsquo;t want, fix a detail, keep the rest. If we weren&rsquo;t sure of something, the row says so.</p></div></li>
-        </ol>
+      <div class="intro ways">
+        <h2 id="ways-h">Four ways to add a payment.</h2>
+        <p>Use whichever is closest to hand. Every payment ends up on the same charts, however it came in.</p>
+        <ul class="ruled" style="margin-top:1.75rem">
+          <li><h3>A screenshot of your bank app</h3><p>The list of payments, the way your bank shows it.</p></li>
+          <li><h3>A statement</h3><p>The PDF or CSV file your bank gives you.</p></li>
+          <li><h3>A photo of a receipt</h3><p>The paper slip from the shop.</p></li>
+          <li><h3>By hand</h3><p>One payment at a time, typed in. Nothing is read, so it is the most private way.</p></li>
+        </ul>
+        <p class="then">A screenshot, a statement or a receipt is read for you: every amount, date and place comes back as a row for you to check, and nothing is saved until you tap Add. The file itself is never kept.</p>
       </div>
 
       <figure class="device">
-        <div class="phone" role="img" aria-label="An example review, titled Check what we found: four payments read from a screenshot, each with its amount, its day and its category. Three are ticked. One has no category yet and is marked Uncategorised. The fourth is unticked because it matches a payment already in Nordram. The button says Add 3 transactions.">
+        <div class="phone" role="img" aria-label="An example review, titled Check what we found: four payments read for you, each with its amount, its day and its category. Three are ticked. One has no category yet and is marked Uncategorised. The fourth is unticked because it matches a payment already in Nordram. The button says Add 3 transactions.">
           <div class="screen">
             <span class="statusbar">10:31</span>
             <div class="island"></div>
@@ -649,35 +576,6 @@
     </div>
   </section>
 
-  <section id="inside" aria-labelledby="inside-h">
-    <div class="inside-head">
-      <h2 id="inside-h">What is inside</h2>
-      <p>The analytics are the product, so most of the app is the part that reads your money back to you.</p>
-    </div>
-    <ul class="inside">
-      <li>
-        <h3>Spent and money in</h3>
-        <p>This month against last, by category and by place, with the day-by-day shape underneath.</p>
-      </li>
-      <li>
-        <h3>Currencies at the day&rsquo;s rate</h3>
-        <p>The dram first, and the foreign currencies that come with living in Armenia. Every payment keeps the currency it happened in, at the rate of the day it happened &mdash; not today&rsquo;s.</p>
-      </li>
-      <li>
-        <h3>Monthly budgets</h3>
-        <p>A limit for any category you choose, and how much of it is left this month.</p>
-      </li>
-      <li>
-        <h3>Trips</h3>
-        <p>Tag the payments from a journey and see what a country actually cost you, on a globe you can spin.</p>
-      </li>
-      <li>
-        <h3>Categories and places</h3>
-        <p>Nordram suggests a category for a shop it does not know, and well-known shops show their own logo. Make your own categories, each with its icon, and say where a payment you typed in happened.</p>
-      </li>
-    </ul>
-  </section>
-
   <section id="signup" aria-labelledby="signup-h">
     <div class="split split-6-6">
       <div class="intro">
@@ -689,7 +587,7 @@
         <h3>Tap Get started. That is the sign-up.</h3>
         <p>No email address, no phone number, no identity check, and nothing that asks who you are. We are not connected to your bank and never will be without you doing it yourself.</p>
         <ul class="ruled">
-          <li><h3>Start as a guest</h3><p>No username, no password. Nordram gives you a name to begin with.</p></li>
+          <li><h3>Start as a guest</h3><p>No username, no password. Nordram gives you a name to begin with. A guest can make five imports; typing payments in is never limited.</p></li>
           <li><h3>Create an account</h3><p>Pick a username and a password, so you can log back in on any phone. Everything you have added stays.</p></li>
         </ul>
       </div>
