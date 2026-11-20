@@ -5,23 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy — Nordram</title>
 <meta name="description" content="What Nordram does with your data, in plain language.">
+<meta name="theme-color" content="#060b0d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Outfit:wght@500;600&display=swap" rel="stylesheet">
 <style>
   /*
-    The same tokens as the landing page, transcribed from the app's own
-    src/theme/tokens.gen.ts. Two pages of one site should not be two palettes.
+    The same tokens as the landing page, from the app's design-system/tokens.json
+    ("Ocean deep" ground, mono-chrome accent). Two pages of one site should not
+    be two palettes.
   */
   :root {
-    --bg: #0A0A0E;               /* surfaceCanvas */
-    --surface: #131319;          /* surfaceCard */
-    --line: rgba(255,255,255,.10);
+    --bg: #060b0d;               /* canvas */
+    --surface: #121d21;          /* card */
+    --line: rgba(140,225,240,.10); /* hairline */
     --text: #EFEFF3;             /* textPrimary */
     --muted: #A8A8B4;            /* textSecondary */
-    --accent: #FF6A00;           /* ndApricot500 */
+    --link-line: rgba(255,255,255,.36); /* borderControl */
     --good: #2BE0A8;             /* ndVizMint / success */
-    --font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --display: "Outfit", system-ui, sans-serif;
+    --font: "Manrope", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -34,13 +37,15 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
+  h1, h2, h3 { font-family: var(--display); }
+  :focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
   .wrap { max-width: 44rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
   header { border-bottom: 1px solid var(--line); padding-bottom: 1.75rem; margin-bottom: 2.5rem; }
   .brand {
     font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase;
     font-weight: 600; margin: 0 0 0.75rem;
   }
-  .brand a { color: var(--accent); text-decoration: none; border-bottom: none; }
+  .brand a { color: var(--text); text-decoration: none; border-bottom: none; }
   h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.6rem; font-weight: 600; letter-spacing: -0.02em; }
   .date { color: var(--muted); font-size: 0.95rem; margin: 0; }
   h2 {
@@ -48,8 +53,8 @@
     margin: 2.75rem 0 0.85rem; padding-top: 0.25rem;
   }
   p { margin: 0 0 1.1rem; }
-  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(255,106,0,0.35); }
-  a:hover { border-bottom-color: var(--accent); }
+  a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--link-line); }
+  a:hover { border-bottom-color: var(--text); }
   ul { margin: 0 0 1.1rem; padding-left: 1.15rem; }
   li { margin-bottom: 0.55rem; }
   li::marker { color: var(--muted); }
@@ -63,7 +68,7 @@
   }
   .card ul { margin-bottom: 0; }
   .keep h3 { color: var(--good); }
-  .never h3 { color: var(--accent); }
+  .never h3 { color: var(--text); }
   .note {
     border-left: 2px solid var(--line); padding-left: 1.1rem;
     color: var(--muted); font-size: 0.97rem; margin: 0 0 1.1rem;
@@ -85,7 +90,7 @@
 <header>
   <p class="brand"><a href="./">Nordram</a></p>
   <h1>Privacy Policy</h1>
-  <p class="date">Last updated 15 November 2026</p>
+  <p class="date">Last updated 20 November 2026</p>
 </header>
 
 <p class="lede">Nordram reads screenshots of your bank app so you don’t have to type your spending in by hand. That means we handle information about your money, so here is exactly what we do with it — in plain language, with nothing important left out.</p>
@@ -105,8 +110,8 @@
   <h3>We keep</h3>
   <ul>
     <li>The payments you import or add — the amount, currency, date, place and category.</li>
-    <li>Your username, your currency, and the rules you set for budgets, pockets, planned moves, trips and accounts.</li>
-    <li>Your password, stored scrambled. We cannot read it.</li>
+    <li>Your username, your currency, and the rules you set for budgets, savings, planned moves, trips and accounts.</li>
+    <li>If you create an account, your password, stored scrambled. We cannot read it.</li>
     <li>A record of each import: when it happened, and a fingerprint of each picture, so the same screenshot is not imported twice by accident.</li>
   </ul>
 </div>
@@ -121,7 +126,7 @@
   </ul>
 </div>
 
-<p class="note">Nordram signs you in with a username and a password, and nothing else. So that the sign-in system has an address to work with, one is generated from your username behind the scenes. It is not a mailbox, nothing is ever sent to it, and it is never shown to you or to anyone else.</p>
+<p class="note">You start as a guest, signed in with no username and no password. If you create an account, Nordram signs you in with a username and a password, and nothing else. So that the sign-in system has an address to work with, one is generated from your username behind the scenes. It is not a mailbox, nothing is ever sent to it, and it is never shown to you or to anyone else.</p>
 
 <h2>What happens to a screenshot</h2>
 <p>When you import a screenshot, the picture is sent to an AI service to be read. It sends back the amounts, dates and places it found. We keep those numbers. The picture itself is not stored.</p>
