@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nordram — ձեր բոլոր ֆինանսների իրական վերլուծություն</title>
-<meta name="description" content="Ձեր բոլոր ֆինանսների իրական վերլուծություն՝ մեկ տեղում։ Վճարումներն ավելացրեք սքրինշոթով, հաշվի քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով։ Առանց բանկին միանալու, առանց էլ. փոստի հասցեի։">
+<meta name="description" content="Ձեր բոլոր ֆինանսների իրական վերլուծություն։ Վճարումներն ավելացրեք սքրինշոթով, քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով։ Առանց բանկին միանալու և առանց էլ. փոստի հասցեի։">
 <meta name="theme-color" content="#060b0d">
 <meta property="og:title" content="Nordram — ձեր բոլոր ֆինանսների իրական վերլուծություն">
-<meta property="og:description" content="Nordram-ը ձեր բոլոր միջոցները ներկայացնում է գծապատկերներով՝ որպես մեկ ամբողջություն։ Վճարումն ավելացրեք սքրինշոթով, հաշվի քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով։">
+<meta property="og:description" content="Nordram-ը ձեր բոլոր միջոցները միասին է ներկայացնում գծապատկերներում։ Վճարումն ավելացրեք սքրինշոթով, քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով։">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nordram.am/hy/">
 <meta property="og:locale" content="hy_AM">
@@ -290,30 +290,123 @@
   .intro p { color: var(--text-2); max-width: 32rem; }
   .intro p + p { margin-top: .9rem; }
 
-  /* Ruled lists: the page's one list style, instead of a grid of boxes. */
-  .ruled { list-style: none; margin: 0; padding: 0; }
-  .ruled > li { padding: 1.25rem 0; border-top: 1px solid var(--hairline); }
-  .ruled > li:last-child { border-bottom: 1px solid var(--hairline); }
-  .ruled h3 { margin-bottom: .35rem; }
-  .ruled p { color: var(--text-2); font-size: .97rem; }
+  /* Section visuals. Built from the phone's own parts (the tile, the
+     hairline, the data hues) so each section shows its point instead of
+     describing it. Icons are drawn here on a 24-unit grid and stroked like
+     the chevron. Hue stays data: chart marks and category tiles. Every icon
+     chip is mono. */
+  .panel {
+    min-width: 0;
+    background: var(--tile); box-shadow: var(--tile-shadow);
+    border: 1px solid var(--hairline); border-radius: 1.5rem;
+    padding: 1.25rem 1.25rem 1rem;
+  }
+  .panel .k { color: var(--text-2); font-size: .85rem; }
+  .panel-total { margin-top: .1rem; font-size: 2.1rem; font-weight: 600; line-height: 1.1; letter-spacing: -.02em; white-space: nowrap; }
+  .panel-change { margin-top: .25rem; color: var(--mint); font-size: .85rem; font-weight: 600; }
+  .panel-change span { color: var(--text-3); font-weight: 400; }
+
+  .history { position: relative; margin: 1.1rem 0 .4rem; }
+  .history::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+    background-size: 100% 25%;
+  }
+  .history svg { position: relative; width: 100%; height: auto; overflow: visible; }
+
+  .holdings { list-style: none; margin: 0; padding: 0; }
+  .holdings li { display: flex; align-items: center; gap: .65rem; padding: .62rem 0; border-top: 1px solid var(--hairline); font-size: .92rem; line-height: 1.3; }
+  .holdings .dot { flex: none; width: .6rem; height: .6rem; border-radius: 50%; background: var(--hue); }
+  .holdings .name { flex: 1; min-width: 0; }
+  .holdings small { display: block; font-size: .78rem; color: var(--text-3); }
+  .holdings .money { flex: none; font-size: 1rem; white-space: nowrap; }
+
+  .seg {
+    display: inline-flex; gap: .2rem; padding: .2rem; border-radius: 999px;
+    background: rgba(255,255,255,.035); border: 1px solid var(--hairline);
+    font-size: .8rem; font-weight: 600; line-height: 1.2; color: var(--text-3);
+  }
+  .seg span { padding: .35rem .85rem; border-radius: 999px; }
+  .seg .on { background: var(--accent-quiet); color: var(--text); }
+  .spend > .seg:first-child { margin-bottom: 1rem; }
+  .daybars { display: flex; align-items: flex-end; gap: 3px; height: 3rem; margin: 1.1rem 0 1.2rem; }
+  .daybars i { flex: 1; min-height: 3px; border-radius: 999px; background: color-mix(in srgb, var(--violet) 45%, transparent); }
+  .daybars i.on { background: var(--violet); }
+  .daybars i.later { height: 3px; background: var(--track); }
+  .cats { list-style: none; margin: 1rem 0 .3rem; padding: 0; display: grid; gap: .85rem; }
+  .cats li { display: flex; align-items: center; gap: .75rem; }
+  .cat {
+    flex: none; display: grid; place-items: center;
+    width: 2.1rem; height: 2.1rem; border-radius: .7rem;
+    color: var(--hue); background: color-mix(in srgb, var(--hue) 15%, transparent);
+  }
+  .cat .icon { font-size: 1.05rem; }
+  .cbody { flex: 1; min-width: 0; display: grid; gap: .35rem; }
+  .crow { display: flex; justify-content: space-between; gap: .6rem; font-size: .9rem; font-weight: 600; line-height: 1.25; }
+  .crow .money { flex: none; font-weight: 500; white-space: nowrap; }
+  .cbar { height: .3rem; border-radius: 999px; background: var(--track); overflow: hidden; }
+  .cbar i { display: block; height: 100%; border-radius: inherit; background: var(--hue); }
+
+  .ico {
+    flex: none; display: grid; place-items: center;
+    width: 2.5rem; height: 2.5rem; border-radius: .8rem;
+    background: var(--chip); border: 1px solid var(--hairline); color: var(--chip-text);
+  }
+  .ico .icon { font-size: 1.25rem; stroke-width: 1.8; }
+
+  /* Tiles: an icon over a label of a few words. */
+  .tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .tiles > li {
+    min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: .8rem;
+    padding: 1rem; border-radius: 1.25rem;
+    background: var(--tile); box-shadow: var(--tile-shadow); border: 1px solid var(--hairline);
+    font-weight: 600; font-size: .95rem; line-height: 1.3;
+  }
+  .tiles small { display: block; margin-top: .2rem; font-weight: 400; font-size: .85rem; color: var(--text-3); }
+
+  /* Icon rows: an icon beside a label. */
+  .irows { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+  .irows li { display: flex; align-items: center; gap: .9rem; font-weight: 600; line-height: 1.35; }
 
   /* Wealth */
-  #wealth .ruled { margin-top: .4rem; }
+  .wealth-grid {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-areas: "intro panel" "rows panel"; grid-template-rows: auto 1fr;
+    column-gap: 3.5rem; align-items: start;
+  }
+  .wealth-grid .intro { grid-area: intro; }
+  .wealth-grid .irows { grid-area: rows; margin-top: 2rem; }
+  .wealth-grid .panel { grid-area: panel; }
 
   /* What is inside */
   .inside-head { max-width: 40rem; margin-bottom: 2.5rem; }
   .inside-head h2 { margin-bottom: 1rem; }
   .inside-head p { color: var(--text-2); }
-  .inside { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3.5rem; list-style: none; margin: 0; padding: 0; }
-  .inside li { padding: 1.4rem 0 1.5rem; border-top: 1px solid var(--hairline); }
-  .inside h3 { margin-bottom: .4rem; }
-  .inside p { color: var(--text-2); font-size: .97rem; max-width: 30rem; }
+  .inside-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 3.5rem; align-items: start; }
+
+  /* Four ways */
+  .ways .tiles { margin-top: 1.75rem; }
 
   /* Nobody's business */
-  .signup h3 { font-size: 1.375rem; letter-spacing: -.02em; margin-bottom: .6rem; }
-  .signup > p { color: var(--text-2); }
-  .signup .ruled { margin-top: 1.5rem; }
-  .signup .ruled h3 { font-size: 1.125rem; margin-bottom: .3rem; }
+  .nos { list-style: none; margin: .4rem 0 1.25rem; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .nos li {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .45rem .9rem .45rem .65rem; border-radius: 999px;
+    background: var(--chip); border: 1px solid var(--hairline); color: var(--chip-text);
+    font-weight: 600; font-size: .92rem; line-height: 1.3;
+  }
+  .nos .icon { font-size: 1.1rem; }
+  .signup > h3 { font-size: 1.375rem; letter-spacing: -.02em; }
+  .paths { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .paths > li {
+    min-width: 0; padding: 1.1rem;
+    background: var(--tile); box-shadow: var(--tile-shadow);
+    border: 1px solid var(--hairline); border-radius: 1.25rem;
+  }
+  .paths h3 { margin-top: .8rem; font-size: 1.05rem; font-weight: 600; }
+  .ticks { list-style: none; margin: .65rem 0 0; padding: 0; display: grid; gap: .45rem; font-size: .9rem; line-height: 1.35; color: var(--text-2); }
+  .ticks li { display: flex; align-items: flex-start; gap: .5rem; }
+  .ticks .icon { margin-top: .2em; font-size: .9rem; color: var(--text-3); stroke-width: 2.5; }
 
   /* Private testing */
   .status {
@@ -387,6 +480,13 @@
     .split-5-7, .split-7-5, .split-6-6 { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
     .split-7-5 .device { order: 2; }
     .status { grid-template-columns: minmax(0, 1fr); align-items: start; }
+    .wealth-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "panel" "rows"; grid-template-rows: none; row-gap: 2.25rem; }
+    .wealth-grid .irows { margin-top: 0; }
+    .inside-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+    .panel { max-width: 34rem; }
+  }
+  @media (max-width: 560px) {
+    .paths { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 640px) {
     :root { --gutter: 1.25rem; }
@@ -395,7 +495,6 @@
     .masthead nav { gap: 1.1rem; }
     .brand svg { height: 1.3rem; }
     section { padding: 4rem 0; }
-    .inside { grid-template-columns: minmax(0, 1fr); }
     .status { padding: 2rem 1.4rem; border-radius: 1.5rem; }
     .actions .btn, .join .btn { width: 100%; }
     footer { flex-direction: column; align-items: flex-start; }
@@ -409,12 +508,14 @@
   .hint { color: var(--text-3); font-size: .85em; }
   /* A Latin name with an Armenian ending after a hyphen stays on one line. */
   .nw { white-space: nowrap; }
-  /* The Armenian hero button's label wraps on a phone: centre it and give
-     the two lines room. min-height still holds a one-line button at 3rem. */
+  /* An Armenian button label can wrap on a phone: centre it and give the
+     two lines room. min-height still holds a one-line button at 3rem. */
   .btn { text-align: center; line-height: 1.25; padding-top: .7rem; padding-bottom: .7rem; }
   @media (max-width: 520px) {
     .masthead nav .wide-only { display: none; }
   }
+  /* A figure with an Armenian ending keeps the colour of the words around it. */
+  .panel-change .nw { color: inherit; font-weight: inherit; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .enter { animation-name: fade; }
@@ -429,7 +530,7 @@
 <div class="wrap">
 
 <header class="masthead">
-  <a class="brand" href="./" aria-label="Nordram, գլխավոր էջ">
+  <a class="brand" href="./" aria-label="Nordram-ի գլխավոր էջ">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 64" width="249" height="64" aria-hidden="true" focusable="false">
       <mask id="nd-dram" maskUnits="userSpaceOnUse" x="0" y="0" width="249" height="64"><rect width="249" height="64" fill="#fff"/><rect x="25.73" y="33.63" width="16.68" height="4.29" fill="#000"/><rect x="25.73" y="42.81" width="16.68" height="4.30" fill="#000"/></mask>
       <g transform="translate(0.365 2.785)">
@@ -450,22 +551,23 @@
   <!--
     The Armenian page says what the English one says, no more. The app itself
     is English-only for now (Armenian interface text is Phase 3 work), so the
-    phone pictures keep the app's English labels and the page says so.
+    phone pictures keep the app's English labels and the page says so. The
+    section panels further down are drawings, not screens, so their labels
+    are Armenian.
   -->
   <div class="hero">
     <div>
       <h1 class="enter">Ձեր բոլոր ֆինանսների<br><span class="second">իրական վերլուծություն։</span></h1>
-      <p class="lede enter enter-2">Բանկային հաշիվներ, քարտեր ու դարակում պահած կանխիկ գումար՝ դրամով կամ արտարժույթով։ <span class="nw">Nordram-ը</span> դրանք ներկայացնում է գծապատկերներով՝ որպես մեկ ամբողջություն, և հաշվարկներն անում է ձեր փոխարեն։</p>
-      <p class="lede enter enter-2">Վճարումներն ավելացրեք այն եղանակով, որն այդ օրն ամենահարմարն է ձեզ համար՝ ձեր բանկի հավելվածի սքրինշոթով, հաշվի քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով մուտքագրելով։</p>
+      <p class="lede enter enter-2">Բանկային հաշիվները, քարտերն ու կանխիկը՝ դրամով կամ արտարժույթով, միասին են ներկայացված գծապատկերներում։</p>
       <div class="actions enter enter-3">
-        <a class="btn" href="#join">Դիմել հավելվածը մինչև թողարկումը փորձելու համար</a>
+        <a class="btn" href="#join">Թեստավորման հրավեր խնդրել</a>
         <a class="textlink" href="#wealth">Ինչպես է աշխատում</a>
       </div>
       <p class="fine enter enter-3">Հավելվածն առայժմ միայն անգլերեն է։</p>
     </div>
 
     <figure class="device enter enter-3">
-      <div class="phone" role="img" aria-label="Nordram-ի «Analytics» էկրանը՝ պայմանական թվերով։ Ընդհանուր կարողությունը 4 292 300 դրամ է և 12 ամսում աճել է 386 000 դրամով։ Գծապատկերը ցույց է տալիս դրա փոփոխությունը ժամանակի ընթացքում։ Խնայողություններ՝ 1 980 000 դրամ, դոլարներ՝ 1 450 000 դրամ, այլ միջոցներ՝ 862 300 դրամ։ Ներքևում յոթ սյունակով ներկայացված են վերջին 7 օրվա ծախսերը՝ ընդհանուր 48 200 դրամ։ Մուտքերը կազմել են 640 000 դրամ, որից 62%-ը չի ծախսվել։">
+      <div class="phone" role="img" aria-label="Nordram-ի «Analytics» էկրանը՝ պայմանական թվերով։ Կարողություն՝ 4 292 300 դրամ, 12 ամսում՝ 386 000 դրամով ավելի, գծով։ Խնայողություններ՝ 1 980 000 դրամ, դոլարներ՝ 1 450 000 դրամ, այլ միջոցներ՝ 862 300 դրամ։ Վերջին 7 օրվա ծախսերը՝ 48 200 դրամ, յոթ սյունակով։ Մուտքեր՝ 640 000 դրամ, որից 62%-ը չի ծախսվել։">
         <div class="screen">
           <span class="statusbar">10:24</span>
           <div class="island"></div>
@@ -522,24 +624,43 @@
   </div>
 
   <section id="wealth" aria-labelledby="wealth-h">
-    <div class="split split-5-7">
+    <div class="wealth-grid">
       <div class="intro">
-        <h2 id="wealth-h">Հետևեք ձեր ընդհանուր կարողությանը մեկ տեղում։</h2>
-        <p>Ավելացրեք ձեր հաշիվները, խնայողությունները, տանը պահած կանխիկը և ձեր մյուս ունեցվածքը։ <span class="nw">Nordram-ը</span> հաշվարկում է ընդհանուր գումարը և պահպանում դրա պատմությունը, որպեսզի գծապատկերում տեսնեք, թե ինչպես է այն փոխվել ժամանակի ընթացքում։</p>
+        <h2 id="wealth-h">Հետևեք ձեր կարողությանը մեկ տեղում։</h2>
+        <p>Ավելացրեք ձեր ամբողջ ունեցվածքը և տեսեք ընդհանուր գումարն ու դրա պատմությունը։</p>
       </div>
-      <ul class="ruled">
-        <li>
-          <h3>Խնայողություններ</h3>
-          <p>Սա ձեր մի կողմ դրած գումարն է, որը պահում եք հիմնական հաշվից առանձին։ Գումարի չափը հավելվածում թարմացնում եք ինքներդ։</p>
-        </li>
-        <li>
-          <h3>Բացասական մնացորդը նորմալ է</h3>
-          <p>Դա պարզապես նշանակում է, որ <span class="nw">Nordram-ում</span> դեռ չի երևում, թե որտեղից է մուտք եղել գումարը։</p>
-        </li>
-        <li>
-          <h3>Ճշտեք հաշվի նախկին մնացորդը</h3>
-          <p>Նշեք հաշվի մնացորդը որևէ նախորդ օրվա դրությամբ և հետագայում ուղղեք այդ տվյալը։</p>
-        </li>
+
+      <div class="panel" role="img" aria-label="Կարողության օրինակ՝ ընդհանուր 4 292 300 դրամ, վերջին 12 ամսում՝ 386 000 դրամով ավելի, աճող գծով։ Խնայողություններ՝ 1 980 000 դրամ, դոլարներ՝ 1 450 000 դրամ, հիմնական հաշիվ՝ 712 300 դրամ, տանը պահած կանխիկ՝ 250 000 դրամ, իսկ քարտը՝ −100 000 դրամ, քանի որ դրա մուտքի տվյալները դեռ չկան։">
+        <p class="k">Կարողություն</p>
+        <p class="money panel-total">֏4,292,300</p>
+        <p class="panel-change">+֏386,000 <span>վերջին 12 ամսում</span></p>
+        <div class="history">
+          <svg viewBox="0 0 300 90" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="history-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3D9BFF" stop-opacity=".2"/>
+                <stop offset="1" stop-color="#3D9BFF" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 80 L26.5 72 L53.1 77.5 L79.6 61.1 L106.2 52.1 L132.7 57.5 L159.3 43 L185.8 35.8 L212.4 41.2 L238.9 26.7 L265.5 17.7 L292 10 L292 90 L0 90 Z" fill="url(#history-fill)"/>
+            <path d="M0 80 L26.5 72 L53.1 77.5 L79.6 61.1 L106.2 52.1 L132.7 57.5 L159.3 43 L185.8 35.8 L212.4 41.2 L238.9 26.7 L265.5 17.7 L292 10" fill="none" stroke="#3D9BFF" stroke-width="6" stroke-opacity=".25" stroke-linejoin="round" stroke-linecap="round"/>
+            <path d="M0 80 L26.5 72 L53.1 77.5 L79.6 61.1 L106.2 52.1 L132.7 57.5 L159.3 43 L185.8 35.8 L212.4 41.2 L238.9 26.7 L265.5 17.7 L292 10" fill="none" stroke="#3D9BFF" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+            <circle cx="292" cy="10" r="4.2" fill="#3D9BFF" stroke="#172429" stroke-width="2"/>
+          </svg>
+        </div>
+        <ul class="holdings">
+          <li><span class="dot" style="--hue: var(--mint)"></span><span class="name">Խնայողություններ</span><span class="money">֏1,980,000</span></li>
+          <li><span class="dot" style="--hue: var(--violet)"></span><span class="name">Դոլարներ</span><span class="money">֏1,450,000</span></li>
+          <li><span class="dot" style="--hue: var(--sky)"></span><span class="name">Հիմնական հաշիվ</span><span class="money">֏712,300</span></li>
+          <li><span class="dot" style="--hue: var(--amber)"></span><span class="name">Տանը պահած կանխիկ</span><span class="money">֏250,000</span></li>
+          <li><span class="dot" style="--hue: var(--pink)"></span><span class="name">Քարտ<small>Մուտքի տվյալները դեռ չկան</small></span><span class="money">&minus;֏100,000</span></li>
+        </ul>
+      </div>
+
+      <ul class="irows">
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.66 3.13 3 7 3s7-1.34 7-3V6"/><path d="M5 12v6c0 1.66 3.13 3 7 3s7-1.34 7-3v-6"/></svg></span>Խնայողություններ, որոնք թարմացնում եք ինքներդ</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></span>Բացասական մնացորդը նորմալ է</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>Նշեք կամ ուղղեք ավելի վաղ ամսաթվի մնացորդը</li>
       </ul>
     </div>
   </section>
@@ -547,47 +668,53 @@
   <section id="inside" aria-labelledby="inside-h">
     <div class="inside-head">
       <h2 id="inside-h">Ի՞նչ կա հավելվածում</h2>
-      <p>Վերլուծությունը <span class="nw">Nordram-ի</span> հիմքն է։ Հավելվածի մեծ մասը նվիրված է նրան, որ հստակ տեսնեք ձեր ֆինանսների պատկերը։</p>
+      <p>Հավելվածի մեծ մասը նվիրված է վերլուծությանը։</p>
     </div>
-    <ul class="inside">
-      <li>
-        <h3>Ծախսեր և մուտքեր</h3>
-        <p>Համեմատեք այս և նախորդ ամիսների ծախսերն ու մուտքերը՝ ըստ կատեգորիայի և վայրի։ Ներքևում կտեսնեք օրական տվյալների գծապատկերը։</p>
-      </li>
-      <li>
-        <h3>Արժույթներ՝ օրվա փոխարժեքով</h3>
-        <p>Առաջինը դրամն է, ապա՝ Հայաստանում առօրյայում օգտագործվող արտարժույթները։ Հավելվածը պահպանում է յուրաքանչյուր վճարման սկզբնական արժույթը և հաշվարկներում օգտագործում վճարման օրվա փոխարժեքը, ոչ թե այսօրվա։</p>
-      </li>
-      <li>
-        <h3>Ամսական բյուջեներ</h3>
-        <p>Ձեր ընտրած ցանկացած կատեգորիայի համար սահմանեք ծախսերի սահմանաչափ և տեսեք, թե այս ամիս որքան գումար դեռ կարող եք ծախսել։</p>
-      </li>
-      <li>
-        <h3>Ճամփորդություններ</h3>
-        <p>Ուղևորության վճարումները նշեք պիտակով և տեսեք, թե իրականում որքան է արժեցել տվյալ երկիր այցելելը՝ գլոբուսի վրա, որը կարող եք պտտել։</p>
-      </li>
-      <li>
-        <h3>Կատեգորիաներ և վայրեր</h3>
-        <p><span class="nw">Nordram-ը</span> կատեգորիա է առաջարկում իրեն անծանոթ խանութի համար, իսկ հայտնի խանութները երևում են իրենց լոգոյով։ Ստեղծեք ձեր սեփական կատեգորիաները՝ յուրաքանչյուրն իր պատկերակով, և նշեք, թե որտեղ է կատարվել ձեռքով մուտքագրված վճարումը։</p>
-      </li>
-    </ul>
+    <div class="inside-grid">
+      <div class="panel spend" role="img" aria-label="Այս ամսվա ծախսերի օրինակ՝ 243 200 դրամ, անցյալ ամսվանից 25 700 դրամով պակաս, ամսվա յուրաքանչյուր անցած օրվա համար մեկ սյունակով։ Ըստ կատեգորիայի. սննդամթերք՝ 86 400, սրճարան և ռեստորան՝ 52 300, գնումներ՝ 44 900, տրանսպորտ՝ 31 800, կոմունալ վճարներ՝ 27 800 դրամ։ Ներդիրներով կարող եք դիտել մուտքերը կամ տվյալներն ըստ վայրի։">
+        <p class="seg"><span class="on">Ծախսեր</span><span>Մուտքեր</span></p>
+        <p class="k">Այս ամիս</p>
+        <p class="money panel-total">֏243,200</p>
+        <p class="panel-change"><span class="nw">֏25,700-ով</span> պակաս<span>, քան անցյալ ամիս</span></p>
+        <div class="daybars"><i style="height:34%"></i><i style="height:52%"></i><i style="height:20%"></i><i style="height:61%"></i><i style="height:45%"></i><i style="height:28%"></i><i style="height:80%"></i><i style="height:38%"></i><i style="height:55%"></i><i style="height:24%"></i><i style="height:47%"></i><i style="height:66%"></i><i style="height:30%"></i><i style="height:42%"></i><i style="height:100%"></i><i style="height:36%"></i><i style="height:58%"></i><i style="height:26%"></i><i style="height:49%"></i><i style="height:71%"></i><i class="on" style="height:40%"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i></div>
+        <p class="seg"><span class="on">Կատեգորիա</span><span>Վայր</span></p>
+        <ul class="cats">
+          <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Սննդամթերք</span><span class="money">֏86,400</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
+          <li style="--hue: var(--amber)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Սրճարան և ռեստորան</span><span class="money">֏52,300</span></span><span class="cbar"><i style="width:60.5%"></i></span></span></li>
+          <li style="--hue: var(--pink)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span><span class="cbody"><span class="crow"><span>Գնումներ</span><span class="money">֏44,900</span></span><span class="cbar"><i style="width:52%"></i></span></span></li>
+          <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l2-6h14l2 6v5H3z"/><path d="M3 13h18"/><path d="M6 18v2M18 18v2"/></svg></span><span class="cbody"><span class="crow"><span>Տրանսպորտ</span><span class="money">֏31,800</span></span><span class="cbar"><i style="width:36.8%"></i></span></span></li>
+          <li style="--hue: var(--violet)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="cbody"><span class="crow"><span>Կոմունալ վճարներ</span><span class="money">֏27,800</span></span><span class="cbar"><i style="width:32.2%"></i></span></span></li>
+        </ul>
+      </div>
+
+      <ul class="tiles">
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></span>Առաջին հերթին դրամ, նաև արտարժույթներ</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span>Վճարման օրվա փոխարժեքով, ոչ թե այսօրվա</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>Ամսական սահմանաչափ՝ ըստ կատեգորիայի</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/></svg></span>Ճամփորդության ծախսերը՝ գլոբուսի վրա</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 14 10 21 12 14 14 12 21 10 14 3 12 10 10z"/></svg></span>Կատեգորիայի առաջարկ անծանոթ խանութների համար</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9l2-5h14l2 5"/><path d="M3 9h18"/><path d="M5 9v11h14V9"/><path d="M10 20v-5h4v5"/></svg></span>Հայտնի խանութների լոգոներ</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><path d="M16.5 13.5v6M13.5 16.5h6"/></svg></span>Ձեր սեփական կատեգորիաներն ու պատկերակները</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>Վայրի նշում ձեռքով մուտքագրված վճարումներում</li>
+      </ul>
+    </div>
   </section>
 
   <section id="ways" aria-labelledby="ways-h">
     <div class="split split-7-5">
       <div class="intro ways">
         <h2 id="ways-h">Վճարում ավելացնելու չորս եղանակ։</h2>
-        <p>Ընտրեք այն, որը տվյալ պահին ամենահարմարն է։ Ինչպես էլ վճարումն ավելացվի, այն հայտնվում է նույն գծապատկերներում։</p>
-        <ul class="ruled" style="margin-top:1.75rem">
-          <li><h3>Ձեր բանկի հավելվածի սքրինշոթ</h3><p>Վճարումների ցանկը՝ այնպես, ինչպես ցույց է տալիս ձեր բանկը։</p></li>
-          <li><h3>Հաշվի քաղվածք</h3><p>PDF կամ CSV ֆայլը, որ տալիս է ձեր բանկը։</p></li>
-          <li><h3>Կտրոնի լուսանկար</h3><p>Խանութի թղթե կտրոնը։</p></li>
-          <li><h3>Ձեռքով</h3><p>Յուրաքանչյուր վճարում մուտքագրում եք առանձին։ Ոչ մի պատկեր կամ ֆայլ չի կարդացվում, ուստի գաղտնիության տեսանկյունից սա լավագույն տարբերակն է։</p></li>
+        <p>Ինչպես էլ ավելացնեք, վճարումը հայտնվում է նույն գծապատկերներում։</p>
+        <ul class="tiles">
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M9.5 7h5M9.5 11h5M9.5 15h3"/></svg></span><span>Սքրինշոթ<small>ձեր բանկի հավելվածից</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><span>Քաղվածք<small>PDF կամ CSV</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span>Կտրոն<small>լուսանկարով</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span><span>Ձեռքով<small>Ամենագաղտնի եղանակը՝ ոչինչ չի կարդացվում</small></span></li>
         </ul>
       </div>
 
       <figure class="device">
-        <div class="phone" role="img" aria-label="«Check what we found» էկրանի օրինակ։ Հավելվածը գտել է չորս վճարում՝ յուրաքանչյուրն իր գումարով, ամսաթվով և կատեգորիայով։ Երեք վճարում ընտրված է։ Դրանցից մեկը դեռ կատեգորիա չունի և կրում է «Uncategorised» նշումը։ Չորրորդն ընտրված չէ, քանի որ համընկնում է Nordram-ում արդեն գրանցված վճարման հետ։ Կոճակի վրա գրված է «Add 3 transactions»։">
+        <div class="phone" role="img" aria-label="«Check what we found» էկրանի օրինակ։ Հավելվածը կարդացել է չորս վճարում։ Երեքն ընտրված են։ Դրանցից մեկի վրա գրված է «Uncategorised»։ Չորրորդն ընտրված չէ, քանի որ համընկնում է Nordram-ում արդեն եղած վճարման հետ։ Կոճակը՝ «Add 3 transactions»։">
           <div class="screen">
             <span class="statusbar">10:31</span>
             <div class="island"></div>
@@ -617,7 +744,7 @@
             <div class="cta">Add 3 transactions</div>
           </div>
         </div>
-        <figcaption>Ցուցադրված վճարումները պայմանական են և իրական հաշվից չեն։</figcaption>
+        <figcaption>Պայմանական վճարումներ են, ոչ թե իրական հաշվից։</figcaption>
       </figure>
     </div>
   </section>
@@ -626,15 +753,37 @@
     <div class="split split-6-6">
       <div class="intro">
         <h2 id="signup-h">Ձեր ֆինանսները միայն ձեզ են վերաբերում։</h2>
-        <p>Անուն, էլ. փոստի հասցե կամ հեռախոսահամար չենք խնդրում։ Սկսում եք որպես հյուր՝ առանց գաղտնաբառի։</p>
+        <ul class="nos">
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="M3 3l18 18"/></svg>Առանց անվան</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/><path d="M3 3l18 18"/></svg>Առանց էլ. փոստի</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/><path d="M3 3l18 18"/></svg>Առանց հեռախոսահամարի</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16a3 3 0 0 1 6 0M14 10h4M14 14h4"/><path d="M3 3l18 18"/></svg>Առանց ինքնության ստուգման</li>
+        </ul>
+        <p>Մենք միացված չենք ձեր բանկին և երբեք չենք միանա, եթե ինքներդ չմիացնեք։</p>
         <p><a class="textlink" href="privacy.html">Ինչ ենք պահում և ինչ երբեք չենք անում</a></p>
       </div>
       <div class="signup">
-        <h3>Գրանցվելու համար պարզապես սեղմեք <span class="nw">«Get started»</span> («Սկսել») կոճակը։</h3>
-        <p>Էլ. փոստի հասցե կամ հեռախոսահամար չենք խնդրում։ Ձեր ինքնությունը չենք ստուգում և չենք հարցնում, թե ով եք։ Հավելվածը միացված չէ ձեր բանկին և չի միանա, քանի դեռ ինքներդ չեք հաստատել այդ կապը։</p>
-        <ul class="ruled">
-          <li><h3>Սկսեք որպես հյուր</h3><p>Առանց օգտանվան, առանց գաղտնաբառի։ Սկզբում <span class="nw">Nordram-ը</span> ձեզ անուն է տալիս։ Որպես հյուր՝ կարող եք տվյալներ ներմուծել մինչև հինգ անգամ և վճարումները ձեռքով մուտքագրել առանց սահմանափակման։</p></li>
-          <li><h3>Ստեղծեք օգտահաշիվ</h3><p>Ընտրեք օգտանուն և գաղտնաբառ, որպեսզի կարողանաք կրկին մուտք գործել ցանկացած հեռախոսից։ Ձեր ավելացրած բոլոր տվյալները կպահպանվեն։</p></li>
+        <h3>Գրանցվելու համար պարզապես սեղմեք <span class="nw">«Get started»</span> կոճակը։</h3>
+        <ul class="paths">
+          <li>
+            <span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+            <h3>Սկսեք որպես հյուր</h3>
+            <ul class="ticks">
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Առանց օգտանվան և գաղտնաբառի</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span><span class="nw">Nordram-ը</span> ձեզ անուն է տալիս</span></li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Հինգ ներմուծում</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Ձեռքով մուտքագրումն անսահմանափակ է</li>
+            </ul>
+          </li>
+          <li>
+            <span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2 20 3M16 7l3 3M14 9l2 2"/></svg></span>
+            <h3>Ստեղծեք օգտահաշիվ</h3>
+            <ul class="ticks">
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Օգտանուն և գաղտնաբառ</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Մուտք ցանկացած հեռախոսից</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Ձեր ավելացրածը պահպանվում է</li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
@@ -644,13 +793,12 @@
     <div class="status">
       <div>
         <h2 id="status-h"><span class="nw">Nordram-ը</span> փակ թեստավորման փուլում է</h2>
-        <p>Հավելվածը դեռ հասանելի չէ ո՛չ App <span class="nw">Store-ում</span>, ո՛չ Google <span class="nw">Play-ում</span>։ Եթե Հայաստանում եք և ուզում եք հավելվածը փորձել մինչև թողարկումը, թողեք ձեր էլ. փոստի հասցեն այստեղ, և մենք ձեզ թեստավորման հրավեր կուղարկենք։ Եթե պարզապես ուզում եք իմանալ, թե երբ այն հասանելի կլինի, գրեք մեզ։ Հավելվածն առայժմ միայն անգլերեն է։</p>
+        <p>Դեռ չկա ո՛չ App <span class="nw">Store-ում</span>, ո՛չ Google <span class="nw">Play-ում</span>։ Եթե Հայաստանում եք, թողեք ձեր էլ. փոստի հասցեն, և մենք ձեզ թեստավորման հրավեր կուղարկենք։</p>
         <p class="addr"><a class="textlink" href="mailto:nordram.am@gmail.com">nordram.am@gmail.com</a></p>
       </div>
       <!--
         Tester sign-up. Web3Forms emails each one to nordram.am@gmail.com.
-        The access key below is the one value to fill in: it is public by
-        design and only says which inbox the email goes to.
+        The access key is public by design: it only names that inbox.
       -->
       <form id="join" class="join" action="https://api.web3forms.com/submit" method="POST" aria-label="Դիմել Nordram-ի թեստավորմանը մասնակցելու համար">
         <input type="hidden" name="access_key" value="79464a86-30d3-41a9-92fc-b17243a377e1">
@@ -665,7 +813,7 @@
         </div>
         <div class="field">
           <label for="join-email">Էլ. փոստի հասցե</label>
-          <p class="field-hint" id="join-email-hint">Նշեք ձեր <span class="nw">Apple ID-ի</span> էլ. փոստի հասցեն, եթե iPhone ունեք, կամ ձեր Google հաշվի էլ. փոստի հասցեն, եթե Android հեռախոս ունեք։ Թեստավորման հրավերը <span class="nw">Apple-ը</span> կամ <span class="nw">Google-ը</span> ուղարկում է հենց այդ հասցեին։</p>
+          <p class="field-hint" id="join-email-hint"><span class="nw">iPhone-ի</span> համար նշեք ձեր <span class="nw">Apple ID-ի</span> էլ. փոստը, <span class="nw">Android-ի</span> համար՝ ձեր Google հաշվի էլ. փոստը։ Հրավերը կգա այդ հասցեին։</p>
           <input id="join-email" name="email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" required aria-describedby="join-email-hint">
         </div>
         <fieldset class="field">
@@ -678,7 +826,7 @@
 
         <button class="btn" type="submit">Հրավեր խնդրել</button>
         <p class="form-status" id="join-status" role="status" aria-live="polite"></p>
-        <p class="form-note">Այս հասցեն օգտագործում ենք միայն թեստավորման հրավերն ուղարկելու և թեստավորման հարցերով ձեզ հետ կապվելու համար։ Հավելվածը երբեք չի խնդրում նշել այդ հասցեն։ <a class="textlink" href="privacy.html#tester-signup">Ինչպես ենք օգտագործում և պահում այս հասցեն</a></p>
+        <p class="form-note">Հասցեն օգտագործում ենք միայն հրավերի և թեստավորման համար։ Հավելվածը երբեք չի խնդրում նշել այդ հասցեն։ <a class="textlink" href="privacy.html#tester-signup">Ինչպես ենք մշակում ձեր հասցեն</a></p>
       </form>
     </div>
   </section>
@@ -710,8 +858,8 @@
     var status = document.getElementById('join-status');
     var text = {
       sending: 'Ուղարկվում է…',
-      done: 'Շնորհակալություն։ Ձեր դիմումը ստացել ենք։ Կգրենք ձեր նշած էլ. փոստի հասցեին։',
-      failed: 'Չհաջողվեց ուղարկել։ Խնդրում ենք կրկին փորձել կամ գրել մեզ՝ nordram.am@gmail.com հասցեով։'
+      done: 'Շնորհակալություն։ Շուտով նամակ կուղարկենք ձեր նշած հասցեին։',
+      failed: 'Չհաջողվեց ուղարկել։ Փորձեք կրկին կամ գրեք nordram.am@gmail.com հասցեին։'
     };
     function show(state) {
       status.className = 'form-status' + (state === 'sending' ? '' : ' ' + state);
