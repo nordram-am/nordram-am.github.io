@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nordram — real analytics on all your money</title>
-<meta name="description" content="Real analytics on all your money, in one place. Add payments from a screenshot, a statement, a receipt photo or by hand. No bank connection, no email address.">
+<meta name="description" content="Real analytics on all your money. Add payments from a screenshot, a statement, a receipt photo or by hand. No bank connection, no email address.">
 <meta name="theme-color" content="#060b0d">
 <meta property="og:title" content="Nordram — real analytics on all your money">
 <meta property="og:description" content="Nordram charts all your money as one. Add a payment from a screenshot, a statement, a receipt photo or by hand.">
@@ -289,30 +289,123 @@
   .intro p { color: var(--text-2); max-width: 32rem; }
   .intro p + p { margin-top: .9rem; }
 
-  /* Ruled lists: the page's one list style, instead of a grid of boxes. */
-  .ruled { list-style: none; margin: 0; padding: 0; }
-  .ruled > li { padding: 1.25rem 0; border-top: 1px solid var(--hairline); }
-  .ruled > li:last-child { border-bottom: 1px solid var(--hairline); }
-  .ruled h3 { margin-bottom: .35rem; }
-  .ruled p { color: var(--text-2); font-size: .97rem; }
+  /* Section visuals. Built from the phone's own parts (the tile, the
+     hairline, the data hues) so each section shows its point instead of
+     describing it. Icons are drawn here on a 24-unit grid and stroked like
+     the chevron. Hue stays data: chart marks and category tiles. Every icon
+     chip is mono. */
+  .panel {
+    min-width: 0;
+    background: var(--tile); box-shadow: var(--tile-shadow);
+    border: 1px solid var(--hairline); border-radius: 1.5rem;
+    padding: 1.25rem 1.25rem 1rem;
+  }
+  .panel .k { color: var(--text-2); font-size: .85rem; }
+  .panel-total { margin-top: .1rem; font-size: 2.1rem; font-weight: 600; line-height: 1.1; letter-spacing: -.02em; white-space: nowrap; }
+  .panel-change { margin-top: .25rem; color: var(--mint); font-size: .85rem; font-weight: 600; }
+  .panel-change span { color: var(--text-3); font-weight: 400; }
+
+  .history { position: relative; margin: 1.1rem 0 .4rem; }
+  .history::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+    background-size: 100% 25%;
+  }
+  .history svg { position: relative; width: 100%; height: auto; overflow: visible; }
+
+  .holdings { list-style: none; margin: 0; padding: 0; }
+  .holdings li { display: flex; align-items: center; gap: .65rem; padding: .62rem 0; border-top: 1px solid var(--hairline); font-size: .92rem; line-height: 1.3; }
+  .holdings .dot { flex: none; width: .6rem; height: .6rem; border-radius: 50%; background: var(--hue); }
+  .holdings .name { flex: 1; min-width: 0; }
+  .holdings small { display: block; font-size: .78rem; color: var(--text-3); }
+  .holdings .money { flex: none; font-size: 1rem; white-space: nowrap; }
+
+  .seg {
+    display: inline-flex; gap: .2rem; padding: .2rem; border-radius: 999px;
+    background: rgba(255,255,255,.035); border: 1px solid var(--hairline);
+    font-size: .8rem; font-weight: 600; line-height: 1.2; color: var(--text-3);
+  }
+  .seg span { padding: .35rem .85rem; border-radius: 999px; }
+  .seg .on { background: var(--accent-quiet); color: var(--text); }
+  .spend > .seg:first-child { margin-bottom: 1rem; }
+  .daybars { display: flex; align-items: flex-end; gap: 3px; height: 3rem; margin: 1.1rem 0 1.2rem; }
+  .daybars i { flex: 1; min-height: 3px; border-radius: 999px; background: color-mix(in srgb, var(--violet) 45%, transparent); }
+  .daybars i.on { background: var(--violet); }
+  .daybars i.later { height: 3px; background: var(--track); }
+  .cats { list-style: none; margin: 1rem 0 .3rem; padding: 0; display: grid; gap: .85rem; }
+  .cats li { display: flex; align-items: center; gap: .75rem; }
+  .cat {
+    flex: none; display: grid; place-items: center;
+    width: 2.1rem; height: 2.1rem; border-radius: .7rem;
+    color: var(--hue); background: color-mix(in srgb, var(--hue) 15%, transparent);
+  }
+  .cat .icon { font-size: 1.05rem; }
+  .cbody { flex: 1; min-width: 0; display: grid; gap: .35rem; }
+  .crow { display: flex; justify-content: space-between; gap: .6rem; font-size: .9rem; font-weight: 600; line-height: 1.25; }
+  .crow .money { flex: none; font-weight: 500; white-space: nowrap; }
+  .cbar { height: .3rem; border-radius: 999px; background: var(--track); overflow: hidden; }
+  .cbar i { display: block; height: 100%; border-radius: inherit; background: var(--hue); }
+
+  .ico {
+    flex: none; display: grid; place-items: center;
+    width: 2.5rem; height: 2.5rem; border-radius: .8rem;
+    background: var(--chip); border: 1px solid var(--hairline); color: var(--chip-text);
+  }
+  .ico .icon { font-size: 1.25rem; stroke-width: 1.8; }
+
+  /* Tiles: an icon over a label of a few words. */
+  .tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .tiles > li {
+    min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: .8rem;
+    padding: 1rem; border-radius: 1.25rem;
+    background: var(--tile); box-shadow: var(--tile-shadow); border: 1px solid var(--hairline);
+    font-weight: 600; font-size: .95rem; line-height: 1.3;
+  }
+  .tiles small { display: block; margin-top: .2rem; font-weight: 400; font-size: .85rem; color: var(--text-3); }
+
+  /* Icon rows: an icon beside a label. */
+  .irows { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+  .irows li { display: flex; align-items: center; gap: .9rem; font-weight: 600; line-height: 1.35; }
 
   /* Wealth */
-  #wealth .ruled { margin-top: .4rem; }
+  .wealth-grid {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-areas: "intro panel" "rows panel"; grid-template-rows: auto 1fr;
+    column-gap: 3.5rem; align-items: start;
+  }
+  .wealth-grid .intro { grid-area: intro; }
+  .wealth-grid .irows { grid-area: rows; margin-top: 2rem; }
+  .wealth-grid .panel { grid-area: panel; }
 
   /* What is inside */
   .inside-head { max-width: 40rem; margin-bottom: 2.5rem; }
   .inside-head h2 { margin-bottom: 1rem; }
   .inside-head p { color: var(--text-2); }
-  .inside { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3.5rem; list-style: none; margin: 0; padding: 0; }
-  .inside li { padding: 1.4rem 0 1.5rem; border-top: 1px solid var(--hairline); }
-  .inside h3 { margin-bottom: .4rem; }
-  .inside p { color: var(--text-2); font-size: .97rem; max-width: 30rem; }
+  .inside-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 3.5rem; align-items: start; }
+
+  /* Four ways */
+  .ways .tiles { margin-top: 1.75rem; }
 
   /* Nobody's business */
-  .signup h3 { font-size: 1.375rem; letter-spacing: -.02em; margin-bottom: .6rem; }
-  .signup > p { color: var(--text-2); }
-  .signup .ruled { margin-top: 1.5rem; }
-  .signup .ruled h3 { font-size: 1.125rem; margin-bottom: .3rem; }
+  .nos { list-style: none; margin: .4rem 0 1.25rem; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .nos li {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .45rem .9rem .45rem .65rem; border-radius: 999px;
+    background: var(--chip); border: 1px solid var(--hairline); color: var(--chip-text);
+    font-weight: 600; font-size: .92rem; line-height: 1.3;
+  }
+  .nos .icon { font-size: 1.1rem; }
+  .signup > h3 { font-size: 1.375rem; letter-spacing: -.02em; }
+  .paths { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .paths > li {
+    min-width: 0; padding: 1.1rem;
+    background: var(--tile); box-shadow: var(--tile-shadow);
+    border: 1px solid var(--hairline); border-radius: 1.25rem;
+  }
+  .paths h3 { margin-top: .8rem; font-size: 1.05rem; font-weight: 600; }
+  .ticks { list-style: none; margin: .65rem 0 0; padding: 0; display: grid; gap: .45rem; font-size: .9rem; line-height: 1.35; color: var(--text-2); }
+  .ticks li { display: flex; align-items: flex-start; gap: .5rem; }
+  .ticks .icon { margin-top: .2em; font-size: .9rem; color: var(--text-3); stroke-width: 2.5; }
 
   /* Private testing */
   .status {
@@ -386,6 +479,13 @@
     .split-5-7, .split-7-5, .split-6-6 { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
     .split-7-5 .device { order: 2; }
     .status { grid-template-columns: minmax(0, 1fr); align-items: start; }
+    .wealth-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "panel" "rows"; grid-template-rows: none; row-gap: 2.25rem; }
+    .wealth-grid .irows { margin-top: 0; }
+    .inside-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+    .panel { max-width: 34rem; }
+  }
+  @media (max-width: 560px) {
+    .paths { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 640px) {
     :root { --gutter: 1.25rem; }
@@ -394,7 +494,6 @@
     .masthead nav { gap: 1.1rem; }
     .brand svg { height: 1.3rem; }
     section { padding: 4rem 0; }
-    .inside { grid-template-columns: minmax(0, 1fr); }
     .status { padding: 2rem 1.4rem; border-radius: 1.5rem; }
     .actions .btn, .join .btn { width: 100%; }
     footer { flex-direction: column; align-items: flex-start; }
@@ -440,8 +539,7 @@
   <div class="hero">
     <div>
       <h1 class="enter">Real analytics<br><span class="second">on all your money.</span></h1>
-      <p class="lede enter enter-2">Banks, cards, cash in a drawer, in dram or in foreign currency. Nordram charts them as one and does the maths for you.</p>
-      <p class="lede enter enter-2">Add payments whichever way is easiest that day: a screenshot of your bank app, a statement, a photo of a receipt, or typing one in by hand.</p>
+      <p class="lede enter enter-2">Banks, cards and cash, in dram or foreign currency, charted as one.</p>
       <div class="actions enter enter-3">
         <a class="btn" href="#join">Ask to try it early</a>
         <a class="textlink" href="#wealth">How it works</a>
@@ -449,7 +547,7 @@
     </div>
 
     <figure class="device enter enter-3">
-      <div class="phone" role="img" aria-label="Nordram's Analytics screen, with example figures. Wealth: ֏4,292,300, up ֏386,000 in 12 months, with a line of its history; savings ֏1,980,000, dollars ֏1,450,000, others ֏862,300. Below it, spending in the last 7 days, ֏48,200, as seven bars, and money in, ֏640,000, with 62% of it kept.">
+      <div class="phone" role="img" aria-label="Nordram's Analytics screen, with example figures. Wealth ֏4,292,300, up ֏386,000 in 12 months, as a line; savings ֏1,980,000, dollars ֏1,450,000, others ֏862,300. Spending in the last 7 days, ֏48,200, as seven bars. Money in ֏640,000, 62% kept.">
         <div class="screen">
           <span class="statusbar">10:24</span>
           <div class="island"></div>
@@ -506,72 +604,97 @@
   </div>
 
   <section id="wealth" aria-labelledby="wealth-h">
-    <div class="split split-5-7">
+    <div class="wealth-grid">
       <div class="intro">
         <h2 id="wealth-h">Track your wealth in one place.</h2>
-        <p>Add your accounts, your savings, the cash at home and the other things you own. Nordram adds them up into one figure and keeps its history, so you can watch the line move.</p>
+        <p>Add everything you own and see one total, with its history.</p>
       </div>
-      <ul class="ruled">
-        <li>
-          <h3>Savings</h3>
-          <p>Money you have set aside, kept apart from your main account, with a value you update yourself.</p>
-        </li>
-        <li>
-          <h3>A negative balance is normal</h3>
-          <p>It only means Nordram has not yet seen where the money came from.</p>
-        </li>
-        <li>
-          <h3>Fix the past</h3>
-          <p>Set what an account held on a past day, and correct it later.</p>
-        </li>
+
+      <div class="panel" role="img" aria-label="Example wealth: ֏4,292,300 in all, up ֏386,000 in 12 months, drawn as a rising line. Savings ֏1,980,000, dollars ֏1,450,000, main account ֏712,300, cash at home ֏250,000, and a card at −֏100,000 because its income has not been seen yet.">
+        <p class="k">Wealth</p>
+        <p class="money panel-total">֏4,292,300</p>
+        <p class="panel-change">+֏386,000 <span>in 12 months</span></p>
+        <div class="history">
+          <svg viewBox="0 0 300 90" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="history-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3D9BFF" stop-opacity=".2"/>
+                <stop offset="1" stop-color="#3D9BFF" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 80 L26.5 72 L53.1 77.5 L79.6 61.1 L106.2 52.1 L132.7 57.5 L159.3 43 L185.8 35.8 L212.4 41.2 L238.9 26.7 L265.5 17.7 L292 10 L292 90 L0 90 Z" fill="url(#history-fill)"/>
+            <path d="M0 80 L26.5 72 L53.1 77.5 L79.6 61.1 L106.2 52.1 L132.7 57.5 L159.3 43 L185.8 35.8 L212.4 41.2 L238.9 26.7 L265.5 17.7 L292 10" fill="none" stroke="#3D9BFF" stroke-width="6" stroke-opacity=".25" stroke-linejoin="round" stroke-linecap="round"/>
+            <path d="M0 80 L26.5 72 L53.1 77.5 L79.6 61.1 L106.2 52.1 L132.7 57.5 L159.3 43 L185.8 35.8 L212.4 41.2 L238.9 26.7 L265.5 17.7 L292 10" fill="none" stroke="#3D9BFF" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+            <circle cx="292" cy="10" r="4.2" fill="#3D9BFF" stroke="#172429" stroke-width="2"/>
+          </svg>
+        </div>
+        <ul class="holdings">
+          <li><span class="dot" style="--hue: var(--mint)"></span><span class="name">Savings</span><span class="money">֏1,980,000</span></li>
+          <li><span class="dot" style="--hue: var(--violet)"></span><span class="name">Dollars</span><span class="money">֏1,450,000</span></li>
+          <li><span class="dot" style="--hue: var(--sky)"></span><span class="name">Main account</span><span class="money">֏712,300</span></li>
+          <li><span class="dot" style="--hue: var(--amber)"></span><span class="name">Cash at home</span><span class="money">֏250,000</span></li>
+          <li><span class="dot" style="--hue: var(--pink)"></span><span class="name">Card<small>Income not seen yet</small></span><span class="money">&minus;֏100,000</span></li>
+        </ul>
+      </div>
+
+      <ul class="irows">
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.66 3.13 3 7 3s7-1.34 7-3V6"/><path d="M5 12v6c0 1.66 3.13 3 7 3s7-1.34 7-3v-6"/></svg></span>Savings you update yourself</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></span>A negative balance is normal</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>Set or fix a past balance</li>
       </ul>
     </div>
   </section>
 
   <section id="inside" aria-labelledby="inside-h">
     <div class="inside-head">
-      <h2 id="inside-h">What is inside</h2>
-      <p>The analytics are the product, so most of the app is the part that reads your money back to you.</p>
+      <h2 id="inside-h">What&rsquo;s inside</h2>
+      <p>Most of the app is analytics.</p>
     </div>
-    <ul class="inside">
-      <li>
-        <h3>Spent and money in</h3>
-        <p>This month against last, by category and by place, with the day-by-day shape underneath.</p>
-      </li>
-      <li>
-        <h3>Currencies at the day&rsquo;s rate</h3>
-        <p>The dram first, and the foreign currencies that come with living in Armenia. Every payment keeps the currency it happened in, at the rate of the day it happened &mdash; not today&rsquo;s.</p>
-      </li>
-      <li>
-        <h3>Monthly budgets</h3>
-        <p>A limit for any category you choose, and how much of it is left this month.</p>
-      </li>
-      <li>
-        <h3>Trips</h3>
-        <p>Tag the payments from a journey and see what a country actually cost you, on a globe you can spin.</p>
-      </li>
-      <li>
-        <h3>Categories and places</h3>
-        <p>Nordram suggests a category for a shop it does not know, and well-known shops show their own logo. Make your own categories, each with its icon, and say where a payment you typed in happened.</p>
-      </li>
-    </ul>
+    <div class="inside-grid">
+      <div class="panel spend" role="img" aria-label="Example spending for this month: ֏243,200, ֏25,700 less than last month, with a bar for each day so far. By category: groceries ֏86,400, eating out ֏52,300, shopping ֏44,900, transport ֏31,800, bills ֏27,800. Tabs switch to money in, and to places.">
+        <p class="seg"><span class="on">Spent</span><span>Money in</span></p>
+        <p class="k">This month</p>
+        <p class="money panel-total">֏243,200</p>
+        <p class="panel-change">֏25,700 less <span>than last month</span></p>
+        <div class="daybars"><i style="height:34%"></i><i style="height:52%"></i><i style="height:20%"></i><i style="height:61%"></i><i style="height:45%"></i><i style="height:28%"></i><i style="height:80%"></i><i style="height:38%"></i><i style="height:55%"></i><i style="height:24%"></i><i style="height:47%"></i><i style="height:66%"></i><i style="height:30%"></i><i style="height:42%"></i><i style="height:100%"></i><i style="height:36%"></i><i style="height:58%"></i><i style="height:26%"></i><i style="height:49%"></i><i style="height:71%"></i><i class="on" style="height:40%"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i></div>
+        <p class="seg"><span class="on">Category</span><span>Place</span></p>
+        <ul class="cats">
+          <li><span class="cat" style="--hue: var(--mint)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Groceries</span><span class="money">֏86,400</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
+          <li><span class="cat" style="--hue: var(--amber)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Eating out</span><span class="money">֏52,300</span></span><span class="cbar"><i style="width:60.5%"></i></span></span></li>
+          <li><span class="cat" style="--hue: var(--pink)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span><span class="cbody"><span class="crow"><span>Shopping</span><span class="money">֏44,900</span></span><span class="cbar"><i style="width:52%"></i></span></span></li>
+          <li><span class="cat" style="--hue: var(--sky)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l2-6h14l2 6v5H3z"/><path d="M3 13h18"/><path d="M6 18v2M18 18v2"/></svg></span><span class="cbody"><span class="crow"><span>Transport</span><span class="money">֏31,800</span></span><span class="cbar"><i style="width:36.8%"></i></span></span></li>
+          <li><span class="cat" style="--hue: var(--violet)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="cbody"><span class="crow"><span>Bills</span><span class="money">֏27,800</span></span><span class="cbar"><i style="width:32.2%"></i></span></span></li>
+        </ul>
+      </div>
+
+      <ul class="tiles">
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></span>Dram first, plus foreign currencies</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span>That day&rsquo;s rate, not today&rsquo;s</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>A monthly limit per category</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/></svg></span>Trip costs on a globe</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 14 10 21 12 14 14 12 21 10 14 3 12 10 10z"/></svg></span>Categories suggested for new shops</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9l2-5h14l2 5"/><path d="M3 9h18"/><path d="M5 9v11h14V9"/><path d="M10 20v-5h4v5"/></svg></span>Logos for well-known shops</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><path d="M16.5 13.5v6M13.5 16.5h6"/></svg></span>Your own categories and icons</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>A place on payments you type</li>
+      </ul>
+    </div>
   </section>
 
   <section id="ways" aria-labelledby="ways-h">
     <div class="split split-7-5">
       <div class="intro ways">
         <h2 id="ways-h">Four ways to add a payment.</h2>
-        <p>Use whichever is closest to hand. Every payment ends up on the same charts, however it came in.</p>
-        <ul class="ruled" style="margin-top:1.75rem">
-          <li><h3>A screenshot of your bank app</h3><p>The list of payments, the way your bank shows it.</p></li>
-          <li><h3>A statement</h3><p>The PDF or CSV file your bank gives you.</p></li>
-          <li><h3>A photo of a receipt</h3><p>The paper slip from the shop.</p></li>
-          <li><h3>By hand</h3><p>One payment at a time, typed in. Nothing is read, so it is the most private way.</p></li>
+        <p>However it comes in, it lands on the same charts.</p>
+        <ul class="tiles">
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M9.5 7h5M9.5 11h5M9.5 15h3"/></svg></span><span>Screenshot<small>of your bank app</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><span>Statement<small>PDF or CSV</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span>Receipt<small>a photo of it</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span><span>By hand<small>Most private: nothing is read</small></span></li>
         </ul>
       </div>
 
       <figure class="device">
-        <div class="phone" role="img" aria-label="An example review, titled Check what we found: four payments read for you, each with its amount, its day and its category. Three are ticked. One has no category yet and is marked Uncategorised. The fourth is unticked because it matches a payment already in Nordram. The button says Add 3 transactions.">
+        <div class="phone" role="img" aria-label="Example review, Check what we found: four payments read for you. Three are ticked, and one of those says Uncategorised. The fourth is unticked because it matches a payment already in Nordram. The button says Add 3 transactions.">
           <div class="screen">
             <span class="statusbar">10:31</span>
             <div class="island"></div>
@@ -610,15 +733,37 @@
     <div class="split split-6-6">
       <div class="intro">
         <h2 id="signup-h">Your money, nobody&rsquo;s business.</h2>
-        <p>No name, no email, no phone. You start as a guest, with no password.</p>
+        <ul class="nos">
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="M3 3l18 18"/></svg>No name</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/><path d="M3 3l18 18"/></svg>No email</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/><path d="M3 3l18 18"/></svg>No phone</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16a3 3 0 0 1 6 0M14 10h4M14 14h4"/><path d="M3 3l18 18"/></svg>No identity check</li>
+        </ul>
+        <p>We are not connected to your bank, and never will be unless you do it yourself.</p>
         <p><a class="textlink" href="privacy.html">What we keep, and what we never do</a></p>
       </div>
       <div class="signup">
-        <h3>Tap Get started. That is the sign-up.</h3>
-        <p>No email address, no phone number, no identity check, and nothing that asks who you are. We are not connected to your bank and never will be without you doing it yourself.</p>
-        <ul class="ruled">
-          <li><h3>Start as a guest</h3><p>No username, no password. Nordram gives you a name to begin with. A guest can make five imports; typing payments in is never limited.</p></li>
-          <li><h3>Create an account</h3><p>Pick a username and a password, so you can log back in on any phone. Everything you have added stays.</p></li>
+        <h3>Tap Get started. That&rsquo;s the sign-up.</h3>
+        <ul class="paths">
+          <li>
+            <span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+            <h3>Start as a guest</h3>
+            <ul class="ticks">
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>No username or password</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Nordram gives you a name</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Five imports</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Typing is never limited</li>
+            </ul>
+          </li>
+          <li>
+            <span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2 20 3M16 7l3 3M14 9l2 2"/></svg></span>
+            <h3>Create an account</h3>
+            <ul class="ticks">
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Username and password</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Log in on any phone</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Everything you added stays</li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
@@ -628,13 +773,12 @@
     <div class="status">
       <div>
         <h2 id="status-h">Nordram is in private testing</h2>
-        <p>It is not on the App Store or Google Play yet. If you are in Armenia and you would like to try it early, leave your email here and we will send you a test invite. If you just want to know when it opens up, write to us.</p>
+        <p>Not on the App Store or Google Play yet. If you&rsquo;re in Armenia, leave your email and we&rsquo;ll send you a test invite.</p>
         <p class="addr"><a class="textlink" href="mailto:nordram.am@gmail.com">nordram.am@gmail.com</a></p>
       </div>
       <!--
         Tester sign-up. Web3Forms emails each one to nordram.am@gmail.com.
-        The access key below is the one value to fill in: it is public by
-        design and only says which inbox the email goes to.
+        The access key is public by design: it only names that inbox.
       -->
       <form id="join" class="join" action="https://api.web3forms.com/submit" method="POST" aria-label="Ask to test Nordram">
         <input type="hidden" name="access_key" value="79464a86-30d3-41a9-92fc-b17243a377e1">
@@ -649,7 +793,7 @@
         </div>
         <div class="field">
           <label for="join-email">Email</label>
-          <p class="field-hint" id="join-email-hint">Use the email of your Apple ID if you have an iPhone, or of your Google account if you have an Android phone. That is where Apple or Google sends the test invite.</p>
+          <p class="field-hint" id="join-email-hint">Your Apple ID email for iPhone, or your Google account email for Android. The invite goes there.</p>
           <input id="join-email" name="email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" required aria-describedby="join-email-hint">
         </div>
         <fieldset class="field">
@@ -662,7 +806,7 @@
 
         <button class="btn" type="submit">Ask for an invite</button>
         <p class="form-status" id="join-status" role="status" aria-live="polite"></p>
-        <p class="form-note">We use this email only to send your test invite and to talk about testing. The app itself still never asks for it. <a class="textlink" href="privacy.html#tester-signup">How we handle it</a></p>
+        <p class="form-note">Used only for your invite and for testing. The app never asks for it. <a class="textlink" href="privacy.html#tester-signup">How we handle it</a></p>
       </form>
     </div>
   </section>
@@ -694,8 +838,8 @@
     var status = document.getElementById('join-status');
     var text = {
       sending: 'Sending…',
-      done: 'Thank you, we have your request. We will write to you at that email address.',
-      failed: 'That did not go through. Please try again, or write to us at nordram.am@gmail.com.'
+      done: 'Thanks! We’ll email you soon.',
+      failed: 'That didn’t go through. Try again, or write to nordram.am@gmail.com.'
     };
     function show(state) {
       status.className = 'form-status' + (state === 'sending' ? '' : ' ' + state);
