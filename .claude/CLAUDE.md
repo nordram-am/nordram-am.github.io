@@ -25,6 +25,17 @@ with the English one, as a written rule — answered "Yes"):
 - Before opening any PR that touches either policy, run
   `python3 -I _checks/policy_pair.py` and paste its output into the PR body.
 
-The app's in-app Privacy sheet loads the English page,
-`https://nordram-am.github.io/privacy.html`, so the English page's address
-must not move.
+The app's in-app Privacy sheet loads the English page. It keeps the page only
+when the address matches exactly, and it checks every hop of a redirect.
+
+- Tester builds up to iOS 53 / Android 46 load
+  `https://nordram-am.github.io/privacy.html`. Since 2026-11-21 that address
+  redirects to `https://nordram.am/privacy.html`, and those builds send the
+  redirect out to the browser instead of showing the page in the sheet.
+- Builds made after the app fix (nordram-am/Nordram#1126) load
+  `https://nordram.am/privacy.html` directly.
+
+Neither address may move. The github.io address must keep pointing at
+`https://nordram.am/privacy.html`, and that page must answer at exactly that
+address, with no redirect in front of it (not to `www.`, not to a trailing
+slash). A new build would send any such hop to the browser too.
