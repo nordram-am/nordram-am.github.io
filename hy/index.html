@@ -366,6 +366,9 @@
   .hint { color: var(--text-3); font-size: .85em; }
   /* A Latin name with an Armenian ending after a hyphen stays on one line. */
   .nw { white-space: nowrap; }
+  /* The Armenian hero button's label wraps on a phone: centre it and give
+     the two lines room. min-height still holds a one-line button at 3rem. */
+  .btn { text-align: center; line-height: 1.25; padding-top: .7rem; padding-bottom: .7rem; }
   @media (max-width: 520px) {
     .masthead nav .wide-only { display: none; }
   }
@@ -531,7 +534,7 @@
     <div class="split split-7-5">
       <div class="intro ways">
         <h2 id="ways-h">Վճարում ավելացնելու չորս եղանակ։</h2>
-        <p>Ընտրեք այն, որը տվյալ պահին ամենահարմարն է։ Ինչպես էլ վճարումն ավելացվի, այն հայտնվում է նույն գրաֆիկներում։</p>
+        <p>Ընտրեք այն, որը տվյալ պահին ամենահարմարն է։ Ինչպես էլ վճարումն ավելացվի, այն հայտնվում է նույն գծապատկերներում։</p>
         <ul class="ruled" style="margin-top:1.75rem">
           <li><h3>Ձեր բանկի հավելվածի սքրինշոթ</h3><p>Վճարումների ցանկը՝ այնպես, ինչպես ցույց է տալիս ձեր բանկը։</p></li>
           <li><h3>Հաշվի քաղվածք</h3><p>PDF կամ CSV ֆայլը, որ տալիս է ձեր բանկը։</p></li>
@@ -584,7 +587,7 @@
         <p><a class="textlink" href="privacy.html">Ինչ ենք պահում և ինչ երբեք չենք անում</a></p>
       </div>
       <div class="signup">
-        <h3>Գրանցվելու համար պարզապես սեղմեք «Get started» («Սկսել») կոճակը։</h3>
+        <h3>Գրանցվելու համար պարզապես սեղմեք <span class="nw">«Get started»</span> («Սկսել») կոճակը։</h3>
         <p>Էլ. փոստի հասցե կամ հեռախոսահամար չենք խնդրում։ Ձեր ինքնությունը չենք ստուգում և չենք հարցնում, թե ով եք։ Հավելվածը միացված չէ ձեր բանկին և չի միանա, քանի դեռ ինքներդ չեք հաստատել այդ կապը։</p>
         <ul class="ruled">
           <li><h3>Սկսեք որպես հյուր</h3><p>Առանց օգտանվան, առանց գաղտնաբառի։ Սկզբում <span class="nw">Nordram-ը</span> ձեզ անուն է տալիս։ Որպես հյուր՝ կարող եք տվյալներ ներմուծել մինչև հինգ անգամ և վճարումները ձեռքով մուտքագրել առանց սահմանափակման։</p></li>
