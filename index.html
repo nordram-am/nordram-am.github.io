@@ -4,48 +4,68 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nordram — real analytics on all your money</title>
-<meta name="description" content="Nordram reads screenshots of your bank app and turns them into real analytics. No bank connection, no email address.">
-<meta name="theme-color" content="#0A0A0E">
+<meta name="description" content="Real analytics on all your money, in one place. Add payments from a screenshot, a statement, a receipt photo or by hand. No bank connection, no email address.">
+<meta name="theme-color" content="#060b0d">
 <meta property="og:title" content="Nordram — real analytics on all your money">
-<meta property="og:description" content="Screenshot your bank app. Nordram reads the payments out of the picture and charts them.">
+<meta property="og:description" content="Nordram charts all your money as one. Add a payment from a screenshot, a statement, a receipt photo or by hand.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nordram-am.github.io/">
+<link rel="alternate" hreflang="en" href="https://nordram-am.github.io/">
+<link rel="alternate" hreflang="hy" href="https://nordram-am.github.io/hy/">
+<link rel="alternate" hreflang="x-default" href="https://nordram-am.github.io/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fff'/%3E%3Cmask id='m' maskUnits='userSpaceOnUse' x='0' y='0' width='64' height='64'%3E%3Crect width='64' height='64' fill='%23fff'/%3E%3Crect x='31.4' y='27.67' width='16.64' height='4.29'/%3E%3Crect x='31.4' y='36.83' width='16.64' height='4.29'/%3E%3C/mask%3E%3Cg transform='translate(5.695 1.775)'%3E%3Cpath d='M32.51 46L32.51 28.27Q32.51 25.52 30.75 23.79Q28.99 22.06 26.3 22.06Q24.51 22.06 23.1 22.83Q21.7 23.6 20.9 25.04Q20.1 26.48 20.1 28.27L16.83 26.54Q16.83 22.96 18.4 20.24Q19.97 17.52 22.75 15.98Q25.54 14.45 29.06 14.45Q32.51 14.45 35.17 16.14Q37.82 17.84 39.36 20.56Q40.9 23.28 40.9 26.35L40.9 46ZM11.71 46L11.71 15.09L20.1 15.09L20.1 46Z' fill='%23050507' mask='url(%23m)'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Outfit:wght@500;600&display=swap" rel="stylesheet">
+<!-- Outfit has no dram sign, so it comes from Noto Sans Armenian, as in the app;
+     the subset also carries the letters of the language switch, "Հայերեն". -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@400;500&text=%D5%80%D5%A1%D5%A5%D5%B5%D5%B6%D6%80%D6%8F&display=swap" rel="stylesheet">
 <style>
   /*
-    Colours are the app's own tokens, transcribed from src/theme/tokens.gen.ts
-    rather than sampled from a screenshot. The site and the app are the same
-    product; a near-miss hex is a second brand.
+    The app's own design tokens (design-system/tokens.json, "Ocean deep" ground),
+    transcribed rather than sampled from a screenshot. The site and the app are
+    the same product; a near-miss hex is a second brand.
+
+    Chrome is mono: white is the accent, and there is one white button per view.
+    Hue appears only as data (chart lines, category tiles), never as decoration.
   */
   :root {
-    --canvas:      #0A0A0E;   /* surfaceCanvas */
-    --sunken:      #050507;   /* surfaceSunken */
-    --raised:      #101015;   /* surfaceRaised */
-    --card:        #131319;   /* surfaceCard */
-    --card-hover:  #1A1A21;   /* surfaceCardHover */
+    --canvas:     #060b0d;
+    --card:       #121d21;
+    --card-2:     #172429;
+    --tile:       linear-gradient(180deg, #1c2b31, #162328);
+    --tile-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 8px 24px rgba(0,0,0,.35);
+    --hairline:   rgba(140,225,240,.10);
+    --edge:       rgba(140,225,240,.12);
 
-    --text:        #EFEFF3;   /* textPrimary */
-    --text-2:      #A8A8B4;   /* textSecondary */
-    --text-3:      #7C7C89;   /* textTertiary */
+    --text:       #EFEFF3;
+    --text-2:     #A8A8B4;
+    --text-3:     #94a7ab;
+    --chip:       rgba(80,200,220,.07);
+    --chip-text:  #c4e6ea;
 
-    --accent:      #FF6A00;   /* ndApricot500 — rationed */
-    --accent-soft: #FF8534;   /* textAccent */
+    --accent:       #FFFFFF;
+    --accent-hover: #EFEFF3;
+    --on-accent:    #050507;
+    --accent-quiet: rgba(255,255,255,.10);
+    --control:      rgba(255,255,255,.36);
+    --ring:         0 0 0 3px rgba(255,255,255,.38);
 
-    --mint:        #2BE0A8;   /* ndVizMint */
-    --sky:         #3D9BFF;   /* ndVizSky */
-    --violet:      #9B6BFF;   /* ndVizViolet */
-    --pink:        #FF4D9E;   /* ndVizPink */
-    --lime:        #C8F03C;   /* ndVizLime */
-    --amber:       #FFC53D;   /* ndVizAmber */
+    --mint:   #2BE0A8;
+    --sky:    #3D9BFF;
+    --violet: #9B6BFF;
+    --pink:   #FF4D9E;
+    --amber:  #FFC53D;
+    --track:  rgba(255,255,255,.07);
 
-    --hairline:    rgba(255,255,255,.055);
-    --line:        rgba(255,255,255,.10);
-    --line-strong: rgba(255,255,255,.18);
+    --display: "Outfit", "Noto Sans Armenian", system-ui, sans-serif;
+    --body:    "Manrope", "Noto Sans Armenian", system-ui, sans-serif;
 
-    --font: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-    --measure: 68rem;
+    --ease:      cubic-bezier(.2,0,0,1);
+    --ease-soft: cubic-bezier(.16,1,.3,1);
+
+    --measure: 72rem;
+    --gutter: 2rem;
   }
 
   * { box-sizing: border-box; }
@@ -53,319 +73,551 @@
 
   body {
     margin: 0;
-    background: var(--canvas);
     color: var(--text);
-    font-family: var(--font);
+    font-family: var(--body);
     font-size: 17px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    background-color: var(--canvas);
+    /* The app's ocean halo: a faint light from the top right, then deep water. */
+    background-image: radial-gradient(70rem 40rem at 72% -6rem, rgba(60,190,210,.06), rgba(60,190,210,0) 70%);
+    background-repeat: no-repeat;
   }
-
-  /* One warm glow behind the fold, then the page settles into ink. */
-  .glow {
-    position: absolute; inset: 0 0 auto 0; height: 42rem;
-    background:
-      radial-gradient(60rem 34rem at 22% -8%, rgba(255,106,0,.13), transparent 62%),
-      radial-gradient(46rem 28rem at 88% 4%, rgba(61,155,255,.07), transparent 60%);
-    pointer-events: none; z-index: 0;
-  }
-
-  .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.5rem; }
-  main, header, footer { position: relative; z-index: 1; }
 
   a { color: inherit; }
+  img, svg { display: block; }
 
-  /* ------------------------------------------------------------- masthead */
-  header {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 1rem; padding: 1.6rem 0;
-  }
-  .brand {
-    display: inline-flex; align-items: center; gap: .6rem;
-    font-weight: 600; font-size: 1.05rem; letter-spacing: -.01em;
-    text-decoration: none; color: var(--text);
-  }
-  .mark {
-    width: 1.65rem; height: 1.65rem; border-radius: .55rem; flex: none;
-    background: linear-gradient(150deg, var(--accent-soft), var(--accent));
-    display: grid; place-items: center;
-    font-size: .95rem; font-weight: 700; color: var(--sunken); line-height: 1;
-  }
-  .top-links { display: flex; gap: 1.4rem; font-size: .93rem; }
-  .top-links a { color: var(--text-3); text-decoration: none; }
-  .top-links a:hover { color: var(--text); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-  /* ----------------------------------------------------------------- hero */
-  .hero { padding: 4.5rem 0 4rem; max-width: 46rem; }
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: .55rem;
-    font-size: .78rem; letter-spacing: .16em; text-transform: uppercase;
-    font-weight: 600; color: var(--accent-soft);
-    border: 1px solid rgba(255,106,0,.28); border-radius: 999px;
-    padding: .32rem .8rem; margin: 0 0 1.6rem;
+  .skip {
+    position: absolute; left: 1rem; top: -4rem; z-index: 10;
+    background: var(--accent); color: var(--on-accent);
+    padding: .6rem 1rem; border-radius: 999px; font-weight: 600; text-decoration: none;
   }
-  .dot { width: .4rem; height: .4rem; border-radius: 50%; background: var(--accent); flex: none; }
+  .skip:focus { top: 1rem; }
+
+  .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ---------------------------------------------------------------- type */
+  h1, h2, h3 { font-family: var(--display); color: var(--text); margin: 0; }
   h1 {
-    font-size: clamp(2.3rem, 6.2vw, 3.9rem);
-    line-height: 1.06; letter-spacing: -.035em; font-weight: 600;
-    margin: 0 0 1.35rem;
+    font-size: clamp(2.7rem, 6.2vw, 4.5rem);
+    line-height: 1; letter-spacing: -.04em; font-weight: 600;
   }
-  h1 .quiet { color: var(--text-3); }
-  .lede { font-size: 1.2rem; color: var(--text-2); margin: 0 0 1rem; max-width: 36rem; }
-  .hero .fine { color: var(--text-3); font-size: 1rem; margin: 1.7rem 0 0; }
-
-  /* -------------------------------------------------------------- panes */
-  section { padding: 3.5rem 0; }
-  .section-head { max-width: 40rem; margin: 0 0 2.2rem; }
+  h1 .second { color: var(--text-2); }
   h2 {
-    font-size: clamp(1.5rem, 3.2vw, 2rem); line-height: 1.15;
-    letter-spacing: -.025em; font-weight: 600; margin: 0 0 .7rem;
+    font-size: clamp(1.9rem, 3.6vw, 2.75rem);
+    line-height: 1.04; letter-spacing: -.03em; font-weight: 600;
   }
-  .section-head p { color: var(--text-2); margin: 0; }
+  h3 {
+    font-size: 1.125rem; line-height: 1.28; letter-spacing: -.01em; font-weight: 500;
+  }
+  p { margin: 0; }
+  .caption {
+    font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .lede { font-size: 1.2rem; line-height: 1.55; color: var(--text-2); }
+  .muted { color: var(--text-2); }
+  .money { font-family: var(--display); font-weight: 500; font-feature-settings: "tnum" 1, "ss01" 1; }
 
-  .panes { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
-  .pane {
-    background: var(--card); border: 1px solid var(--line);
-    border-radius: 20px; padding: 1.6rem 1.5rem 1.7rem;
+  .textlink {
+    text-decoration: underline; text-decoration-color: var(--control);
+    text-underline-offset: .22em; text-decoration-thickness: 1px;
+    transition: text-decoration-color 140ms var(--ease);
   }
-  .pane .glyph {
-    width: 2.4rem; height: 2.4rem; border-radius: .8rem; margin-bottom: 1.1rem;
-    display: grid; place-items: center; font-size: 1.15rem;
-  }
-  .pane h3 { font-size: 1.16rem; font-weight: 600; letter-spacing: -.015em; margin: 0 0 .55rem; line-height: 1.25; }
-  .pane p { color: var(--text-2); margin: 0; font-size: .98rem; }
-  .g-wealth  { background: rgba(43,224,168,.12);  color: var(--mint); }
-  .g-shot    { background: rgba(255,106,0,.14);   color: var(--accent-soft); }
-  .g-privacy { background: rgba(155,107,255,.14); color: var(--violet); }
+  .textlink:hover { text-decoration-color: var(--text); }
 
-  /* --------------------------------------------------------------- steps */
-  .steps { display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr); counter-reset: step; }
-  .step {
-    background: var(--raised); border: 1px solid var(--hairline);
-    border-radius: 18px; padding: 1.4rem 1.3rem 1.5rem;
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 3rem; padding: 0 1.5rem; border-radius: 999px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #EDEDF1 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(0,0,0,.12);
+    color: var(--on-accent); font: 600 .95rem/1 var(--body); text-decoration: none;
+    transition: background 140ms var(--ease), transform 140ms var(--ease);
   }
-  .step .n {
-    counter-increment: step;
-    font-size: .78rem; font-weight: 600; letter-spacing: .12em;
-    color: var(--text-3); display: block; margin-bottom: .8rem;
-  }
-  .step .n::before { content: "0" counter(step); }
-  .step h3 { font-size: 1.03rem; font-weight: 600; margin: 0 0 .45rem; letter-spacing: -.01em; }
-  .step p { color: var(--text-2); margin: 0; font-size: .94rem; }
+  .btn:hover { background: var(--accent-hover); }
+  .btn:active { transform: scale(.97); }
+  .btn:focus-visible { outline: none; box-shadow: var(--ring); border-radius: 999px; }
 
-  /* ------------------------------------------------------------ features */
-  .features { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
-  .feature {
-    background: var(--card); border: 1px solid var(--line);
-    border-radius: 18px; padding: 1.35rem 1.4rem 1.45rem;
+  /* ------------------------------------------------------------ masthead */
+  .masthead {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; padding: 1.5rem 0;
   }
-  .feature h3 {
-    font-size: 1.02rem; font-weight: 600; margin: 0 0 .45rem; letter-spacing: -.01em;
-    display: flex; align-items: center; gap: .55rem;
-  }
-  .feature h3::before {
-    content: ""; width: .5rem; height: .5rem; border-radius: 50%;
-    background: var(--tint, var(--text-3)); flex: none;
-  }
-  .feature p { color: var(--text-2); margin: 0; font-size: .94rem; }
+  .brand { display: inline-flex; padding: .25rem 0; border-radius: 6px; }
+  .brand svg { height: 1.5rem; width: auto; }
+  .masthead nav { display: flex; gap: 1.5rem; font-size: .94rem; }
+  .masthead nav a { color: var(--text-2); text-decoration: none; transition: color 140ms var(--ease); }
+  .masthead nav a:hover { color: var(--text); }
 
-  /* ---------------------------------------------------------- signup card */
-  .signup {
-    background: linear-gradient(160deg, var(--card-hover), var(--card));
-    border: 1px solid var(--line); border-radius: 22px;
-    padding: 2.2rem 2rem;
-    display: grid; gap: 2rem; grid-template-columns: 1.15fr 1fr; align-items: center;
+  /* ---------------------------------------------------------------- hero */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+    gap: 3.5rem; align-items: center;
+    padding: 4.5rem 0 6rem;
   }
-  .signup h2 { margin-bottom: .6rem; }
-  .signup p { color: var(--text-2); margin: 0; }
-  .req { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
-  .req li {
-    background: var(--sunken); border: 1px solid var(--hairline);
-    border-radius: 14px; padding: .85rem 1rem;
-  }
-  .req strong { display: block; font-weight: 600; font-size: 1rem; }
-  .req span { color: var(--text-3); font-size: .92rem; }
+  .hero .caption { margin-bottom: 1.5rem; }
+  .hero h1 { margin-bottom: 1.75rem; }
+  .hero .lede + .lede { margin-top: 1rem; }
+  .hero .lede { max-width: 36rem; }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2.25rem; }
+  .actions .textlink { font-weight: 500; }
+  .hero .fine { margin-top: 2rem; font-size: .94rem; color: var(--text-3); max-width: 36rem; }
 
-  /* -------------------------------------------------------------- status */
+  /* Hero entrance: fade, then rise 12px. Reduced motion fades but never moves. */
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .enter { animation: rise 800ms var(--ease-soft) both; }
+  .enter-2 { animation-delay: 90ms; }
+  .enter-3 { animation-delay: 180ms; }
+
+  /* -------------------------------------------------------- phone frames */
+  figure { margin: 0; }
+  .device { justify-self: center; width: min(19rem, 100%); }
+  .phone {
+    position: relative;
+    border-radius: 2.9rem; padding: .55rem;
+    background: #0b1215;
+    border: 1px solid var(--edge);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 30px 70px rgba(0,0,0,.55);
+  }
+  .screen {
+    position: relative; overflow: hidden;
+    border-radius: 2.4rem;
+    background-color: var(--canvas);
+    background-image: radial-gradient(90% 34% at 70% 0%, rgba(60,190,210,.06) 0%, rgba(60,190,210,0) 70%);
+    padding: 1rem .9rem 1.2rem;
+    font-size: .8rem; line-height: 1.35;
+  }
+  .island {
+    width: 5.4rem; height: 1.55rem; border-radius: 999px; background: #000;
+    margin: 0 auto .9rem;
+  }
+  .statusbar {
+    position: absolute; top: 1.2rem; left: 1.6rem;
+    font: 600 .78rem/1 var(--body); color: var(--text);
+  }
+  .screen-title { font: 500 1.35rem/1.15 var(--display); letter-spacing: -.02em; margin: .2rem .2rem .9rem; }
+  .device figcaption { margin-top: 1rem; text-align: center; font-size: .8rem; color: var(--text-3); }
+
+  /* The mocks are drawn from the latest App Design board (20 Nov 2026), at
+     about four-fifths of the app's size so they fit a 19rem phone. */
+  .icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  /* Analytics: the Wealth card across the top, Spending and Money in below. */
+  .board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+  .card {
+    position: relative; overflow: hidden; min-width: 0;
+    display: flex; flex-direction: column; gap: .5rem;
+    background: var(--tile); box-shadow: var(--tile-shadow);
+    border: 1px solid var(--hairline); border-radius: 1.25rem;
+    padding: .75rem;
+  }
+  .card.wide { grid-column: 1 / -1; flex-direction: row; align-items: stretch; gap: .6rem; }
+  .wealth-side { flex: 0 0 55%; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: .9rem; }
+  .card .k { color: var(--text-2); font-size: .66rem; }
+  .wealth-total { font-size: 1.25rem; font-weight: 600; line-height: 1.15; letter-spacing: -.02em; white-space: nowrap; }
+  .wealth-change { color: var(--mint); font-size: .62rem; font-weight: 600; white-space: nowrap; }
+  .wealth-change span { color: var(--text-3); font-weight: 400; }
+  .wkey { list-style: none; margin: 0; padding: 0; display: grid; gap: .1rem; font-size: .62rem; }
+  .wkey li { display: flex; gap: .25rem; min-width: 0; white-space: nowrap; }
+  .wkey li span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .wkey li span + span { flex: none; color: var(--text-3); font-feature-settings: "tnum" 1; }
+  .wealth-chart { position: relative; flex: 1; min-width: 0; display: flex; align-items: flex-end; padding-right: .3rem; }
+  /* Faint grid behind the line, bleeding to the card's right edge, fading in from the left. */
+  .wealth-chart::before {
+    content: ""; position: absolute; top: -.75rem; right: -.75rem; bottom: -.75rem; left: 0;
+    background-image: linear-gradient(to right, var(--hairline) 1px, transparent 1px), linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+    background-size: 1.75rem 1.75rem; background-position: right bottom;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 24%);
+            mask-image: linear-gradient(to right, transparent, #000 24%);
+  }
+  .wealth-chart svg { position: relative; width: 100%; height: auto; overflow: visible; }
+  .card-h { font-size: .74rem; font-weight: 600; line-height: 1.2; }
+  .card-sub { font-size: .6rem; color: var(--text-3); margin-top: .1rem; }
+  .bars { display: flex; align-items: flex-end; gap: .3rem; height: 2.75rem; }
+  .bars i { flex: 1; border-radius: 999px; background: var(--track); }
+  .bars i.on { background: var(--violet); }
+  .days { display: flex; gap: .3rem; margin-top: -.2rem; font-size: .52rem; font-weight: 600; color: var(--text-3); }
+  .days span { flex: 1; text-align: center; }
+  .days span.on { color: var(--text); }
+  .ring { flex: 1; min-height: 2.75rem; display: grid; place-items: center; }
+  .ring svg { width: 3.3rem; height: 3.3rem; }
+  .card-foot {
+    margin-top: auto; padding-top: .5rem; border-top: 1px solid var(--hairline);
+    display: flex; align-items: center; justify-content: space-between; gap: .3rem;
+  }
+  .card-foot .money { font-size: .88rem; white-space: nowrap; }
+  .card-foot .icon { font-size: .75rem; color: var(--text-3); }
+
+  /* Review: "Check what we found". */
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows li { display: flex; align-items: center; gap: .6rem; padding: .6rem 0; border-top: 1px solid var(--hairline); }
+  .rows li:first-child { border-top: 0; padding-top: .2rem; }
+  .box {
+    flex: none; width: 1.15rem; height: 1.15rem; border-radius: .3rem;
+    display: grid; place-items: center;
+    background: var(--accent); color: var(--on-accent); border: 1px solid var(--accent);
+  }
+  .box .icon { font-size: .75rem; stroke-width: 3; }
+  .box.off { background: rgba(255,255,255,.035); border-color: var(--control); }
+  .txn { flex: 1; min-width: 0; display: grid; gap: 1px; }
+  .txn b { font-weight: 600; font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .txn .money { font-size: .9rem; letter-spacing: -.02em; line-height: 1.25; }
+  .txn small { display: flex; align-items: center; gap: .25rem; font-size: .66rem; color: var(--text-3); min-width: 0; white-space: nowrap; }
+  .txn small .flag { display: inline-flex; align-items: center; gap: .2rem; color: var(--amber); }
+  .edit {
+    flex: none; width: 1.7rem; height: 1.7rem; border-radius: 50%;
+    display: grid; place-items: center;
+    background: rgba(255,255,255,.035); border: 1px solid var(--hairline); color: var(--text-2);
+  }
+  .edit .icon { font-size: .78rem; }
+  .edit.warn { border-color: color-mix(in srgb, var(--amber) 44%, transparent); color: var(--amber); }
+  .cta {
+    margin-top: 1rem; height: 2.5rem; border-radius: 999px;
+    display: grid; place-items: center;
+    background: linear-gradient(180deg, #FFFFFF 0%, #EDEDF1 100%);
+    color: var(--on-accent); font-weight: 600; font-size: .85rem;
+  }
+
+  /* ------------------------------------------------------------ sections */
+  section { padding: 6rem 0; border-top: 1px solid var(--hairline); }
+  .split { display: grid; gap: 3.5rem; align-items: start; }
+  .split-5-7 { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .split-7-5 { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: center; }
+  .split-6-6 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .intro h2 { margin-bottom: 1.1rem; }
+  .intro p { color: var(--text-2); max-width: 32rem; }
+  .intro p + p { margin-top: .9rem; }
+
+  /* Ruled lists: the page's one list style, instead of a grid of boxes. */
+  .ruled { list-style: none; margin: 0; padding: 0; }
+  .ruled > li { padding: 1.25rem 0; border-top: 1px solid var(--hairline); }
+  .ruled > li:last-child { border-bottom: 1px solid var(--hairline); }
+  .ruled h3 { margin-bottom: .35rem; }
+  .ruled p { color: var(--text-2); font-size: .97rem; }
+
+  /* Wealth */
+  #wealth .ruled { margin-top: .4rem; }
+
+  /* Four ways in: the list, then the review that three of them lead to. */
+  .ways .then { margin-top: 1.5rem; color: var(--text-2); font-size: .97rem; }
+
+  /* What is inside */
+  .inside-head { max-width: 40rem; margin-bottom: 2.5rem; }
+  .inside-head h2 { margin-bottom: 1rem; }
+  .inside-head p { color: var(--text-2); }
+  .inside { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3.5rem; list-style: none; margin: 0; padding: 0; }
+  .inside li { padding: 1.4rem 0 1.5rem; border-top: 1px solid var(--hairline); }
+  .inside h3 { margin-bottom: .4rem; }
+  .inside p { color: var(--text-2); font-size: .97rem; max-width: 30rem; }
+
+  /* Nobody's business */
+  .signup h3 { font-size: 1.375rem; letter-spacing: -.02em; margin-bottom: .6rem; }
+  .signup > p { color: var(--text-2); }
+  .signup .ruled { margin-top: 1.5rem; }
+  .signup .ruled h3 { font-size: 1.125rem; margin-bottom: .3rem; }
+
+  /* Private testing */
   .status {
-    border: 1px solid var(--line-strong); border-radius: 22px;
-    padding: 2.1rem 2rem; text-align: center; background: var(--raised);
+    background: var(--tile); box-shadow: var(--tile-shadow);
+    border: 1px solid var(--hairline); border-radius: 1.75rem;
+    padding: 3rem;
+    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 2rem 3rem; align-items: end;
   }
-  .status h2 { margin-bottom: .7rem; }
-  .status p { color: var(--text-2); margin: 0 auto; max-width: 34rem; }
-  .status .mail { margin-top: 1.4rem; }
-  .status a {
-    color: var(--accent-soft); text-decoration: none;
-    border-bottom: 1px solid rgba(255,133,52,.35);
-  }
-  .status a:hover { border-bottom-color: var(--accent-soft); }
+  .status h2 { margin-bottom: 1rem; }
+  .status p { color: var(--text-2); max-width: 34rem; }
+  .status .reach { display: grid; gap: .9rem; justify-items: start; }
+  .status .addr { color: var(--text-2); font-size: .94rem; }
+  #status { border-top: 0; padding-top: 2rem; }
 
   /* -------------------------------------------------------------- footer */
   footer {
-    border-top: 1px solid var(--hairline); margin-top: 3.5rem;
-    padding: 2rem 0 3.5rem; color: var(--text-3); font-size: .92rem;
-    display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; justify-content: space-between;
+    border-top: 1px solid var(--hairline);
+    padding: 2rem 0 3rem; color: var(--text-3); font-size: .92rem;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; justify-content: space-between;
   }
-  footer nav { display: flex; gap: 1.4rem; }
-  footer a { color: var(--text-3); text-decoration: none; }
+  footer .where { display: flex; align-items: center; gap: .7rem; }
+  footer .where svg { width: 1.5rem; height: 1.5rem; }
+  footer nav { display: flex; gap: 1.5rem; }
+  footer a { color: var(--text-2); text-decoration: none; transition: color 140ms var(--ease); }
   footer a:hover { color: var(--text); }
 
-  /* ------------------------------------------------------------ responsive */
-  @media (max-width: 900px) {
-    .panes, .features { grid-template-columns: repeat(2, 1fr); }
-    .steps { grid-template-columns: repeat(2, 1fr); }
-    .signup { grid-template-columns: 1fr; }
+  /* ---------------------------------------------------------- responsive */
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: minmax(0, 1fr); gap: 3.5rem; padding: 3rem 0 4.5rem; }
+    .split-5-7, .split-7-5, .split-6-6 { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+    .split-7-5 .device { order: 2; }
+    .status { grid-template-columns: minmax(0, 1fr); align-items: start; }
   }
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
+    :root { --gutter: 1.25rem; }
     body { font-size: 16px; }
-    .wrap { padding: 0 1.15rem; }
-    .hero { padding: 3rem 0 2.5rem; }
-    .panes, .features, .steps { grid-template-columns: 1fr; }
-    .signup, .status { padding: 1.6rem 1.3rem; }
-    section { padding: 2.5rem 0; }
-    footer { flex-direction: column; }
+    .lede { font-size: 1.08rem; }
+    .masthead nav { gap: 1.1rem; }
+    .brand svg { height: 1.3rem; }
+    section { padding: 4rem 0; }
+    .inside { grid-template-columns: minmax(0, 1fr); }
+    .status { padding: 2rem 1.4rem; border-radius: 1.5rem; }
+    .actions .btn { width: 100%; }
+    footer { flex-direction: column; align-items: flex-start; }
   }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .enter { animation-name: fade; }
+    .btn, .btn:active { transition: none; transform: none; }
+  }
 </style>
 </head>
 <body>
 
-<div class="glow"></div>
+<a class="skip" href="#main">Skip to content</a>
 
 <div class="wrap">
 
-<header>
-  <a class="brand" href="/"><span class="mark">N</span> Nordram</a>
-  <nav class="top-links">
-    <a href="#how">How it works</a>
+<header class="masthead">
+  <a class="brand" href="./" aria-label="Nordram, home">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 64" width="249" height="64" aria-hidden="true" focusable="false">
+      <mask id="nd-dram" maskUnits="userSpaceOnUse" x="0" y="0" width="249" height="64"><rect width="249" height="64" fill="#fff"/><rect x="25.73" y="33.63" width="16.68" height="4.29" fill="#000"/><rect x="25.73" y="42.81" width="16.68" height="4.30" fill="#000"/></mask>
+      <g transform="translate(0.365 2.785)">
+        <path d="M26.85 52.00L26.85 34.23Q26.85 31.48 25.08 29.74Q23.32 28.01 20.63 28.01Q18.83 28.01 17.41 28.78Q16.01 29.55 15.21 30.99Q14.41 32.44 14.41 34.23L11.13 32.50Q11.13 28.91 12.70 26.19Q14.27 23.46 17.06 21.92Q19.85 20.38 23.38 20.38Q26.85 20.38 29.51 22.08Q32.17 23.77 33.71 26.50Q35.25 29.23 35.25 32.31L35.25 52.00ZM6.00 52.00L6.00 21.02L14.41 21.02L14.41 52.00Z" fill="#fff" mask="url(#nd-dram)"/>
+        <path d="M54.96 52.70Q50.29 52.70 46.54 50.56Q42.80 48.42 40.62 44.74Q38.45 41.06 38.45 36.45Q38.45 31.90 40.62 28.29Q42.80 24.67 46.54 22.53Q50.29 20.38 54.96 20.38Q59.69 20.38 63.44 22.50Q67.18 24.61 69.39 28.26Q71.60 31.90 71.60 36.45Q71.60 40.99 69.42 44.70Q67.25 48.42 63.47 50.56Q59.69 52.70 54.96 52.70ZM54.96 44.83Q57.33 44.83 59.15 43.74Q60.97 42.66 61.97 40.80Q62.96 38.94 62.96 36.51Q62.96 34.08 61.90 32.22Q60.85 30.37 59.09 29.31Q57.33 28.26 54.96 28.26Q52.65 28.26 50.86 29.31Q49.07 30.37 48.08 32.22Q47.09 34.08 47.09 36.51Q47.09 38.94 48.08 40.80Q49.07 42.66 50.86 43.74Q52.65 44.83 54.96 44.83ZM75.01 52.00L75.01 21.09L83.39 21.09L83.39 52.00ZM83.39 34.98L80.13 32.74Q80.70 27.04 83.45 23.74Q86.21 20.45 91.39 20.45Q93.69 20.45 95.45 21.18Q97.21 21.92 98.69 23.58L93.44 29.60Q92.73 28.83 91.74 28.48Q90.75 28.13 89.47 28.13Q86.78 28.13 85.09 29.79Q83.39 31.46 83.39 34.98ZM111.63 52.64Q107.28 52.64 103.92 50.53Q100.56 48.42 98.57 44.77Q96.59 41.12 96.59 36.58Q96.59 31.97 98.57 28.32Q100.56 24.67 103.92 22.56Q107.28 20.45 111.63 20.45Q114.89 20.45 117.58 21.82Q120.27 23.20 121.90 25.57Q123.53 27.94 123.66 30.94L123.66 41.95Q123.53 45.02 121.93 47.46Q120.33 49.89 117.65 51.26Q114.96 52.64 111.63 52.64ZM113.10 44.90Q115.41 44.90 117.17 43.81Q118.93 42.72 119.92 40.86Q120.91 39.01 120.91 36.58Q120.91 34.02 119.89 32.19Q118.86 30.37 117.13 29.28Q115.41 28.19 113.10 28.19Q110.73 28.19 108.97 29.28Q107.21 30.37 106.22 32.26Q105.23 34.14 105.23 36.51Q105.23 39.01 106.22 40.86Q107.21 42.72 109.01 43.81Q110.80 44.90 113.10 44.90ZM128.85 52.00L120.40 52.00L120.40 43.68L121.81 36.13L120.33 28.64L120.33 5.73L128.85 5.73ZM134.25 52.00L134.25 21.09L142.64 21.09L142.64 52.00ZM142.64 34.98L139.37 32.74Q139.95 27.04 142.70 23.74Q145.45 20.45 150.64 20.45Q152.94 20.45 154.70 21.18Q156.46 21.92 157.93 23.58L152.69 29.60Q151.98 28.83 150.99 28.48Q150.00 28.13 148.72 28.13Q146.03 28.13 144.33 29.79Q142.64 31.46 142.64 34.98ZM170.69 52.64Q166.46 52.64 163.10 50.53Q159.74 48.42 157.82 44.77Q155.90 41.12 155.90 36.58Q155.90 31.97 157.82 28.32Q159.74 24.67 163.10 22.56Q166.46 20.45 170.75 20.45Q174.01 20.45 176.64 21.79Q179.26 23.14 180.86 25.50Q182.46 27.87 182.59 30.94L182.59 42.14Q182.46 45.15 180.89 47.55Q179.33 49.95 176.67 51.30Q174.01 52.64 170.69 52.64ZM172.29 44.90Q175.81 44.90 177.98 42.53Q180.16 40.16 180.16 36.58Q180.16 34.14 179.13 32.22Q178.11 30.30 176.38 29.25Q174.65 28.19 172.29 28.19Q169.98 28.19 168.22 29.28Q166.46 30.37 165.47 32.22Q164.48 34.08 164.48 36.51Q164.48 39.01 165.47 40.86Q166.46 42.72 168.25 43.81Q170.05 44.90 172.29 44.90ZM179.65 52.00L179.65 43.68L181.05 36.13L179.65 28.64L179.65 21.09L188.09 21.09L188.09 52.00ZM193.50 52.00L193.50 21.09L201.89 21.09L201.89 52.00ZM213.60 52.00L213.60 33.76Q213.60 31.07 211.93 29.57Q210.27 28.06 207.77 28.06Q206.11 28.06 204.80 28.74Q203.49 29.41 202.69 30.69Q201.89 31.97 201.89 33.82L198.62 32.16Q198.62 28.58 200.19 25.95Q201.76 23.33 204.45 21.89Q207.13 20.45 210.53 20.45Q213.73 20.45 216.35 21.89Q218.97 23.33 220.51 25.92Q222.05 28.51 222.05 32.10L222.05 52.00ZM233.76 52.00L233.76 33.76Q233.76 31.07 232.09 29.57Q230.43 28.06 228.00 28.06Q226.27 28.06 224.96 28.74Q223.65 29.41 222.85 30.69Q222.05 31.97 222.05 33.82L217.25 32.61Q217.44 28.83 219.20 26.14Q220.96 23.46 223.77 21.95Q226.59 20.45 230.05 20.45Q233.50 20.45 236.25 21.89Q239.01 23.33 240.64 26.02Q242.27 28.70 242.27 32.48L242.27 52.00Z" fill="#fff"/>
+      </g>
+    </svg>
+  </a>
+  <nav aria-label="Site">
+    <a href="#wealth">How it works</a>
     <a href="privacy.html">Privacy</a>
+    <a href="hy/" hreflang="hy" lang="hy">Հայերեն</a>
   </nav>
 </header>
 
-<main>
+<main id="main">
 
   <!--
-    The hero and the three panes below are the app's own words — INTRO_PANES in
-    src/features/onboarding/IntroArt.tsx, which is itself the prototype's copy
-    verbatim. The site should not invent a second pitch.
+    Every claim on this page is something the app does today. Wording the
+    founder approved is kept where it is still true; where it changed, the pull
+    request that changed it says so. No figures about the company, no count of
+    currencies, no store badges: Nordram is in private testing.
   -->
   <div class="hero">
-    <p class="eyebrow"><span class="dot"></span> Private testing</p>
-    <h1>Real analytics<br><span class="quiet">on all your money.</span></h1>
-    <p class="lede">Banks, cards, cash in a drawer, any currency. Nordram charts them as one and does the maths for you.</p>
-    <p class="lede">And you don&rsquo;t have to type your payments in. You screenshot your bank app, and Nordram reads the amounts, the dates and the places straight out of the picture. A statement or a photo of a receipt works too, and you can always type one in by hand.</p>
-    <p class="fine">A budgeting app for Armenia. No bank connection, no email address, no adverts.</p>
+    <div>
+      <p class="caption enter">Private testing &middot; Armenia</p>
+      <h1 class="enter">Real analytics<br><span class="second">on all your money.</span></h1>
+      <p class="lede enter enter-2">Banks, cards, cash in a drawer, in dram or in foreign currency. Nordram charts them as one and does the maths for you.</p>
+      <p class="lede enter enter-2">Add payments whichever way is easiest that day: a screenshot of your bank app, a statement, a photo of a receipt, or typing one in by hand.</p>
+      <div class="actions enter enter-3">
+        <a class="btn" href="mailto:nordram.am@gmail.com">Ask to try it early</a>
+        <a class="textlink" href="#wealth">How it works</a>
+      </div>
+      <p class="fine enter enter-3">A budgeting app for Armenia. No bank connection, no email address, no adverts.</p>
+    </div>
+
+    <figure class="device enter enter-3">
+      <div class="phone" role="img" aria-label="Nordram's Analytics screen, with example figures. Wealth: ֏4,292,300, up ֏386,000 in 12 months, with a line of its history; savings ֏1,980,000, dollars ֏1,450,000, others ֏862,300. Below it, spending in the last 7 days, ֏48,200, as seven bars, and money in, ֏640,000, with 62% of it kept.">
+        <div class="screen">
+          <span class="statusbar">10:24</span>
+          <div class="island"></div>
+          <p class="screen-title">Analytics</p>
+          <div class="board">
+            <div class="card wide">
+              <div class="wealth-side">
+                <div>
+                  <p class="k">Wealth</p>
+                  <p class="money wealth-total">֏4,292,300</p>
+                  <p class="wealth-change">+֏386,000 <span>in 12 months</span></p>
+                </div>
+                <ul class="wkey">
+                  <li><span>Savings</span><span>&middot; ֏1,980,000</span></li>
+                  <li><span>Dollars</span><span>&middot; ֏1,450,000</span></li>
+                  <li><span>Others</span><span>&middot; ֏862,300</span></li>
+                </ul>
+              </div>
+              <div class="wealth-chart">
+                <svg viewBox="0 0 90 86" aria-hidden="true" focusable="false">
+                  <defs>
+                    <linearGradient id="wealth-fill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#3D9BFF" stop-opacity=".22"/>
+                      <stop offset="1" stop-color="#3D9BFF" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0 80 L8 72 L16 77.5 L24 61.1 L32 52.1 L40 57.5 L48 43 L56 35.8 L64 41.2 L72 26.7 L80 17.7 L88 10 L88 86 L0 86 Z" fill="url(#wealth-fill)"/>
+                  <path d="M0 80 L8 72 L16 77.5 L24 61.1 L32 52.1 L40 57.5 L48 43 L56 35.8 L64 41.2 L72 26.7 L80 17.7 L88 10" fill="none" stroke="#3D9BFF" stroke-width="4" stroke-opacity=".28" stroke-linejoin="round" stroke-linecap="round"/>
+                  <path d="M0 80 L8 72 L16 77.5 L24 61.1 L32 52.1 L40 57.5 L48 43 L56 35.8 L64 41.2 L72 26.7 L80 17.7 L88 10" fill="none" stroke="#3D9BFF" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+                  <circle cx="88" cy="10" r="2.8" fill="#3D9BFF" stroke="#162328" stroke-width="1.4"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card">
+              <div><p class="card-h">Spending</p><p class="card-sub">Last 7 days</p></div>
+              <div class="bars"><i style="height:46%"></i><i style="height:30%"></i><i style="height:64%"></i><i style="height:22%"></i><i style="height:52%"></i><i class="on" style="height:100%"></i><i style="height:38%"></i></div>
+              <div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span class="on">S</span><span>S</span></div>
+              <div class="card-foot"><span class="money">֏48,200</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></div>
+            </div>
+            <div class="card">
+              <div><p class="card-h">Money in</p><p class="card-sub">62% kept</p></div>
+              <div class="ring">
+                <svg viewBox="0 0 52 52" aria-hidden="true" focusable="false">
+                  <circle cx="26" cy="26" r="22.5" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="6"/>
+                  <circle cx="26" cy="26" r="22.5" fill="none" stroke="#2BE0A8" stroke-width="6" stroke-linecap="round" stroke-dasharray="87.6 141.4" transform="rotate(-90 26 26)"/>
+                </svg>
+              </div>
+              <div class="card-foot"><span class="money">֏640,000</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption>Example figures, not a real account.</figcaption>
+    </figure>
   </div>
 
-  <section id="why">
-    <div class="panes">
-      <article class="pane">
-        <div class="glyph g-wealth">◆</div>
-        <h3>Real analytics on all your money.</h3>
-        <p>Banks, cards, cash in a drawer, any currency. Nordram charts them as one and does the maths for you.</p>
-      </article>
-      <article class="pane">
-        <div class="glyph g-shot">▣</div>
-        <h3>Screenshots do the typing.</h3>
-        <p>Upload screenshots from your bank app, a statement or a receipt photo, and we pull out every amount, file it, and chart it for you. Or type a payment in yourself.</p>
-      </article>
-      <article class="pane">
-        <div class="glyph g-privacy">◈</div>
-        <h3>Your money, nobody&rsquo;s business.</h3>
-        <p>No name, no email, no phone. You start as a guest, with no password.</p>
-      </article>
-    </div>
-  </section>
-
-  <section id="how">
-    <div class="section-head">
-      <h2>How an import goes</h2>
-      <p>Four steps, and you can stop at any of them. Nothing is saved until you say so.</p>
-    </div>
-    <div class="steps">
-      <article class="step">
-        <span class="n"></span>
-        <h3>Pick your screenshots</h3>
-        <p>As many as you like, straight from your photos. Anything that shows a list of transactions.</p>
-      </article>
-      <article class="step">
-        <span class="n"></span>
-        <h3>Check them</h3>
-        <p>You see the shots you chose before a single one is sent, and you can drop any of them.</p>
-      </article>
-      <article class="step">
-        <span class="n"></span>
-        <h3>We read them</h3>
-        <p>Every amount, date and place comes back as a row. The picture itself is never kept.</p>
-      </article>
-      <article class="step">
-        <span class="n"></span>
-        <h3>Look, then keep</h3>
-        <p>Untick a row you don&rsquo;t want, fix a detail, keep the rest. If we weren&rsquo;t sure of something, the row says so.</p>
-      </article>
-    </div>
-  </section>
-
-  <section id="inside">
-    <div class="section-head">
-      <h2>What is inside</h2>
-      <p>The analytics are the product, so most of the app is the part that reads your money back to you.</p>
-    </div>
-    <div class="features">
-      <article class="feature" style="--tint: var(--mint)">
-        <h3>Wealth over time</h3>
-        <p>Everything you hold, in one line, across every account and pocket you have told us about.</p>
-      </article>
-      <article class="feature" style="--tint: var(--accent)">
-        <h3>Spent and money in</h3>
-        <p>This month against last, by category and by place, with the day-by-day shape underneath.</p>
-      </article>
-      <article class="feature" style="--tint: var(--sky)">
-        <h3>Currencies at the day&rsquo;s rate</h3>
-        <p>The dram first, and the foreign currencies that come with living in Armenia. Every payment keeps the currency it happened in, at the rate of the day it happened &mdash; not today&rsquo;s.</p>
-      </article>
-      <article class="feature" style="--tint: var(--amber)">
-        <h3>Budgets</h3>
-        <p>A limit per category, and an honest read on how much of the month is left against how much of the money is.</p>
-      </article>
-      <article class="feature" style="--tint: var(--violet)">
-        <h3>Pockets</h3>
-        <p>Set money aside without moving it at your bank. What is left to spend stops pretending your savings are spendable.</p>
-      </article>
-      <article class="feature" style="--tint: var(--pink)">
-        <h3>Trips</h3>
-        <p>Tag the payments from a journey and see what a country actually cost you, on a globe you can spin.</p>
-      </article>
-    </div>
-  </section>
-
-  <section id="signup">
-    <div class="signup">
-      <div>
-        <h2>Tap Get started. That is the sign-up.</h2>
-        <p>No email address, no phone number, no identity check, and nothing that asks who you are. We are not connected to your bank and never will be without you doing it yourself.</p>
+  <section id="wealth" aria-labelledby="wealth-h">
+    <div class="split split-5-7">
+      <div class="intro">
+        <h2 id="wealth-h">Track your wealth in one place.</h2>
+        <p>Add your accounts, your savings, the cash at home and the other things you own. Nordram adds them up into one figure and keeps its history, so you can watch the line move.</p>
+        <p>Money held in another currency counts at today&rsquo;s rate.</p>
       </div>
-      <ul class="req">
-        <li><strong>Start as a guest</strong><span>No username, no password. Nordram gives you a name to begin with.</span></li>
-        <li><strong>Save your account</strong><span>Pick a username and a password, so you can log back in on any phone.</span></li>
+      <ul class="ruled">
+        <li>
+          <h3>Savings</h3>
+          <p>Money you have set aside, kept apart from your main account, with a value you update yourself.</p>
+        </li>
+        <li>
+          <h3>A negative balance is normal</h3>
+          <p>It only means Nordram has not yet seen where the money came from.</p>
+        </li>
+        <li>
+          <h3>Fix the past</h3>
+          <p>Set what an account held on a past day, and correct it later.</p>
+        </li>
       </ul>
     </div>
   </section>
 
-  <section id="status">
+  <section id="inside" aria-labelledby="inside-h">
+    <div class="inside-head">
+      <h2 id="inside-h">What is inside</h2>
+      <p>The analytics are the product, so most of the app is the part that reads your money back to you.</p>
+    </div>
+    <ul class="inside">
+      <li>
+        <h3>Spent and money in</h3>
+        <p>This month against last, by category and by place, with the day-by-day shape underneath.</p>
+      </li>
+      <li>
+        <h3>Currencies at the day&rsquo;s rate</h3>
+        <p>The dram first, and the foreign currencies that come with living in Armenia. Every payment keeps the currency it happened in, at the rate of the day it happened &mdash; not today&rsquo;s.</p>
+      </li>
+      <li>
+        <h3>Monthly budgets</h3>
+        <p>A limit for any category you choose, and how much of it is left this month.</p>
+      </li>
+      <li>
+        <h3>Trips</h3>
+        <p>Tag the payments from a journey and see what a country actually cost you, on a globe you can spin.</p>
+      </li>
+      <li>
+        <h3>Categories and places</h3>
+        <p>Nordram suggests a category for a shop it does not know, and well-known shops show their own logo. Make your own categories, each with its icon, and say where a payment you typed in happened.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section id="ways" aria-labelledby="ways-h">
+    <div class="split split-7-5">
+      <div class="intro ways">
+        <h2 id="ways-h">Four ways to add a payment.</h2>
+        <p>Use whichever is closest to hand. Every payment ends up on the same charts, however it came in.</p>
+        <ul class="ruled" style="margin-top:1.75rem">
+          <li><h3>A screenshot of your bank app</h3><p>The list of payments, the way your bank shows it.</p></li>
+          <li><h3>A statement</h3><p>The PDF or CSV file your bank gives you.</p></li>
+          <li><h3>A photo of a receipt</h3><p>The paper slip from the shop.</p></li>
+          <li><h3>By hand</h3><p>One payment at a time, typed in. Nothing is read, so it is the most private way.</p></li>
+        </ul>
+        <p class="then">A screenshot, a statement or a receipt is read for you: every amount, date and place comes back as a row for you to check, and nothing is saved until you tap Add. The file itself is never kept.</p>
+      </div>
+
+      <figure class="device">
+        <div class="phone" role="img" aria-label="An example review, titled Check what we found: four payments read for you, each with its amount, its day and its category. Three are ticked. One has no category yet and is marked Uncategorised. The fourth is unticked because it matches a payment already in Nordram. The button says Add 3 transactions.">
+          <div class="screen">
+            <span class="statusbar">10:31</span>
+            <div class="island"></div>
+            <p class="screen-title">Check what we found</p>
+            <ul class="rows">
+              <li>
+                <span class="box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span class="txn"><b>Lumen Coffee</b><span class="money">&minus;֏1,400</span><small>Today &middot; Eating out</small></span>
+                <span class="edit"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span>
+              </li>
+              <li>
+                <span class="box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span class="txn"><b>Corner Market</b><span class="money">&minus;֏8,750</span><small>Today &middot; Groceries</small></span>
+                <span class="edit"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span>
+              </li>
+              <li>
+                <span class="box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span class="txn"><b>City Taxi</b><span class="money">&minus;֏1,850</span><small>Yesterday &middot; <span class="flag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>Uncategorised</span></small></span>
+                <span class="edit warn"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span>
+              </li>
+              <li>
+                <span class="box off"></span>
+                <span class="txn"><b>Book Corner</b><span class="money">&minus;֏6,900</span><small>14 Nov &middot; Shopping</small><small>Matches Book Corner &middot; &minus;֏6,900 &middot; 14 Nov</small></span>
+                <span class="edit warn"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span>
+              </li>
+            </ul>
+            <div class="cta">Add 3 transactions</div>
+          </div>
+        </div>
+        <figcaption>Example payments, not a real account.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="signup" aria-labelledby="signup-h">
+    <div class="split split-6-6">
+      <div class="intro">
+        <h2 id="signup-h">Your money, nobody&rsquo;s business.</h2>
+        <p>No name, no email, no phone. You start as a guest, with no password.</p>
+        <p><a class="textlink" href="privacy.html">What we keep, and what we never do</a></p>
+      </div>
+      <div class="signup">
+        <h3>Tap Get started. That is the sign-up.</h3>
+        <p>No email address, no phone number, no identity check, and nothing that asks who you are. We are not connected to your bank and never will be without you doing it yourself.</p>
+        <ul class="ruled">
+          <li><h3>Start as a guest</h3><p>No username, no password. Nordram gives you a name to begin with. A guest can make five imports; typing payments in is never limited.</p></li>
+          <li><h3>Create an account</h3><p>Pick a username and a password, so you can log back in on any phone. Everything you have added stays.</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="status" aria-labelledby="status-h">
     <div class="status">
-      <h2>Nordram is in private testing</h2>
-      <p>It is not on the App Store or Google Play yet. If you are in Armenia and you would like to try it early, or you just want to know when it opens up, write to us.</p>
-      <p class="mail"><a href="mailto:nordram.am@gmail.com">nordram.am@gmail.com</a></p>
+      <div>
+        <h2 id="status-h">Nordram is in private testing</h2>
+        <p>It is not on the App Store or Google Play yet. If you are in Armenia and you would like to try it early, or you just want to know when it opens up, write to us.</p>
+      </div>
+      <div class="reach">
+        <a class="btn" href="mailto:nordram.am@gmail.com">Write to us</a>
+        <p class="addr">nordram.am@gmail.com</p>
+      </div>
     </div>
   </section>
 
 </main>
 
 <footer>
-  <span>Nordram &middot; Yerevan, Armenia</span>
-  <nav>
+  <span class="where">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" aria-hidden="true" focusable="false">
+      <mask id="nd-dram-mark" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64"><rect width="64" height="64" fill="#fff"/><rect x="31.4" y="27.67" width="16.64" height="4.29" fill="#000"/><rect x="31.4" y="36.83" width="16.64" height="4.29" fill="#000"/></mask>
+      <g transform="translate(5.695 1.775)"><path d="M32.51 46L32.51 28.27Q32.51 25.52 30.75 23.79Q28.99 22.06 26.3 22.06Q24.51 22.06 23.1 22.83Q21.7 23.6 20.9 25.04Q20.1 26.48 20.1 28.27L16.83 26.54Q16.83 22.96 18.4 20.24Q19.97 17.52 22.75 15.98Q25.54 14.45 29.06 14.45Q32.51 14.45 35.17 16.14Q37.82 17.84 39.36 20.56Q40.9 23.28 40.9 26.35L40.9 46ZM11.71 46L11.71 15.09L20.1 15.09L20.1 46Z" fill="#A8A8B4" mask="url(#nd-dram-mark)"/></g>
+    </svg>
+    Nordram &middot; Yerevan, Armenia
+  </span>
+  <nav aria-label="Footer">
     <a href="privacy.html">Privacy policy</a>
     <a href="mailto:nordram.am@gmail.com">Contact</a>
   </nav>
