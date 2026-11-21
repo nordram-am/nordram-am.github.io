@@ -320,13 +320,54 @@
     background: var(--tile); box-shadow: var(--tile-shadow);
     border: 1px solid var(--hairline); border-radius: 1.75rem;
     padding: 3rem;
-    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 2rem 3rem; align-items: end;
+    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 2rem 3rem; align-items: start;
   }
   .status h2 { margin-bottom: 1rem; }
   .status p { color: var(--text-2); max-width: 34rem; }
-  .status .reach { display: grid; gap: .9rem; justify-items: start; }
-  .status .addr { color: var(--text-2); font-size: .94rem; }
+  .status .addr { margin-top: .9rem; font-size: .94rem; }
   #status { border-top: 0; padding-top: 2rem; }
+
+  /* Tester sign-up. It posts straight to the form service, so it works with
+     no script; the script at the end of the page only keeps you on the page.
+     Text in the fields is 16px or more so an iPhone does not zoom in, and
+     every control is at least 3rem (48px) tall. */
+  #join { scroll-margin-top: 1.5rem; color-scheme: dark; }
+  .join .field { margin: 0 0 1.25rem; padding: 0; border: 0; min-width: 0; }
+  .join label, .join legend { display: block; padding: 0; font-weight: 600; font-size: .94rem; color: var(--text); }
+  .join legend { margin-bottom: .45rem; }
+  .join .field > label { margin-bottom: .45rem; }
+  .join .opt { font-weight: 400; color: var(--text-3); }
+  .join .field-hint { margin: -.2rem 0 .55rem; font-size: .88rem; line-height: 1.45; color: var(--text-3); }
+  .join input[type="text"], .join input[type="email"] {
+    display: block; width: 100%; min-height: 3rem; margin: 0; padding: .65rem 1rem;
+    font: inherit; color: var(--text);
+    background: rgba(255,255,255,.035); border: 1px solid var(--control); border-radius: .9rem;
+    transition: border-color 140ms var(--ease), box-shadow 140ms var(--ease);
+  }
+  .join input[type="text"]:hover, .join input[type="email"]:hover { border-color: rgba(255,255,255,.5); }
+  .join input[type="text"]:focus, .join input[type="email"]:focus { outline: none; border-color: var(--accent); box-shadow: var(--ring); }
+  .join .choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .join .choice {
+    display: flex; align-items: center; gap: .65rem; min-height: 3rem; padding: 0 1rem;
+    font-weight: 500; font-size: 1rem; cursor: pointer;
+    background: rgba(255,255,255,.035); border: 1px solid var(--control); border-radius: .9rem;
+    transition: border-color 140ms var(--ease), background 140ms var(--ease);
+  }
+  .join .choice:hover { border-color: rgba(255,255,255,.5); }
+  .join .choice input { flex: none; width: 1.15rem; height: 1.15rem; margin: 0; accent-color: var(--accent); }
+  .join .choice:has(input:checked) { border-color: var(--accent); background: var(--accent-quiet); }
+  @supports selector(:has(*)) {
+    .join .choice:has(input:focus-visible) { box-shadow: var(--ring); }
+    .join .choice input:focus-visible { outline: none; }
+  }
+  .join .botcheck { display: none; }
+  button.btn { border: 0; cursor: pointer; }
+  .join .btn[disabled] { opacity: .55; cursor: progress; transform: none; }
+  .join .form-status { margin-top: .9rem; font-size: .94rem; color: var(--text); }
+  .join .form-status:empty { margin: 0; }
+  .join .form-status.done { color: var(--mint); }
+  .join .form-status.failed { color: var(--amber); }
+  .join .form-note { margin-top: 1.25rem; font-size: .88rem; line-height: 1.5; color: var(--text-3); }
 
   /* -------------------------------------------------------------- footer */
   footer {
@@ -356,7 +397,7 @@
     section { padding: 4rem 0; }
     .inside { grid-template-columns: minmax(0, 1fr); }
     .status { padding: 2rem 1.4rem; border-radius: 1.5rem; }
-    .actions .btn { width: 100%; }
+    .actions .btn, .join .btn { width: 100%; }
     footer { flex-direction: column; align-items: flex-start; }
   }
   /* Armenian: the headings set in Noto Sans Armenian, whose words run longer
@@ -417,7 +458,7 @@
       <p class="lede enter enter-2">Բանկային հաշիվներ, քարտեր ու դարակում պահած կանխիկ գումար՝ դրամով կամ արտարժույթով։ <span class="nw">Nordram-ը</span> դրանք ներկայացնում է գծապատկերներով՝ որպես մեկ ամբողջություն, և հաշվարկներն անում է ձեր փոխարեն։</p>
       <p class="lede enter enter-2">Վճարումներն ավելացրեք այն եղանակով, որն այդ օրն ամենահարմարն է ձեզ համար՝ ձեր բանկի հավելվածի սքրինշոթով, հաշվի քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով մուտքագրելով։</p>
       <div class="actions enter enter-3">
-        <a class="btn" href="mailto:nordram.am@gmail.com">Գրել՝ հավելվածը մինչև թողարկումը փորձելու համար</a>
+        <a class="btn" href="#join">Դիմել՝ հավելվածը մինչև թողարկումը փորձելու համար</a>
         <a class="textlink" href="#wealth">Ինչպես է աշխատում</a>
       </div>
       <p class="fine enter enter-3">Հավելվածն առայժմ միայն անգլերեն է։</p>
@@ -603,12 +644,42 @@
     <div class="status">
       <div>
         <h2 id="status-h"><span class="nw">Nordram-ը</span> փակ թեստավորման փուլում է</h2>
-        <p>Հավելվածը դեռ հասանելի չէ ո՛չ App <span class="nw">Store-ում</span>, ո՛չ Google <span class="nw">Play-ում</span>։ Եթե Հայաստանում եք և ուզում եք հավելվածը փորձել մինչև թողարկումը կամ պարզապես իմանալ, թե երբ այն հասանելի կլինի, գրեք մեզ։ Հավելվածն առայժմ միայն անգլերեն է։</p>
+        <p>Հավելվածը դեռ հասանելի չէ ո՛չ App <span class="nw">Store-ում</span>, ո՛չ Google <span class="nw">Play-ում</span>։ Եթե Հայաստանում եք և ուզում եք հավելվածը փորձել մինչև թողարկումը, թողեք ձեր էլ. փոստի հասցեն այստեղ, և մենք ձեզ թեստավորման հրավեր կուղարկենք։ Եթե պարզապես ուզում եք իմանալ, թե երբ այն հասանելի կլինի, գրեք մեզ։ Հավելվածն առայժմ միայն անգլերեն է։</p>
+        <p class="addr"><a class="textlink" href="mailto:nordram.am@gmail.com">nordram.am@gmail.com</a></p>
       </div>
-      <div class="reach">
-        <a class="btn" href="mailto:nordram.am@gmail.com">Գրեք մեզ</a>
-        <p class="addr">nordram.am@gmail.com</p>
-      </div>
+      <!--
+        Tester sign-up. Web3Forms emails each one to nordram.am@gmail.com.
+        The access key below is the one value to fill in: it is public by
+        design and only says which inbox the email goes to.
+      -->
+      <form id="join" class="join" action="https://api.web3forms.com/submit" method="POST" aria-label="Դիմել Nordram-ի թեստավորմանը մասնակցելու համար">
+        <input type="hidden" name="access_key" value="REPLACE_WITH_WEB3FORMS_KEY">
+        <input type="hidden" name="subject" value="New tester sign-up — nordram.am (Armenian)">
+        <input type="hidden" name="from_name" value="nordram.am">
+        <!-- Web3Forms' honeypot: hidden from people and screen readers, so a tick means a bot. -->
+        <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="field">
+          <label for="join-name">Անուն <span class="opt">(ըստ ցանկության)</span></label>
+          <input id="join-name" name="name" type="text" autocomplete="name" maxlength="100">
+        </div>
+        <div class="field">
+          <label for="join-email">Էլ. փոստի հասցե</label>
+          <p class="field-hint" id="join-email-hint">Նշեք ձեր <span class="nw">Apple ID-ի</span> էլ. փոստի հասցեն, եթե iPhone ունեք, կամ ձեր Google հաշվի էլ. փոստի հասցեն, եթե Android հեռախոս ունեք։ Թեստավորման հրավերը <span class="nw">Apple-ը</span> կամ <span class="nw">Google-ը</span> ուղարկում է հենց այդ հասցեին։</p>
+          <input id="join-email" name="email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" required aria-describedby="join-email-hint">
+        </div>
+        <fieldset class="field">
+          <legend>Ձեր հեռախոսը</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="phone" value="iPhone" required>iPhone</label>
+            <label class="choice"><input type="radio" name="phone" value="Android" required>Android</label>
+          </div>
+        </fieldset>
+
+        <button class="btn" type="submit">Հրավեր խնդրել</button>
+        <p class="form-status" id="join-status" role="status" aria-live="polite"></p>
+        <p class="form-note">Այս հասցեն օգտագործում ենք միայն թեստավորման հրավերն ուղարկելու և թեստավորման հարցերով ձեզ հետ կապվելու համար։ Հավելվածն ինքը նախկինի պես երբեք չի խնդրում նշել այդ հասցեն։ <a class="textlink" href="privacy.html#tester-signup">Ինչպես ենք վարվում այս տվյալների հետ</a></p>
+      </form>
     </div>
   </section>
 
@@ -629,5 +700,50 @@
 </footer>
 
 </div>
+<script>
+  // The tester sign-up, sent without leaving the page. With no script, or a
+  // browser without fetch, the form posts to Web3Forms as an ordinary form.
+  (function () {
+    var form = document.getElementById('join');
+    if (!form || !window.fetch || !window.FormData) return;
+    var button = form.querySelector('button[type="submit"]');
+    var status = document.getElementById('join-status');
+    var text = {
+      sending: 'Ուղարկվում է…',
+      done: 'Շնորհակալություն, ձեր դիմումը ստացել ենք։ Կգրենք ձեզ այդ էլ. փոստի հասցեով։',
+      failed: 'Չհաջողվեց ուղարկել։ Խնդրում ենք կրկին փորձել կամ գրել մեզ՝ nordram.am@gmail.com հասցեով։'
+    };
+    function show(state) {
+      status.className = 'form-status' + (state === 'sending' ? '' : ' ' + state);
+      status.textContent = text[state];
+    }
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (button.disabled) return;
+      var data = {};
+      new FormData(form).forEach(function (value, key) { data[key] = value; });
+      button.disabled = true;
+      form.setAttribute('aria-busy', 'true');
+      show('sending');
+      fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (response) {
+          return response.json().then(function (json) {
+            return response.ok && !!json && json.success === true;
+          }, function () { return false; });
+        })
+        .catch(function () { return false; })
+        .then(function (ok) {
+          if (ok) form.reset();
+          show(ok ? 'done' : 'failed');
+          button.disabled = false;
+          form.removeAttribute('aria-busy');
+        });
+    });
+  })();
+</script>
 </body>
 </html>
