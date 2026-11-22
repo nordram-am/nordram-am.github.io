@@ -794,11 +794,12 @@
       <div>
         <h2 id="status-h"><span class="nw">Nordram-ը</span> փակ թեստավորման փուլում է</h2>
         <p>Դեռ չկա ո՛չ App <span class="nw">Store-ում</span>, ո՛չ Google <span class="nw">Play-ում</span>։ Եթե Հայաստանում եք, թողեք ձեր էլ. փոստի հասցեն, և մենք ձեզ թեստավորման հրավեր կուղարկենք։</p>
-        <p class="addr"><a class="textlink" href="mailto:nordram.am@gmail.com">nordram.am@gmail.com</a></p>
+        <p class="addr"><a class="textlink" href="mailto:hi@nordram.am">hi@nordram.am</a></p>
       </div>
       <!--
-        Tester sign-up. Web3Forms emails each one to nordram.am@gmail.com.
-        The access key is public by design: it only names that inbox.
+        Tester sign-up. Web3Forms emails each one to the team's Gmail inbox;
+        the destination is set on the Web3Forms access key, not here.
+        That key is public by design: all it does is name that inbox.
       -->
       <form id="join" class="join" action="https://api.web3forms.com/submit" method="POST" aria-label="Դիմել Nordram-ի թեստավորմանը մասնակցելու համար">
         <input type="hidden" name="access_key" value="79464a86-30d3-41a9-92fc-b17243a377e1">
@@ -843,7 +844,7 @@
   </span>
   <nav aria-label="Էջատակ">
     <a href="privacy.html">Գաղտնիության քաղաքականություն</a>
-    <a href="mailto:nordram.am@gmail.com">Կապ</a>
+    <a href="mailto:hi@nordram.am">Կապ</a>
   </nav>
 </footer>
 
@@ -859,7 +860,7 @@
     var text = {
       sending: 'Ուղարկվում է…',
       done: 'Շնորհակալություն։ Շուտով նամակ կուղարկենք ձեր նշած հասցեին։',
-      failed: 'Չհաջողվեց ուղարկել։ Փորձեք կրկին կամ գրեք nordram.am@gmail.com հասցեին։'
+      failed: 'Չհաջողվեց ուղարկել։ Փորձեք կրկին կամ գրեք hi@nordram.am հասցեին։'
     };
     function show(state) {
       status.className = 'form-status' + (state === 'sending' ? '' : ' ' + state);

@@ -774,11 +774,12 @@
       <div>
         <h2 id="status-h">Nordram is in private testing</h2>
         <p>Not on the App Store or Google Play yet. If you&rsquo;re in Armenia, leave your email and we&rsquo;ll send you a test invite.</p>
-        <p class="addr"><a class="textlink" href="mailto:nordram.am@gmail.com">nordram.am@gmail.com</a></p>
+        <p class="addr"><a class="textlink" href="mailto:hi@nordram.am">hi@nordram.am</a></p>
       </div>
       <!--
-        Tester sign-up. Web3Forms emails each one to nordram.am@gmail.com.
-        The access key is public by design: it only names that inbox.
+        Tester sign-up. Web3Forms emails each one to the team's Gmail inbox;
+        the destination is set on the Web3Forms access key, not here.
+        That key is public by design: all it does is name that inbox.
       -->
       <form id="join" class="join" action="https://api.web3forms.com/submit" method="POST" aria-label="Ask to test Nordram">
         <input type="hidden" name="access_key" value="79464a86-30d3-41a9-92fc-b17243a377e1">
@@ -823,7 +824,7 @@
   </span>
   <nav aria-label="Footer">
     <a href="privacy.html">Privacy policy</a>
-    <a href="mailto:nordram.am@gmail.com">Contact</a>
+    <a href="mailto:hi@nordram.am">Contact</a>
   </nav>
 </footer>
 
@@ -839,7 +840,7 @@
     var text = {
       sending: 'Sending…',
       done: 'Thanks! We’ll email you soon.',
-      failed: 'That didn’t go through. Try again, or write to nordram.am@gmail.com.'
+      failed: 'That didn’t go through. Try again, or write to hi@nordram.am.'
     };
     function show(state) {
       status.className = 'form-status' + (state === 'sending' ? '' : ' ' + state);
