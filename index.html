@@ -1,17 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="hy">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nordram — real analytics on all your money</title>
-<meta name="description" content="Real analytics on all your money. Add payments from a screenshot, a statement, a receipt photo or by hand. No bank connection, no email address.">
+<title>Nordram — ձեր բոլոր ֆինանսների իրական վերլուծություն</title>
+<meta name="description" content="Ձեր բոլոր ֆինանսների իրական վերլուծություն։ Վճարումներն ավելացրեք սքրինշոթով, քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով։ Առանց բանկին միանալու և առանց էլ. փոստի հասցեի։">
 <meta name="theme-color" content="#060b0d">
-<meta property="og:title" content="Nordram — real analytics on all your money">
-<meta property="og:description" content="Nordram charts all your money as one. Add a payment from a screenshot, a statement, a receipt photo or by hand.">
+<meta property="og:title" content="Nordram — ձեր բոլոր ֆինանսների իրական վերլուծություն">
+<meta property="og:description" content="Nordram-ը ձեր բոլոր միջոցները միասին է ներկայացնում գծապատկերներում։ Վճարումն ավելացրեք սքրինշոթով, քաղվածքով, կտրոնի լուսանկարով կամ ձեռքով։">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nordram.am/">
-<link rel="alternate" hreflang="en" href="https://nordram.am/">
-<link rel="alternate" hreflang="hy" href="https://nordram.am/hy/">
+<meta property="og:locale" content="hy_AM">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="alternate" hreflang="en" href="https://nordram.am/en/">
+<link rel="alternate" hreflang="hy" href="https://nordram.am/">
 <link rel="alternate" hreflang="x-default" href="https://nordram.am/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fff'/%3E%3Cmask id='m' maskUnits='userSpaceOnUse' x='0' y='0' width='64' height='64'%3E%3Crect width='64' height='64' fill='%23fff'/%3E%3Crect x='31.4' y='27.67' width='16.64' height='4.29'/%3E%3Crect x='31.4' y='36.83' width='16.64' height='4.29'/%3E%3C/mask%3E%3Cg transform='translate(5.695 1.775)'%3E%3Cpath d='M32.51 46L32.51 28.27Q32.51 25.52 30.75 23.79Q28.99 22.06 26.3 22.06Q24.51 22.06 23.1 22.83Q21.7 23.6 20.9 25.04Q20.1 26.48 20.1 28.27L16.83 26.54Q16.83 22.96 18.4 20.24Q19.97 17.52 22.75 15.98Q25.54 14.45 29.06 14.45Q32.51 14.45 35.17 16.14Q37.82 17.84 39.36 20.56Q40.9 23.28 40.9 26.35L40.9 46ZM11.71 46L11.71 15.09L20.1 15.09L20.1 46Z' fill='%23050507' mask='url(%23m)'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -19,9 +21,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Outfit:wght@500;600&display=swap" rel="stylesheet">
-<!-- Outfit has no dram sign, so it comes from Noto Sans Armenian, as in the app;
-     the subset also carries the letters of the language switch, "Հայերեն". -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@400;500&text=%D5%80%D5%A1%D5%A5%D5%B5%D5%B6%D6%80%D6%8F&display=swap" rel="stylesheet">
+<!-- Outfit and Manrope have no Armenian letters; Noto Sans Armenian sets them,
+     as it does in the app (it is second in both font stacks). -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   /*
     The app's own design tokens (design-system/tokens.json, "Ocean deep" ground),
@@ -491,6 +493,23 @@
     .actions .btn, .join .btn { width: 100%; }
     footer { flex-direction: column; align-items: flex-start; }
   }
+  /* Armenian: the headings set in Noto Sans Armenian, whose words run longer
+     and whose letters sit taller than Outfit's, so a smaller size, a little
+     more line height and less negative tracking. */
+  h1 { font-size: clamp(2.1rem, 5vw, 3.6rem); line-height: 1.08; letter-spacing: -.025em; }
+  h2 { font-size: clamp(1.7rem, 3.1vw, 2.4rem); line-height: 1.14; letter-spacing: -.02em; }
+  h1, h2, h3 { overflow-wrap: break-word; }
+  .hint { color: var(--text-3); font-size: .85em; }
+  /* A Latin name with an Armenian ending after a hyphen stays on one line. */
+  .nw { white-space: nowrap; }
+  /* An Armenian button label can wrap on a phone: centre it and give the
+     two lines room. min-height still holds a one-line button at 3rem. */
+  .btn { text-align: center; line-height: 1.25; padding-top: .7rem; padding-bottom: .7rem; }
+  @media (max-width: 520px) {
+    .masthead nav .wide-only { display: none; }
+  }
+  /* A figure with an Armenian ending keeps the colour of the words around it. */
+  .panel-change .nw { color: inherit; font-weight: inherit; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .enter { animation-name: fade; }
@@ -500,12 +519,12 @@
 </head>
 <body>
 
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main">Անցնել բովանդակությանը</a>
 
 <div class="wrap">
 
 <header class="masthead">
-  <a class="brand" href="./" aria-label="Nordram, home">
+  <a class="brand" href="./" aria-label="Nordram-ի գլխավոր էջ">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 64" width="249" height="64" aria-hidden="true" focusable="false">
       <mask id="nd-dram" maskUnits="userSpaceOnUse" x="0" y="0" width="249" height="64"><rect width="249" height="64" fill="#fff"/><rect x="25.73" y="33.63" width="16.68" height="4.29" fill="#000"/><rect x="25.73" y="42.81" width="16.68" height="4.30" fill="#000"/></mask>
       <g transform="translate(0.365 2.785)">
@@ -514,33 +533,35 @@
       </g>
     </svg>
   </a>
-  <nav aria-label="Site">
-    <a href="#wealth">How it works</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="hy/" hreflang="hy" lang="hy">Հայերեն</a>
+  <nav aria-label="Կայք">
+    <a class="wide-only" href="#wealth">Ինչպես է աշխատում</a>
+    <a href="hy/privacy.html">Գաղտնիություն</a>
+    <a href="en/" hreflang="en" lang="en">English</a>
   </nav>
 </header>
 
 <main id="main">
 
   <!--
-    Every claim on this page is something the app does today. Wording the
-    founder approved is kept where it is still true; where it changed, the pull
-    request that changed it says so. No figures about the company, no count of
-    currencies, no store badges: Nordram is in private testing.
+    The Armenian page says what the English one says, no more. The app itself
+    is English-only for now (Armenian interface text is Phase 3 work), so the
+    phone pictures keep the app's English labels and the page says so. The
+    section panels further down are drawings, not screens, so their labels
+    are Armenian.
   -->
   <div class="hero">
     <div>
-      <h1 class="enter">Real analytics<br><span class="second">on all your money.</span></h1>
-      <p class="lede enter enter-2">Banks, cards and cash, in dram or foreign currency, charted as one.</p>
+      <h1 class="enter">Ձեր բոլոր ֆինանսների<br><span class="second">իրական վերլուծություն։</span></h1>
+      <p class="lede enter enter-2">Բանկային հաշիվները, քարտերն ու կանխիկը՝ դրամով կամ արտարժույթով, միասին են ներկայացված գծապատկերներում։</p>
       <div class="actions enter enter-3">
-        <a class="btn" href="#join">Ask to try it early</a>
-        <a class="textlink" href="#wealth">How it works</a>
+        <a class="btn" href="#join">Թեստավորման հրավեր խնդրել</a>
+        <a class="textlink" href="#wealth">Ինչպես է աշխատում</a>
       </div>
+      <p class="fine enter enter-3">Հավելվածն առայժմ միայն անգլերեն է։</p>
     </div>
 
     <figure class="device enter enter-3">
-      <div class="phone" role="img" aria-label="Nordram's Analytics screen, with example figures. Wealth ֏4,292,300, up ֏386,000 in 12 months, as a line; savings ֏1,980,000, dollars ֏1,450,000, others ֏862,300. Spending in the last 7 days, ֏48,200, as seven bars. Money in ֏640,000, 62% kept.">
+      <div class="phone" role="img" aria-label="Nordram-ի «Analytics» էկրանը՝ պայմանական թվերով։ Կարողություն՝ 4 292 300 դրամ, 12 ամսում՝ 386 000 դրամով ավելի, գծով։ Խնայողություններ՝ 1 980 000 դրամ, դոլարներ՝ 1 450 000 դրամ, այլ միջոցներ՝ 862 300 դրամ։ Վերջին 7 օրվա ծախսերը՝ 48 200 դրամ, յոթ սյունակով։ Մուտքեր՝ 640 000 դրամ, որից 62%-ը չի ծախսվել։">
         <div class="screen">
           <span class="statusbar">10:24</span>
           <div class="island"></div>
@@ -599,14 +620,14 @@
   <section id="wealth" aria-labelledby="wealth-h">
     <div class="wealth-grid">
       <div class="intro">
-        <h2 id="wealth-h">Track your wealth in one place.</h2>
-        <p>Add everything you own and see one total, with its history.</p>
+        <h2 id="wealth-h">Հետևեք ձեր կարողությանը մեկ տեղում։</h2>
+        <p>Ավելացրեք ձեր ամբողջ ունեցվածքը և տեսեք ընդհանուր գումարն ու դրա պատմությունը։</p>
       </div>
 
-      <div class="panel" role="img" aria-label="Example wealth: ֏4,292,300 in all, up ֏386,000 in 12 months, drawn as a rising line. Savings ֏1,980,000, dollars ֏1,450,000, main account ֏712,300, cash at home ֏250,000, and a card at −֏100,000.">
-        <p class="k">Wealth</p>
+      <div class="panel" role="img" aria-label="Կարողության օրինակ՝ ընդհանուր 4 292 300 դրամ, վերջին 12 ամսում՝ 386 000 դրամով ավելի, աճող գծով։ Խնայողություններ՝ 1 980 000 դրամ, դոլարներ՝ 1 450 000 դրամ, հիմնական հաշիվ՝ 712 300 դրամ, տանը պահած կանխիկ՝ 250 000 դրամ, իսկ քարտը՝ −100 000 դրամ։">
+        <p class="k">Կարողություն</p>
         <p class="money panel-total">֏4,292,300</p>
-        <p class="panel-change">+֏386,000 <span>in 12 months</span></p>
+        <p class="panel-change">+֏386,000 <span>վերջին 12 ամսում</span></p>
         <div class="history">
           <svg viewBox="0 0 300 90" aria-hidden="true" focusable="false">
             <defs>
@@ -622,11 +643,11 @@
           </svg>
         </div>
         <ul class="holdings">
-          <li><span class="dot" style="--hue: var(--mint)"></span><span class="name">Savings</span><span class="money">֏1,980,000</span></li>
-          <li><span class="dot" style="--hue: var(--violet)"></span><span class="name">Dollars</span><span class="money">֏1,450,000</span></li>
-          <li><span class="dot" style="--hue: var(--sky)"></span><span class="name">Main account</span><span class="money">֏712,300</span></li>
-          <li><span class="dot" style="--hue: var(--amber)"></span><span class="name">Cash at home</span><span class="money">֏250,000</span></li>
-          <li><span class="dot" style="--hue: var(--pink)"></span><span class="name">Card</span><span class="money">&minus;֏100,000</span></li>
+          <li><span class="dot" style="--hue: var(--mint)"></span><span class="name">Խնայողություններ</span><span class="money">֏1,980,000</span></li>
+          <li><span class="dot" style="--hue: var(--violet)"></span><span class="name">Դոլարներ</span><span class="money">֏1,450,000</span></li>
+          <li><span class="dot" style="--hue: var(--sky)"></span><span class="name">Հիմնական հաշիվ</span><span class="money">֏712,300</span></li>
+          <li><span class="dot" style="--hue: var(--amber)"></span><span class="name">Տանը պահած կանխիկ</span><span class="money">֏250,000</span></li>
+          <li><span class="dot" style="--hue: var(--pink)"></span><span class="name">Քարտ</span><span class="money">&minus;֏100,000</span></li>
         </ul>
       </div>
     </div>
@@ -634,35 +655,35 @@
 
   <section id="inside" aria-labelledby="inside-h">
     <div class="inside-head">
-      <h2 id="inside-h">What&rsquo;s inside</h2>
-      <p>Most of the app is analytics.</p>
+      <h2 id="inside-h">Ի՞նչ կա հավելվածում</h2>
+      <p>Հավելվածի մեծ մասը նվիրված է վերլուծությանը։</p>
     </div>
     <div class="inside-grid">
-      <div class="panel spend" role="img" aria-label="Example spending for this month: ֏243,200, ֏25,700 less than last month, with a bar for each day so far. By category: groceries ֏86,400, eating out ֏52,300, shopping ֏44,900, transport ֏31,800, bills ֏27,800. Tabs switch to money in, and to places.">
-        <p class="seg"><span class="on">Spent</span><span>Money in</span></p>
-        <p class="k">This month</p>
+      <div class="panel spend" role="img" aria-label="Այս ամսվա ծախսերի օրինակ՝ 243 200 դրամ, անցյալ ամսվանից 25 700 դրամով պակաս, ամսվա յուրաքանչյուր անցած օրվա համար մեկ սյունակով։ Ըստ կատեգորիայի. սննդամթերք՝ 86 400, սրճարան և ռեստորան՝ 52 300, գնումներ՝ 44 900, տրանսպորտ՝ 31 800, կոմունալ վճարներ՝ 27 800 դրամ։ Ներդիրներով կարող եք դիտել մուտքերը կամ տվյալներն ըստ վայրի։">
+        <p class="seg"><span class="on">Ծախսեր</span><span>Մուտքեր</span></p>
+        <p class="k">Այս ամիս</p>
         <p class="money panel-total">֏243,200</p>
-        <p class="panel-change">֏25,700 less <span>than last month</span></p>
+        <p class="panel-change"><span class="nw">֏25,700-ով</span> պակաս<span>, քան անցյալ ամիս</span></p>
         <div class="daybars"><i style="height:34%"></i><i style="height:52%"></i><i style="height:20%"></i><i style="height:61%"></i><i style="height:45%"></i><i style="height:28%"></i><i style="height:80%"></i><i style="height:38%"></i><i style="height:55%"></i><i style="height:24%"></i><i style="height:47%"></i><i style="height:66%"></i><i style="height:30%"></i><i style="height:42%"></i><i style="height:100%"></i><i style="height:36%"></i><i style="height:58%"></i><i style="height:26%"></i><i style="height:49%"></i><i style="height:71%"></i><i class="on" style="height:40%"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i></div>
-        <p class="seg"><span class="on">Category</span><span>Place</span></p>
+        <p class="seg"><span class="on">Կատեգորիա</span><span>Վայր</span></p>
         <ul class="cats">
-          <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Groceries</span><span class="money">֏86,400</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
-          <li style="--hue: var(--amber)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Eating out</span><span class="money">֏52,300</span></span><span class="cbar"><i style="width:60.5%"></i></span></span></li>
-          <li style="--hue: var(--pink)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span><span class="cbody"><span class="crow"><span>Shopping</span><span class="money">֏44,900</span></span><span class="cbar"><i style="width:52%"></i></span></span></li>
-          <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l2-6h14l2 6v5H3z"/><path d="M3 13h18"/><path d="M6 18v2M18 18v2"/></svg></span><span class="cbody"><span class="crow"><span>Transport</span><span class="money">֏31,800</span></span><span class="cbar"><i style="width:36.8%"></i></span></span></li>
-          <li style="--hue: var(--violet)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="cbody"><span class="crow"><span>Bills</span><span class="money">֏27,800</span></span><span class="cbar"><i style="width:32.2%"></i></span></span></li>
+          <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Սննդամթերք</span><span class="money">֏86,400</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
+          <li style="--hue: var(--amber)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Սրճարան և ռեստորան</span><span class="money">֏52,300</span></span><span class="cbar"><i style="width:60.5%"></i></span></span></li>
+          <li style="--hue: var(--pink)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span><span class="cbody"><span class="crow"><span>Գնումներ</span><span class="money">֏44,900</span></span><span class="cbar"><i style="width:52%"></i></span></span></li>
+          <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l2-6h14l2 6v5H3z"/><path d="M3 13h18"/><path d="M6 18v2M18 18v2"/></svg></span><span class="cbody"><span class="crow"><span>Տրանսպորտ</span><span class="money">֏31,800</span></span><span class="cbar"><i style="width:36.8%"></i></span></span></li>
+          <li style="--hue: var(--violet)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="cbody"><span class="crow"><span>Կոմունալ վճարներ</span><span class="money">֏27,800</span></span><span class="cbar"><i style="width:32.2%"></i></span></span></li>
         </ul>
       </div>
 
       <ul class="tiles">
-        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></span>Dram first, plus foreign currencies</li>
-        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span>That day&rsquo;s rate, not today&rsquo;s</li>
-        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>A monthly limit per category</li>
-        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/></svg></span>Trip costs on a globe</li>
-        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 14 10 21 12 14 14 12 21 10 14 3 12 10 10z"/></svg></span>Categories suggested for new shops</li>
-        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9l2-5h14l2 5"/><path d="M3 9h18"/><path d="M5 9v11h14V9"/><path d="M10 20v-5h4v5"/></svg></span>Logos for well-known shops</li>
-        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><path d="M16.5 13.5v6M13.5 16.5h6"/></svg></span>Your own categories and icons</li>
-        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>A place on payments you type</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></span>Առաջին հերթին դրամ, նաև արտարժույթներ</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span>Վճարման օրվա փոխարժեքով, ոչ թե այսօրվա</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>Ամսական սահմանաչափ՝ ըստ կատեգորիայի</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/></svg></span>Ճամփորդության ծախսերը՝ գլոբուսի վրա</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 14 10 21 12 14 14 12 21 10 14 3 12 10 10z"/></svg></span>Կատեգորիայի առաջարկ անծանոթ խանութների համար</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9l2-5h14l2 5"/><path d="M3 9h18"/><path d="M5 9v11h14V9"/><path d="M10 20v-5h4v5"/></svg></span>Հայտնի խանութների լոգոներ</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><path d="M16.5 13.5v6M13.5 16.5h6"/></svg></span>Ձեր սեփական կատեգորիաներն ու պատկերակները</li>
+        <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>Վայրի նշում ձեռքով մուտքագրված վճարումներում</li>
       </ul>
     </div>
   </section>
@@ -670,18 +691,18 @@
   <section id="ways" aria-labelledby="ways-h">
     <div class="split split-7-5">
       <div class="intro ways">
-        <h2 id="ways-h">Four ways to add a payment.</h2>
-        <p>However it comes in, it lands on the same charts.</p>
+        <h2 id="ways-h">Վճարում ավելացնելու չորս եղանակ։</h2>
+        <p>Ինչպես էլ ավելացնեք, վճարումը հայտնվում է նույն գծապատկերներում։</p>
         <ul class="tiles">
-          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M9.5 7h5M9.5 11h5M9.5 15h3"/></svg></span><span>Screenshot<small>of your bank app</small></span></li>
-          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><span>Statement<small>PDF or CSV</small></span></li>
-          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span>Receipt<small>a photo of it</small></span></li>
-          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span><span>By hand<small>Most private: nothing is read</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M9.5 7h5M9.5 11h5M9.5 15h3"/></svg></span><span>Սքրինշոթ<small>ձեր բանկի հավելվածից</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><span>Քաղվածք<small>PDF կամ CSV</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span>Կտրոն<small>լուսանկարով</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span><span>Ձեռքով<small>Ամենագաղտնի եղանակը՝ ոչինչ չի կարդացվում</small></span></li>
         </ul>
       </div>
 
       <figure class="device">
-        <div class="phone" role="img" aria-label="Example review, Check what we found: four payments read for you. Three are ticked, and one of those says Uncategorised. The fourth is unticked because it matches a payment already in Nordram. The button says Add 3 transactions.">
+        <div class="phone" role="img" aria-label="«Check what we found» էկրանի օրինակ։ Հավելվածը կարդացել է չորս վճարում։ Երեքն ընտրված են։ Դրանցից մեկի վրա գրված է «Uncategorised»։ Չորրորդն ընտրված չէ, քանի որ համընկնում է Nordram-ում արդեն եղած վճարման հետ։ Կոճակը՝ «Add 3 transactions»։">
           <div class="screen">
             <span class="statusbar">10:31</span>
             <div class="island"></div>
@@ -711,7 +732,7 @@
             <div class="cta">Add 3 transactions</div>
           </div>
         </div>
-        <figcaption>Example payments, not a real account.</figcaption>
+        <figcaption>Պայմանական վճարումներ են, ոչ թե իրական հաշվից։</figcaption>
       </figure>
     </div>
   </section>
@@ -719,36 +740,36 @@
   <section id="signup" aria-labelledby="signup-h">
     <div class="split split-6-6">
       <div class="intro">
-        <h2 id="signup-h">Your money, nobody&rsquo;s business.</h2>
+        <h2 id="signup-h">Ձեր ֆինանսները միայն ձեզ են վերաբերում։</h2>
         <ul class="nos">
-          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="M3 3l18 18"/></svg>No name</li>
-          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/><path d="M3 3l18 18"/></svg>No email</li>
-          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/><path d="M3 3l18 18"/></svg>No phone</li>
-          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16a3 3 0 0 1 6 0M14 10h4M14 14h4"/><path d="M3 3l18 18"/></svg>No identity check</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="M3 3l18 18"/></svg>Առանց անվան</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/><path d="M3 3l18 18"/></svg>Առանց էլ. փոստի</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/><path d="M3 3l18 18"/></svg>Առանց հեռախոսահամարի</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16a3 3 0 0 1 6 0M14 10h4M14 14h4"/><path d="M3 3l18 18"/></svg>Առանց ինքնության ստուգման</li>
         </ul>
-        <p>We are not connected to your bank, and never will be unless you do it yourself.</p>
-        <p><a class="textlink" href="privacy.html">What we keep, and what we never do</a></p>
+        <p>Մենք միացված չենք ձեր բանկին և երբեք չենք միանա, եթե ինքներդ չմիացնեք։</p>
+        <p><a class="textlink" href="hy/privacy.html">Ինչ ենք պահում և ինչ երբեք չենք անում</a></p>
       </div>
       <div class="signup">
-        <h3>Tap Get started. That&rsquo;s the sign-up.</h3>
+        <h3>Գրանցվելու համար պարզապես սեղմեք <span class="nw">«Get started»</span> կոճակը։</h3>
         <ul class="paths">
           <li>
             <span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
-            <h3>Start as a guest</h3>
+            <h3>Սկսեք որպես հյուր</h3>
             <ul class="ticks">
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>No username or password</li>
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Nordram gives you a name</li>
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Five imports</li>
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Typing is never limited</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Առանց օգտանվան և գաղտնաբառի</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span><span class="nw">Nordram-ը</span> ձեզ անուն է տալիս</span></li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Հինգ ներմուծում</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Ձեռքով մուտքագրումն անսահմանափակ է</li>
             </ul>
           </li>
           <li>
             <span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2 20 3M16 7l3 3M14 9l2 2"/></svg></span>
-            <h3>Create an account</h3>
+            <h3>Ստեղծեք օգտահաշիվ</h3>
             <ul class="ticks">
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Username and password</li>
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Log in on any phone</li>
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Everything you added stays</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Օգտանուն և գաղտնաբառ</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Մուտք ցանկացած հեռախոսից</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>Ձեր ավելացրածը պահպանվում է</li>
             </ul>
           </li>
         </ul>
@@ -759,8 +780,8 @@
   <section id="status" aria-labelledby="status-h">
     <div class="status">
       <div>
-        <h2 id="status-h">Nordram is in private testing</h2>
-        <p>Not on the App Store or Google Play yet. If you&rsquo;re in Armenia, leave your email and we&rsquo;ll send you a test invite.</p>
+        <h2 id="status-h"><span class="nw">Nordram-ը</span> փակ թեստավորման փուլում է</h2>
+        <p>Դեռ չկա ո՛չ App <span class="nw">Store-ում</span>, ո՛չ Google <span class="nw">Play-ում</span>։ Եթե Հայաստանում եք, թողեք ձեր էլ. փոստի հասցեն, և մենք ձեզ թեստավորման հրավեր կուղարկենք։</p>
         <p class="addr"><a class="textlink" href="mailto:hi@nordram.am">hi@nordram.am</a></p>
       </div>
       <!--
@@ -768,33 +789,33 @@
         the destination is set on the Web3Forms access key, not here.
         That key is public by design: all it does is name that inbox.
       -->
-      <form id="join" class="join" action="https://api.web3forms.com/submit" method="POST" aria-label="Ask to test Nordram">
+      <form id="join" class="join" action="https://api.web3forms.com/submit" method="POST" aria-label="Դիմել Nordram-ի թեստավորմանը մասնակցելու համար">
         <input type="hidden" name="access_key" value="79464a86-30d3-41a9-92fc-b17243a377e1">
-        <input type="hidden" name="subject" value="New tester sign-up — nordram.am (English)">
+        <input type="hidden" name="subject" value="New tester sign-up — nordram.am (Armenian)">
         <input type="hidden" name="from_name" value="nordram.am">
         <!-- Web3Forms' honeypot: hidden from people and screen readers, so a tick means a bot. -->
         <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <div class="field">
-          <label for="join-name">Name <span class="opt">(optional)</span></label>
+          <label for="join-name">Անուն <span class="opt">(ըստ ցանկության)</span></label>
           <input id="join-name" name="name" type="text" autocomplete="name" maxlength="100">
         </div>
         <div class="field">
-          <label for="join-email">Email</label>
-          <p class="field-hint" id="join-email-hint">Your Apple ID email for iPhone, or your Google account email for Android. The invite goes there.</p>
+          <label for="join-email">Էլ. փոստի հասցե</label>
+          <p class="field-hint" id="join-email-hint"><span class="nw">iPhone-ի</span> համար նշեք ձեր <span class="nw">Apple ID-ի</span> էլ. փոստը, <span class="nw">Android-ի</span> համար՝ ձեր Google հաշվի էլ. փոստը։ Հրավերը կգա այդ հասցեին։</p>
           <input id="join-email" name="email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" required aria-describedby="join-email-hint">
         </div>
         <fieldset class="field">
-          <legend>Your phone</legend>
+          <legend>Ձեր հեռախոսը</legend>
           <div class="choices">
             <label class="choice"><input type="radio" name="phone" value="iPhone" required>iPhone</label>
             <label class="choice"><input type="radio" name="phone" value="Android" required>Android</label>
           </div>
         </fieldset>
 
-        <button class="btn" type="submit">Ask for an invite</button>
+        <button class="btn" type="submit">Հրավեր խնդրել</button>
         <p class="form-status" id="join-status" role="status" aria-live="polite"></p>
-        <p class="form-note">Used only for your invite and for testing. The app never asks for it. <a class="textlink" href="privacy.html#tester-signup">How we handle it</a></p>
+        <p class="form-note">Հասցեն օգտագործում ենք միայն հրավերի և թեստավորման համար։ Հավելվածը երբեք չի խնդրում նշել այդ հասցեն։ <a class="textlink" href="hy/privacy.html#tester-signup">Ինչպես ենք մշակում ձեր հասցեն</a></p>
       </form>
     </div>
   </section>
@@ -807,11 +828,11 @@
       <mask id="nd-dram-mark" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64"><rect width="64" height="64" fill="#fff"/><rect x="31.4" y="27.67" width="16.64" height="4.29" fill="#000"/><rect x="31.4" y="36.83" width="16.64" height="4.29" fill="#000"/></mask>
       <g transform="translate(5.695 1.775)"><path d="M32.51 46L32.51 28.27Q32.51 25.52 30.75 23.79Q28.99 22.06 26.3 22.06Q24.51 22.06 23.1 22.83Q21.7 23.6 20.9 25.04Q20.1 26.48 20.1 28.27L16.83 26.54Q16.83 22.96 18.4 20.24Q19.97 17.52 22.75 15.98Q25.54 14.45 29.06 14.45Q32.51 14.45 35.17 16.14Q37.82 17.84 39.36 20.56Q40.9 23.28 40.9 26.35L40.9 46ZM11.71 46L11.71 15.09L20.1 15.09L20.1 46Z" fill="#A8A8B4" mask="url(#nd-dram-mark)"/></g>
     </svg>
-    Nordram &middot; Yerevan, Armenia
+    Nordram &middot; Երևան, Հայաստան
   </span>
-  <nav aria-label="Footer">
-    <a href="privacy.html">Privacy policy</a>
-    <a href="mailto:hi@nordram.am">Contact</a>
+  <nav aria-label="Էջատակ">
+    <a href="hy/privacy.html">Գաղտնիության քաղաքականություն</a>
+    <a href="mailto:hi@nordram.am">Կապ</a>
   </nav>
 </footer>
 
@@ -825,9 +846,9 @@
     var button = form.querySelector('button[type="submit"]');
     var status = document.getElementById('join-status');
     var text = {
-      sending: 'Sending…',
-      done: 'Thanks! We’ll email you soon.',
-      failed: 'That didn’t go through. Try again, or write to hi@nordram.am.'
+      sending: 'Ուղարկվում է…',
+      done: 'Շնորհակալություն։ Շուտով նամակ կուղարկենք ձեր նշած հասցեին։',
+      failed: 'Չհաջողվեց ուղարկել։ Փորձեք կրկին կամ գրեք hi@nordram.am հասցեին։'
     };
     function show(state) {
       status.className = 'form-status' + (state === 'sending' ? '' : ' ' + state);

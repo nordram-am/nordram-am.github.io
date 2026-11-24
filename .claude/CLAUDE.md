@@ -6,10 +6,24 @@ off the site.
 
 ## Pages come in pairs
 
-English pages are at the root; their Armenian copies are under `hy/`:
+Armenian is the site's default language (founder, 2026-11-24). Each page has
+an Armenian and an English copy:
 
-- `index.html` ↔ `hy/index.html`
-- `privacy.html` ↔ `hy/privacy.html`
+- Home: Armenian `index.html` (served at `/`) ↔ English `en/index.html`
+  (served at `/en/`).
+- Privacy: English `privacy.html` (`/privacy.html`) ↔ Armenian
+  `hy/privacy.html` (`/hy/privacy.html`). Both privacy addresses stay where
+  they are; see the rules below.
+- `hy/index.html` is only a redirect to `/` (it keeps any `#hash`), so old
+  `/hy/` links still work. It is not a page; don't add content to it.
+
+There is no automatic language detection or redirect by browser language.
+Each page links to its other-language copy with a visible switch.
+
+Links between pages: the Armenian home links to `hy/privacy.html`, the
+English home to `/privacy.html`. Each privacy page's brand link goes to its
+own language's home (`/` for Armenian, `/en/` for English). hreflang
+`x-default` points at the Armenian copy.
 
 ## The privacy policy changes in both languages at once
 
