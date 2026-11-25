@@ -222,9 +222,6 @@
   .enter { animation: rise 800ms var(--ease-soft) both; }
   .enter-2 { animation-delay: 90ms; }
   .enter-3 { animation-delay: 180ms; }
-  /* Once the script has run, the hero phone's spending bars grow in as it rises. */
-  @keyframes grow { from { transform: scaleY(0); } }
-  .motion .bars i { transform-origin: 50% 100%; animation: grow 700ms var(--ease-soft) calc(450ms + var(--i, 0) * 60ms) both; }
 
   /* -------------------------------------------------------- phone frames */
   figure { margin: 0; }
@@ -424,22 +421,6 @@
   .live .states > * { grid-area: 1 / 1; min-width: 0; transition: opacity 240ms var(--ease) 120ms; }
   .live .states > [hidden] { display: block; visibility: hidden; opacity: 0; transition: opacity 140ms var(--ease), visibility 0s 140ms; }
 
-  /* Scroll reveal. The script marks what fades up and adds .motion to <html>
-     only after it has run, so with no script everything simply shows; what
-     is already on screen when the page opens is marked seen and stays put.
-     Bars grow once their panel is in view, and again each time a switch
-     shows them; a hidden example's bars drop back once it has faded. */
-  .motion .rv { transition: opacity 600ms var(--ease-soft), transform 600ms var(--ease-soft); }
-  .motion .rv:not(.in) { opacity: 0; transform: translateY(16px); }
-  .motion .daybars i { transform-origin: 50% 100%; transition: transform 700ms var(--ease-soft) calc(150ms + var(--i, 0) * 14ms); }
-  .motion .cbar i { transform-origin: 0 50%; transition: transform 700ms var(--ease-soft) calc(150ms + var(--i, 0) * 70ms); }
-  .motion .rv:not(.in) .daybars i, .motion .states > [hidden] .daybars i { transform: scaleY(0); }
-  .motion .rv:not(.in) .cbar i, .motion .states > [hidden] .cbar i { transform: scaleX(0); }
-  .motion .states > [hidden] i { transition: transform 0s 140ms; }
-  @media print {
-    .motion .rv:not(.in), .motion .rv:not(.in) .daybars i, .motion .rv:not(.in) .cbar i { opacity: 1; transform: none; }
-  }
-
   .ico {
     flex: none; display: grid; place-items: center;
     width: 2.5rem; height: 2.5rem; border-radius: .8rem;
@@ -628,13 +609,8 @@
     html { scroll-behavior: auto; }
     .enter { animation-name: fade; }
     .btn, .btn:active { transition: none; transform: none; }
-    /* The script leaves the reveal and the growing bars off here; these
-       hold if the setting changes while the page is open. The switches
-       still work, and change at once. */
-    .motion .rv:not(.in), .motion .rv:not(.in) .daybars i, .motion .rv:not(.in) .cbar i { opacity: 1; transform: none; }
-    .motion .rv, .motion .daybars i, .motion .cbar i, .live .seg button,
-    .live .states > *, .live .states > [hidden] { transition: none; }
-    .motion .bars i { animation: none; }
+    /* The panel's switches still work here, and change at once. */
+    .live .seg button, .live .states > *, .live .states > [hidden] { transition: none; }
   }
 </style>
 </head>
@@ -988,15 +964,11 @@
     window.addEventListener('scroll', update, { passive: true });
   })();
 
-  // The panel's switches, and calm motion. The switches always work; the
-  // fades and growing bars are off for reduced motion, and nothing is
-  // hidden until this has run.
+  // The panel's switches: each becomes two buttons that swap the example
+  // below it. Without this script they stay plain labels.
   (function () {
-    function each(sel, fn, root) { [].forEach.call((root || document).querySelectorAll(sel), fn); }
     var sets = document.querySelectorAll('.spend .states');
-
-    // Each switch becomes two buttons that swap the example below it.
-    each('.spend .seg', function (seg, i) {
+    [].forEach.call(document.querySelectorAll('.spend .seg'), function (seg, i) {
       var views = sets[i] && sets[i].children, buttons;
       if (!views || views.length !== seg.children.length) return;
       buttons = [].map.call(seg.children, function (label, n) {
@@ -1016,28 +988,6 @@
       seg.parentNode.setAttribute('role', 'group');
       seg.parentNode.classList.add('live');
     });
-
-    if (!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    // Fade up once on scrolling in; what is on screen already stays put.
-    var io = new IntersectionObserver(function (entries) {
-      var n = 0;
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        e.target.style.transitionDelay = Math.min(n++, 4) * 80 + 'ms';
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      });
-    }, { rootMargin: '0px 0px -8% 0px' });
-    each('.intro > :not(.tiles), .inside-head > *, .panel, .tiles > li, #ways .device, .signup > h3, .paths > li, .status', function (el) {
-      var box = el.getBoundingClientRect();
-      el.classList.add('rv');
-      if (box.top < innerHeight && box.bottom > 0) el.classList.add('in');
-      else io.observe(el);
-    });
-    each('.bars, .daybars, .cats', function (list) {
-      each('i', function (bar, k) { bar.style.setProperty('--i', k); }, list);
-    });
-    document.documentElement.classList.add('motion');
   })();
 
   // The tester sign-up, sent without leaving the page. With no script, or a
