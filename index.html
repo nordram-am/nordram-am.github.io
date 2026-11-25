@@ -215,7 +215,6 @@
   .hero .lede { max-width: 36rem; }
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2.25rem; }
   .actions .textlink { font-weight: 500; }
-  .hero .fine { margin-top: 2rem; font-size: .94rem; color: var(--text-3); max-width: 36rem; }
 
   /* Hero entrance: fade, then rise 12px. Reduced motion fades but never moves. */
   @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
@@ -670,7 +669,7 @@
   <!--
     The Armenian page says what the English one says, no more. The app itself
     is English-only for now (Armenian interface text is Phase 3 work), so the
-    phone pictures keep the app's English labels and the page says so. The
+    phone pictures keep the app's English labels. The
     section panels further down are drawings, not screens, so their labels
     are Armenian.
   -->
@@ -682,11 +681,10 @@
         <a class="btn" href="#join">Թեստավորման հրավեր խնդրել</a>
         <a class="textlink" href="#wealth">Ինչպես է աշխատում</a>
       </div>
-      <p class="fine enter enter-3">Հավելվածն առայժմ միայն անգլերեն է։</p>
     </div>
 
     <figure class="device enter enter-3">
-      <div class="phone" role="img" aria-label="Nordram-ի «Analytics» էկրանը՝ պայմանական թվերով։ Կարողություն՝ 4 292 300 դրամ, 12 ամսում՝ 386 000 դրամով ավելի, գծով։ Խնայողություններ՝ 1 980 000 դրամ, դոլարներ՝ 1 450 000 դրամ, այլ միջոցներ՝ 862 300 դրամ։ Վերջին 7 օրվա ծախսերը՝ 48 200 դրամ, յոթ սյունակով։ Մուտքեր՝ 640 000 դրամ, որից 62%-ը չի ծախսվել։">
+      <div class="phone" role="img" aria-label="Nordram-ի «Analytics» էկրանը՝ պայմանական թվերով։ Ընդհանուր կարողությունը 4 292 300 դրամ է։ Գիծը ցույց է տալիս, որ 12 ամսում այն աճել է 386 000 դրամով։ Խնայողություններ՝ 1 980 000 դրամ, դոլարներ՝ 1 450 000 դրամ, այլ միջոցներ՝ 862 300 դրամ։ Վերջին 7 օրվա ծախսերը՝ 48 200 դրամ, յոթ սյունակով։ Մուտքեր՝ 640 000 դրամ, որից 62%-ը չի ծախսվել։">
         <div class="screen">
           <span class="statusbar">10:24</span>
           <div class="island"></div>
@@ -746,10 +744,10 @@
     <div class="wealth-grid">
       <div class="intro">
         <h2 id="wealth-h">Հետևեք ձեր կարողությանը մեկ տեղում։</h2>
-        <p>Ավելացրեք ձեր ամբողջ ունեցվածքը և տեսեք ընդհանուր գումարն ու դրա պատմությունը։</p>
+        <p>Հավելվածում նշեք ձեր ունեցածը և տեսեք ընդհանուր արժեքն ու դրա փոփոխությունը ժամանակի ընթացքում։</p>
       </div>
 
-      <div class="panel" role="img" aria-label="Կարողության օրինակ՝ ընդհանուր 4 292 300 դրամ, վերջին 12 ամսում՝ 386 000 դրամով ավելի, աճող գծով։ Խնայողություններ՝ 1 980 000 դրամ, դոլարներ՝ 1 450 000 դրամ, հիմնական հաշիվ՝ 712 300 դրամ, տանը պահած կանխիկ՝ 250 000 դրամ, իսկ քարտը՝ −100 000 դրամ։">
+      <div class="panel" role="img" aria-label="Օրինակ՝ ընդհանուր կարողությունը 4 292 300 դրամ է։ Բարձրացող գիծը ցույց է տալիս 386 000 դրամի աճ վերջին 12 ամսում։ Խնայողություններ՝ 1 980 000 դրամ, դոլարներ՝ 1 450 000 դրամ, հիմնական հաշիվ՝ 712 300 դրամ, տանը պահած կանխիկ՝ 250 000 դրամ, իսկ քարտը՝ −100 000 դրամ։">
         <p class="k">Կարողություն</p>
         <p class="money panel-total">֏4,292,300</p>
         <p class="panel-change">+֏386,000 <span>վերջին 12 ամսում</span></p>
@@ -784,7 +782,7 @@
       <p>Հավելվածի մեծ մասը նվիրված է վերլուծությանը։</p>
     </div>
     <div class="inside-grid">
-      <div class="panel spend" role="img" aria-label="Այս ամսվա ծախսերի օրինակ՝ 243 200 դրամ, անցյալ ամսվանից 25 700 դրամով պակաս, ամսվա յուրաքանչյուր անցած օրվա համար մեկ սյունակով։ Ըստ կատեգորիայի. սննդամթերք՝ 86 400, սրճարան և ռեստորան՝ 52 300, գնումներ՝ 44 900, տրանսպորտ՝ 31 800, կոմունալ վճարներ՝ 27 800 դրամ։ Ներդիրներով կարող եք դիտել մուտքերը կամ տվյալներն ըստ վայրի։">
+      <div class="panel spend" role="img" aria-label="Այս ամսվա ծախսերի օրինակ՝ 243 200 դրամ, անցյալ ամսվանից 25 700 դրամով պակաս, ամսվա յուրաքանչյուր անցած օրվա համար մեկ սյունակով։ Ըստ կատեգորիայի՝ սննդամթերք՝ 86 400, սրճարաններ և ռեստորաններ՝ 52 300, գնումներ՝ 44 900, տրանսպորտ՝ 31 800, կոմունալ վճարներ՝ 27 800 դրամ։ Հավելվածում կարող եք դիտել նաև մուտքերը և տեսնել ծախսերի բաշխումն ըստ վայրի։">
         <p class="seg"><span class="on">Ծախսեր</span><span>Մուտքեր</span></p>
         <p class="k">Այս ամիս</p>
         <div class="states"><div>
@@ -800,7 +798,7 @@
         <div class="states"><div>
         <ul class="cats">
           <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Սննդամթերք</span><span class="money">֏86,400</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
-          <li style="--hue: var(--amber)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Սրճարան և ռեստորան</span><span class="money">֏52,300</span></span><span class="cbar"><i style="width:60.5%"></i></span></span></li>
+          <li style="--hue: var(--amber)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Սրճարաններ և ռեստորաններ</span><span class="money">֏52,300</span></span><span class="cbar"><i style="width:60.5%"></i></span></span></li>
           <li style="--hue: var(--pink)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span><span class="cbody"><span class="crow"><span>Գնումներ</span><span class="money">֏44,900</span></span><span class="cbar"><i style="width:52%"></i></span></span></li>
           <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l2-6h14l2 6v5H3z"/><path d="M3 13h18"/><path d="M6 18v2M18 18v2"/></svg></span><span class="cbody"><span class="crow"><span>Տրանսպորտ</span><span class="money">֏31,800</span></span><span class="cbar"><i style="width:36.8%"></i></span></span></li>
           <li style="--hue: var(--violet)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="cbody"><span class="crow"><span>Կոմունալ վճարներ</span><span class="money">֏27,800</span></span><span class="cbar"><i style="width:32.2%"></i></span></span></li>
@@ -838,12 +836,12 @@
           <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M9.5 7h5M9.5 11h5M9.5 15h3"/></svg></span><span>Սքրինշոթ<small>ձեր բանկի հավելվածից</small></span></li>
           <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><span>Քաղվածք<small>PDF կամ CSV</small></span></li>
           <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span>Կտրոն<small>լուսանկարով</small></span></li>
-          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span><span>Ձեռքով<small>Ամենագաղտնի եղանակը՝ ոչինչ չի կարդացվում</small></span></li>
+          <li><span class="ico"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span><span>Ձեռքով<small>Առավել գաղտնի՝ հավելվածը ֆայլ չի կարդում</small></span></li>
         </ul>
       </div>
 
       <figure class="device">
-        <div class="phone" role="img" aria-label="«Check what we found» էկրանի օրինակ։ Հավելվածը կարդացել է չորս վճարում։ Երեքն ընտրված են։ Դրանցից մեկի վրա գրված է «Uncategorised»։ Չորրորդն ընտրված չէ, քանի որ համընկնում է Nordram-ում արդեն եղած վճարման հետ։ Կոճակը՝ «Add 3 transactions»։">
+        <div class="phone" role="img" aria-label="«Check what we found» էկրանի օրինակ։ Հավելվածը կարդացել է չորս վճարման տվյալները։ Երեքն ընտրված են։ Ընտրված վճարումներից մեկը նշված է որպես «Uncategorised»։ Չորրորդն ընտրված չէ, քանի որ համընկնում է հավելվածում արդեն գրանցված վճարման հետ։ Կոճակը՝ «Add 3 transactions»։">
           <div class="screen">
             <span class="statusbar">10:31</span>
             <div class="island"></div>
@@ -873,7 +871,7 @@
             <div class="cta">Add 3 transactions</div>
           </div>
         </div>
-        <figcaption>Պայմանական վճարումներ են, ոչ թե իրական հաշվից։</figcaption>
+        <figcaption>Սրանք վճարումների օրինակներ են։ Տվյալներն իրական բանկային հաշվից չեն վերցված։</figcaption>
       </figure>
     </div>
   </section>
@@ -975,7 +973,7 @@
     <a href="hy/privacy.html">Գաղտնիության քաղաքականություն</a>
     <a href="mailto:hi@nordram.am">hi@nordram.am</a>
   </nav>
-  <p class="legal"><span class="nw">Nordram-ը</span> բյուջեի պլանավորման հավելված է, ոչ թե բանկ։ Այն ձեր գումարը չի պահում։</p>
+  <p class="legal"><span class="nw">Nordram-ը</span> բյուջեն կառավարելու հավելված է, ոչ թե բանկ։ Այն ձեր գումարը չի պահում։</p>
 </footer>
 
 </div>
