@@ -223,6 +223,9 @@
   .enter { animation: rise 800ms var(--ease-soft) both; }
   .enter-2 { animation-delay: 90ms; }
   .enter-3 { animation-delay: 180ms; }
+  /* Once the script has run, the hero phone's spending bars grow in as it rises. */
+  @keyframes grow { from { transform: scaleY(0); } }
+  .motion .bars i { transform-origin: 50% 100%; animation: grow 700ms var(--ease-soft) calc(450ms + var(--i, 0) * 60ms) both; }
 
   /* -------------------------------------------------------- phone frames */
   figure { margin: 0; }
@@ -373,8 +376,8 @@
   .holdings .name { flex: 1; min-width: 0; }
   .holdings .money { flex: none; font-size: 1rem; white-space: nowrap; }
 
-  /* The app's view switches, drawn as plain labels: on the page they do not
-     switch anything, so nothing about them says "press me". */
+  /* The app's view switches. Without the script they are plain labels, since
+     nothing would switch; the script makes them buttons (.live, below). */
   .seg {
     display: flex; flex-wrap: wrap; align-items: baseline;
     font-size: .8rem; font-weight: 600; line-height: 1.2; color: var(--text-3);
@@ -386,6 +389,8 @@
   .daybars { display: flex; align-items: flex-end; gap: 3px; height: 3rem; margin: 1.1rem 0 1.2rem; }
   .daybars i { flex: 1; min-height: 3px; border-radius: 999px; background: color-mix(in srgb, var(--violet) 45%, transparent); }
   .daybars i.on { background: var(--violet); }
+  .daybars.income i { background: color-mix(in srgb, var(--mint) 45%, transparent); }
+  .daybars.income i.on { background: var(--mint); }
   .daybars i.later { height: 3px; background: var(--track); }
   .cats { list-style: none; margin: 1rem 0 .3rem; padding: 0; display: grid; gap: .85rem; }
   .cats li { display: flex; align-items: center; gap: .75rem; }
@@ -400,6 +405,41 @@
   .crow .money { flex: none; font-weight: 500; white-space: nowrap; }
   .cbar { height: .3rem; border-radius: 999px; background: var(--track); overflow: hidden; }
   .cbar i { display: block; height: 100%; border-radius: inherit; background: var(--hue); }
+
+  /* Once the script has run, the switches are buttons drawn like the
+     language pill, and each swaps the example beside it with a short
+     crossfade. Both examples share one grid cell, so nothing below moves. */
+  .live .seg { width: fit-content; padding: .15rem; border: 1px solid var(--hairline); border-radius: 999px; line-height: 1; }
+  .live .seg button {
+    display: inline-flex; align-items: center; min-height: 2rem; padding: 0 .75rem;
+    border: 0; border-radius: 999px; background: none; color: var(--text-2);
+    font: inherit; cursor: pointer;
+    transition: background-color 160ms var(--ease), color 160ms var(--ease);
+  }
+  .live .seg [aria-pressed="true"] { background: var(--accent-quiet); color: var(--text); }
+  .live .seg button:focus-visible { outline: none; box-shadow: var(--ring); }
+  @media (hover: hover) and (pointer: fine) {
+    .live .seg button:hover { color: var(--text); }
+  }
+  .live .states { display: grid; }
+  .live .states > * { grid-area: 1 / 1; min-width: 0; transition: opacity 240ms var(--ease) 120ms; }
+  .live .states > [hidden] { display: block; visibility: hidden; opacity: 0; transition: opacity 140ms var(--ease), visibility 0s 140ms; }
+
+  /* Scroll reveal. The script marks what fades up and adds .motion to <html>
+     only after it has run, so with no script everything simply shows; what
+     is already on screen when the page opens is marked seen and stays put.
+     Bars grow once their panel is in view, and again each time a switch
+     shows them; a hidden example's bars drop back once it has faded. */
+  .motion .rv { transition: opacity 600ms var(--ease-soft), transform 600ms var(--ease-soft); }
+  .motion .rv:not(.in) { opacity: 0; transform: translateY(16px); }
+  .motion .daybars i { transform-origin: 50% 100%; transition: transform 700ms var(--ease-soft) calc(150ms + var(--i, 0) * 14ms); }
+  .motion .cbar i { transform-origin: 0 50%; transition: transform 700ms var(--ease-soft) calc(150ms + var(--i, 0) * 70ms); }
+  .motion .rv:not(.in) .daybars i, .motion .states > [hidden] .daybars i { transform: scaleY(0); }
+  .motion .rv:not(.in) .cbar i, .motion .states > [hidden] .cbar i { transform: scaleX(0); }
+  .motion .states > [hidden] i { transition: transform 0s 140ms; }
+  @media print {
+    .motion .rv:not(.in), .motion .rv:not(.in) .daybars i, .motion .rv:not(.in) .cbar i { opacity: 1; transform: none; }
+  }
 
   .ico {
     flex: none; display: grid; place-items: center;
@@ -589,6 +629,13 @@
     html { scroll-behavior: auto; }
     .enter { animation-name: fade; }
     .btn, .btn:active { transition: none; transform: none; }
+    /* The script leaves the reveal and the growing bars off here; these
+       hold if the setting changes while the page is open. The switches
+       still work, and change at once. */
+    .motion .rv:not(.in), .motion .rv:not(.in) .daybars i, .motion .rv:not(.in) .cbar i { opacity: 1; transform: none; }
+    .motion .rv, .motion .daybars i, .motion .cbar i, .live .seg button,
+    .live .states > *, .live .states > [hidden] { transition: none; }
+    .motion .bars i { animation: none; }
   }
 </style>
 </head>
@@ -740,10 +787,17 @@
       <div class="panel spend" role="img" aria-label="Այս ամսվա ծախսերի օրինակ՝ 243 200 դրամ, անցյալ ամսվանից 25 700 դրամով պակաս, ամսվա յուրաքանչյուր անցած օրվա համար մեկ սյունակով։ Ըստ կատեգորիայի. սննդամթերք՝ 86 400, սրճարան և ռեստորան՝ 52 300, գնումներ՝ 44 900, տրանսպորտ՝ 31 800, կոմունալ վճարներ՝ 27 800 դրամ։ Ներդիրներով կարող եք դիտել մուտքերը կամ տվյալներն ըստ վայրի։">
         <p class="seg"><span class="on">Ծախսեր</span><span>Մուտքեր</span></p>
         <p class="k">Այս ամիս</p>
+        <div class="states"><div>
         <p class="money panel-total">֏243,200</p>
         <p class="panel-change"><span class="nw">֏25,700-ով</span> պակաս<span>, քան անցյալ ամիս</span></p>
         <div class="daybars"><i style="height:34%"></i><i style="height:52%"></i><i style="height:20%"></i><i style="height:61%"></i><i style="height:45%"></i><i style="height:28%"></i><i style="height:80%"></i><i style="height:38%"></i><i style="height:55%"></i><i style="height:24%"></i><i style="height:47%"></i><i style="height:66%"></i><i style="height:30%"></i><i style="height:42%"></i><i style="height:100%"></i><i style="height:36%"></i><i style="height:58%"></i><i style="height:26%"></i><i style="height:49%"></i><i style="height:71%"></i><i class="on" style="height:40%"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i></div>
+        </div><div hidden>
+        <p class="money panel-total">֏640,000</p>
+        <p class="panel-change"><span class="nw">֏40,000-ով</span> ավելի<span>, քան անցյալ ամիս</span></p>
+        <div class="daybars income"><i></i><i></i><i></i><i></i><i style="height:100%"></i><i></i><i></i><i></i><i></i><i style="height:7%"></i><i></i><i></i><i></i><i></i><i style="height:36%"></i><i></i><i></i><i></i><i style="height:9.5%"></i><i></i><i class="on"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i></div>
+        </div></div>
         <p class="seg"><span class="on">Կատեգորիա</span><span>Վայր</span></p>
+        <div class="states"><div>
         <ul class="cats">
           <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Սննդամթերք</span><span class="money">֏86,400</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
           <li style="--hue: var(--amber)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Սրճարան և ռեստորան</span><span class="money">֏52,300</span></span><span class="cbar"><i style="width:60.5%"></i></span></span></li>
@@ -751,6 +805,15 @@
           <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l2-6h14l2 6v5H3z"/><path d="M3 13h18"/><path d="M6 18v2M18 18v2"/></svg></span><span class="cbody"><span class="crow"><span>Տրանսպորտ</span><span class="money">֏31,800</span></span><span class="cbar"><i style="width:36.8%"></i></span></span></li>
           <li style="--hue: var(--violet)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="cbody"><span class="crow"><span>Կոմունալ վճարներ</span><span class="money">֏27,800</span></span><span class="cbar"><i style="width:32.2%"></i></span></span></li>
         </ul>
+        </div><div hidden>
+        <ul class="cats">
+          <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Corner Market</span><span class="money">֏48,600</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
+          <li style="--hue: var(--amber)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Lumen Coffee</span><span class="money">֏21,400</span></span><span class="cbar"><i style="width:44%"></i></span></span></li>
+          <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Morning Bakery</span><span class="money">֏16,800</span></span><span class="cbar"><i style="width:34.6%"></i></span></span></li>
+          <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l2-6h14l2 6v5H3z"/><path d="M3 13h18"/><path d="M6 18v2M18 18v2"/></svg></span><span class="cbody"><span class="crow"><span>City Taxi</span><span class="money">֏14,200</span></span><span class="cbar"><i style="width:29.2%"></i></span></span></li>
+          <li style="--hue: var(--pink)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span><span class="cbody"><span class="crow"><span>Book Corner</span><span class="money">֏6,900</span></span><span class="cbar"><i style="width:14.2%"></i></span></span></li>
+        </ul>
+        </div></div>
       </div>
 
       <ul class="tiles">
@@ -925,6 +988,58 @@
     function update() { header.classList.toggle('scrolled', window.scrollY > 4); }
     update();
     window.addEventListener('scroll', update, { passive: true });
+  })();
+
+  // The panel's switches, and calm motion. The switches always work; the
+  // fades and growing bars are off for reduced motion, and nothing is
+  // hidden until this has run.
+  (function () {
+    function each(sel, fn, root) { [].forEach.call((root || document).querySelectorAll(sel), fn); }
+    var sets = document.querySelectorAll('.spend .states');
+
+    // Each switch becomes two buttons that swap the example below it.
+    each('.spend .seg', function (seg, i) {
+      var views = sets[i] && sets[i].children, buttons;
+      if (!views || views.length !== seg.children.length) return;
+      buttons = [].map.call(seg.children, function (label, n) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = label.textContent;
+        b.setAttribute('aria-pressed', !views[n].hidden);
+        b.onclick = function () {
+          buttons.forEach(function (other, m) {
+            other.setAttribute('aria-pressed', m === n);
+            views[m].hidden = m !== n;
+          });
+        };
+        seg.replaceChild(b, label);
+        return b;
+      });
+      seg.parentNode.setAttribute('role', 'group');
+      seg.parentNode.classList.add('live');
+    });
+
+    if (!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Fade up once on scrolling in; what is on screen already stays put.
+    var io = new IntersectionObserver(function (entries) {
+      var n = 0;
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.style.transitionDelay = Math.min(n++, 4) * 80 + 'ms';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    each('.intro > :not(.tiles), .inside-head > *, .panel, .tiles > li, #ways .device, .signup > h3, .paths > li, .status', function (el) {
+      var box = el.getBoundingClientRect();
+      el.classList.add('rv');
+      if (box.top < innerHeight && box.bottom > 0) el.classList.add('in');
+      else io.observe(el);
+    });
+    each('.bars, .daybars, .cats', function (list) {
+      each('i', function (bar, k) { bar.style.setProperty('--i', k); }, list);
+    });
+    document.documentElement.classList.add('motion');
   })();
 
   // The tester sign-up, sent without leaving the page. With no script, or a
