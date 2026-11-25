@@ -66,6 +66,7 @@
     --violet: #9B6BFF;
     --pink:   #FF4D9E;
     --amber:  #FFC53D;
+    --lime:   #C8F03C;
     --track:  rgba(255,255,255,.07);
 
     --display: "Outfit", "Noto Sans Armenian", system-ui, sans-serif;
@@ -372,8 +373,8 @@
   .holdings .name { flex: 1; min-width: 0; }
   .holdings .money { flex: none; font-size: 1rem; white-space: nowrap; }
 
-  /* The app's view switches, drawn as plain labels: on the page they do not
-     switch anything, so nothing about them says "press me". */
+  /* The app's view switches. Without the script they are plain labels, since
+     nothing would switch; the script makes them buttons (.live, below). */
   .seg {
     display: flex; flex-wrap: wrap; align-items: baseline;
     font-size: .8rem; font-weight: 600; line-height: 1.2; color: var(--text-3);
@@ -385,6 +386,8 @@
   .daybars { display: flex; align-items: flex-end; gap: 3px; height: 3rem; margin: 1.1rem 0 1.2rem; }
   .daybars i { flex: 1; min-height: 3px; border-radius: 999px; background: color-mix(in srgb, var(--violet) 45%, transparent); }
   .daybars i.on { background: var(--violet); }
+  .daybars.income i { background: color-mix(in srgb, var(--mint) 45%, transparent); }
+  .daybars.income i.on { background: var(--mint); }
   .daybars i.later { height: 3px; background: var(--track); }
   .cats { list-style: none; margin: 1rem 0 .3rem; padding: 0; display: grid; gap: .85rem; }
   .cats li { display: flex; align-items: center; gap: .75rem; }
@@ -399,6 +402,25 @@
   .crow .money { flex: none; font-weight: 500; white-space: nowrap; }
   .cbar { height: .3rem; border-radius: 999px; background: var(--track); overflow: hidden; }
   .cbar i { display: block; height: 100%; border-radius: inherit; background: var(--hue); }
+
+  /* Once the script has run, the switches are buttons drawn like the
+     language pill, and each swaps the example beside it with a short
+     crossfade. Both examples share one grid cell, so nothing below moves. */
+  .live .seg { width: fit-content; padding: .15rem; border: 1px solid var(--hairline); border-radius: 999px; line-height: 1; }
+  .live .seg button {
+    display: inline-flex; align-items: center; min-height: 2rem; padding: 0 .75rem;
+    border: 0; border-radius: 999px; background: none; color: var(--text-2);
+    font: inherit; cursor: pointer;
+    transition: background-color 160ms var(--ease), color 160ms var(--ease);
+  }
+  .live .seg [aria-pressed="true"] { background: var(--accent-quiet); color: var(--text); }
+  .live .seg button:focus-visible { outline: none; box-shadow: var(--ring); }
+  @media (hover: hover) and (pointer: fine) {
+    .live .seg button:hover { color: var(--text); }
+  }
+  .live .states { display: grid; }
+  .live .states > * { grid-area: 1 / 1; min-width: 0; transition: opacity 240ms var(--ease) 120ms; }
+  .live .states > [hidden] { display: block; visibility: hidden; opacity: 0; transition: opacity 140ms var(--ease), visibility 0s 140ms; }
 
   .ico {
     flex: none; display: grid; place-items: center;
@@ -588,6 +610,8 @@
     html { scroll-behavior: auto; }
     .enter { animation-name: fade; }
     .btn, .btn:active { transition: none; transform: none; }
+    /* The panel's switches still work here, and change at once. */
+    .live .seg button, .live .states > *, .live .states > [hidden] { transition: none; }
   }
 </style>
 </head>
@@ -735,13 +759,20 @@
       <p>Հավելվածի մեծ մասը նվիրված է վերլուծությանը։</p>
     </div>
     <div class="inside-grid">
-      <div class="panel spend" role="img" aria-label="Այս ամսվա ծախսերի օրինակ՝ 243 200 դրամ, անցյալ ամսվանից 25 700 դրամով պակաս, ամսվա յուրաքանչյուր անցած օրվա համար մեկ սյունակով։ Ըստ կատեգորիայի՝ սննդամթերք՝ 86 400, սրճարաններ և ռեստորաններ՝ 52 300, գնումներ՝ 44 900, տրանսպորտ՝ 31 800, կոմունալ վճարներ՝ 27 800 դրամ։ Հավելվածում կարող եք դիտել նաև մուտքերը և տեսնել ծախսերի բաշխումն ըստ վայրի։">
+      <div class="panel spend" role="img" aria-label="Այս ամսվա ծախսերի օրինակ՝ 243 200 դրամ, անցյալ ամսվանից 25 700 դրամով պակաս, ամսվա յուրաքանչյուր անցած օրվա համար մեկ սյունակով։ Ըստ կատեգորիայի՝ սննդամթերք՝ 86 400, սրճարաններ և ռեստորաններ՝ 52 300, գնումներ՝ 44 900, տրանսպորտ՝ 31 800, կոմունալ վճարներ՝ 27 800 դրամ։ Հավելվածում կարող եք դիտել նաև մուտքերը և տեսնել ծախսերի բաշխումն ըստ վայրի։" data-group-label="Օրինակ՝ այս ամսվա ծախսերն ու մուտքերը">
         <p class="seg"><span class="on">Ծախսեր</span><span>Մուտքեր</span></p>
         <p class="k">Այս ամիս</p>
+        <div class="states"><div>
         <p class="money panel-total">֏243,200</p>
         <p class="panel-change"><span class="nw">֏25,700-ով</span> պակաս<span>, քան անցյալ ամիս</span></p>
         <div class="daybars"><i style="height:34%"></i><i style="height:52%"></i><i style="height:20%"></i><i style="height:61%"></i><i style="height:45%"></i><i style="height:28%"></i><i style="height:80%"></i><i style="height:38%"></i><i style="height:55%"></i><i style="height:24%"></i><i style="height:47%"></i><i style="height:66%"></i><i style="height:30%"></i><i style="height:42%"></i><i style="height:100%"></i><i style="height:36%"></i><i style="height:58%"></i><i style="height:26%"></i><i style="height:49%"></i><i style="height:71%"></i><i class="on" style="height:40%"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i></div>
+        </div><div hidden>
+        <p class="money panel-total">֏640,000</p>
+        <p class="panel-change"><span class="nw">֏40,000-ով</span> ավելի<span>, քան անցյալ ամիս</span></p>
+        <div class="daybars income"><i></i><i></i><i></i><i></i><i style="height:100%"></i><i></i><i></i><i></i><i></i><i style="height:7%"></i><i></i><i></i><i></i><i></i><i style="height:36%"></i><i></i><i></i><i></i><i style="height:9.5%"></i><i></i><i class="on"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i><i class="later"></i></div>
+        </div></div>
         <p class="seg"><span class="on">Կատեգորիա</span><span>Վայր</span></p>
+        <div class="states"><div>
         <ul class="cats">
           <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Սննդամթերք</span><span class="money">֏86,400</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
           <li style="--hue: var(--amber)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Սրճարաններ և ռեստորաններ</span><span class="money">֏52,300</span></span><span class="cbar"><i style="width:60.5%"></i></span></span></li>
@@ -749,6 +780,29 @@
           <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l2-6h14l2 6v5H3z"/><path d="M3 13h18"/><path d="M6 18v2M18 18v2"/></svg></span><span class="cbody"><span class="crow"><span>Տրանսպորտ</span><span class="money">֏31,800</span></span><span class="cbar"><i style="width:36.8%"></i></span></span></li>
           <li style="--hue: var(--violet)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><span class="cbody"><span class="crow"><span>Կոմունալ վճարներ</span><span class="money">֏27,800</span></span><span class="cbar"><i style="width:32.2%"></i></span></span></li>
         </ul>
+        </div><div hidden>
+        <ul class="cats">
+          <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Corner Market</span><span class="money">֏48,600</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
+          <li style="--hue: var(--amber)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 9h12v4a6 6 0 0 1-12 0z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v3M11 3v3M14 3v3"/></svg></span><span class="cbody"><span class="crow"><span>Lumen Coffee</span><span class="money">֏21,400</span></span><span class="cbar"><i style="width:44%"></i></span></span></li>
+          <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h11L21 7H6.2"/></svg></span><span class="cbody"><span class="crow"><span>Morning Bakery</span><span class="money">֏16,800</span></span><span class="cbar"><i style="width:34.6%"></i></span></span></li>
+          <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l2-6h14l2 6v5H3z"/><path d="M3 13h18"/><path d="M6 18v2M18 18v2"/></svg></span><span class="cbody"><span class="crow"><span>City Taxi</span><span class="money">֏14,200</span></span><span class="cbar"><i style="width:29.2%"></i></span></span></li>
+          <li style="--hue: var(--pink)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span><span class="cbody"><span class="crow"><span>Book Corner</span><span class="money">֏6,900</span></span><span class="cbar"><i style="width:14.2%"></i></span></span></li>
+        </ul>
+        </div><div hidden>
+        <ul class="cats">
+          <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></span><span class="cbody"><span class="crow"><span>Աշխատավարձ</span><span class="money">֏420,000</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
+          <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></span><span class="cbody"><span class="crow"><span>Ֆրիլանս</span><span class="money">֏150,000</span></span><span class="cbar"><i style="width:35.7%"></i></span></span></li>
+          <li style="--hue: var(--violet)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17 7 7 17"/><path d="M17 17H7V7"/></svg></span><span class="cbody"><span class="crow"><span>Փոխանցումներ մարդկանցից</span><span class="money">֏40,000</span></span><span class="cbar"><i style="width:9.5%"></i></span></span></li>
+          <li style="--hue: var(--lime)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span><span class="cbody"><span class="crow"><span>Քեշբեք և գումարի վերադարձ</span><span class="money">֏30,000</span></span><span class="cbar"><i style="width:7.1%"></i></span></span></li>
+        </ul>
+        </div><div hidden>
+        <ul class="cats">
+          <li style="--hue: var(--mint)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></span><span class="cbody"><span class="crow"><span>Orbit Labs</span><span class="money">֏420,000</span></span><span class="cbar"><i style="width:100%"></i></span></span></li>
+          <li style="--hue: var(--sky)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></span><span class="cbody"><span class="crow"><span>Kite Studio</span><span class="money">֏150,000</span></span><span class="cbar"><i style="width:35.7%"></i></span></span></li>
+          <li style="--hue: var(--violet)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17 7 7 17"/><path d="M17 17H7V7"/></svg></span><span class="cbody"><span class="crow"><span>Card transfer</span><span class="money">֏40,000</span></span><span class="cbar"><i style="width:9.5%"></i></span></span></li>
+          <li style="--hue: var(--lime)"><span class="cat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span><span class="cbody"><span class="crow"><span>Bank cashback</span><span class="money">֏30,000</span></span><span class="cbar"><i style="width:7.1%"></i></span></span></li>
+        </ul>
+        </div></div>
       </div>
 
       <ul class="tiles">
@@ -922,6 +976,40 @@
     function update() { header.classList.toggle('scrolled', window.scrollY > 4); }
     update();
     window.addEventListener('scroll', update, { passive: true });
+  })();
+
+  // The panel's switches: each becomes two buttons. The top one picks
+  // spending or money in, the lower one category or place, and the list
+  // follows both: its four views are spent by category, spent by place,
+  // money in by category, money in by place. Without this script they stay
+  // plain labels and the panel stays one picture of spending.
+  (function () {
+    var panel = document.querySelector('.spend'),
+        segs = panel ? panel.querySelectorAll('.seg') : [],
+        sets = panel ? panel.querySelectorAll('.states') : [],
+        pick = [0, 0];
+    if (segs.length !== 2 || sets.length !== 2 || sets[0].children.length !== 2 ||
+        sets[1].children.length !== 4) return;
+    [].forEach.call(segs, function (seg, i) {
+      var buttons = [].map.call(seg.children, function (label, n) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = label.textContent;
+        b.setAttribute('aria-pressed', n === 0);
+        b.onclick = function () {
+          pick[i] = n;
+          buttons.forEach(function (other, m) { other.setAttribute('aria-pressed', m === n); });
+          [pick[0], pick[0] * 2 + pick[1]].forEach(function (on, s) {
+            [].forEach.call(sets[s].children, function (view, v) { view.hidden = v !== on; });
+          });
+        };
+        seg.replaceChild(b, label);
+        return b;
+      });
+    });
+    panel.setAttribute('role', 'group');
+    if (panel.dataset.groupLabel) panel.setAttribute('aria-label', panel.dataset.groupLabel);
+    panel.classList.add('live');
   })();
 
   // The tester sign-up, sent without leaving the page. With no script, or a
